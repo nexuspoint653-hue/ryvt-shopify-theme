@@ -1,0 +1,10 @@
+{
+  "sections": {
+    "hero": { "type": "hero", "settings": { "eyebrow": "Premium Athletic Wear", "heading": "Detroit, On Your Back", "link_text": "Shop Men" } },
+    "story": { "type": "story-block", "settings": { "eyebrow": "The Renaissance Tee", "heading": "One Tee, Four Ways", "link_text": "Shop the Renaissance Tee" } },
+    "row_tees": { "type": "category-row", "settings": { "heading": "T-Shirts", "columns": 4, "show_promo": true } },
+    "row_tanks": { "type": "category-row", "settings": { "heading": "Tank Tops", "columns": 4, "show_promo": true } },
+    "row_bottoms": { "type": "category-row", "settings": { "heading": "Bottoms", "columns": 4, "show_promo": true } }
+  },
+  "order": ["hero", "story", "row_tees", "row_tanks", "row_bottoms"]
+}

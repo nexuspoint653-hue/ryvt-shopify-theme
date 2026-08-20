@@ -1,0 +1,10 @@
+{ "sections": {
+    "main": { "type": "main-product",
+      "blocks": {
+        "b1": { "type": "accordion", "settings": { "title": "Material", "body": "<p>100% heavyweight cotton. Garment-dyed.</p>" } },
+        "b2": { "type": "accordion", "settings": { "title": "Care", "body": "<p>Machine wash cold with like colours. Tumble dry low.</p>" } },
+        "b3": { "type": "accordion", "settings": { "title": "Shipping &amp; Returns", "body": "<p>Free shipping on orders over $100. 30-day returns.</p>" } }
+      }, "block_order": ["b1", "b2", "b3"] },
+    "related": { "type": "related-products", "settings": { "heading": "Complete the Look" } }
+  },
+  "order": ["main", "related"] }
