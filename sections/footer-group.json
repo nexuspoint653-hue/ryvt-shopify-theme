@@ -1,0 +1,25 @@
+{
+  "type": "footer",
+  "name": "Footer",
+  "sections": {
+    "split": {
+      "type": "editorial-split",
+      "blocks": {
+        "p1": { "type": "panel", "settings": { "title": "Discover RYVT", "body": "Premium athletic wear built in Metro Detroit — heavyweight cotton, garment-dyed, made to outlast the season." } },
+        "p2": { "type": "panel", "settings": { "title": "The Fabric", "body": "How we choose our cotton, why we garment-dye every piece, and what that means after fifty washes." } }
+      },
+      "block_order": ["p1", "p2"]
+    },
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "f1": { "type": "menu", "settings": { "title": "Shop", "menu": "footer" } },
+        "f2": { "type": "menu", "settings": { "title": "Company", "menu": "footer" } },
+        "f3": { "type": "menu", "settings": { "title": "Support", "menu": "footer" } }
+      },
+      "block_order": ["f1", "f2", "f3"],
+      "settings": { "nl_title": "Join the movement" }
+    }
+  },
+  "order": ["split", "footer"]
+}

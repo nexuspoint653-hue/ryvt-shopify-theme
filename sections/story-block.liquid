@@ -1,0 +1,26 @@
+{%- comment -%}
+  The Renaissance Tee storytelling block. Kept deliberately close to the
+  original — do not restyle without checking with the owner.
+{%- endcomment -%}
+<section class="tee-sec">
+  <svg class="glyph" viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M4 20 L14 8 L18 13 L28 3 L28 10 L18 20 L14 15 L8 22 Z M4 26 L14 14 L18 19 L28 9 L28 16 L18 26 L14 21 L8 28 Z"/></svg>
+  <div class="wrap">
+    {%- if section.settings.eyebrow != blank -%}
+      <div class="mini" style="margin-bottom:14px">{{ section.settings.eyebrow }}</div>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="h1" style="max-width:9ch">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- if section.settings.link_text != blank -%}
+      <div style="margin-top:26px"><a href="{{ section.settings.link }}" class="ulink">{{ section.settings.link_text }}</a></div>
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}
+{ "name": "Story block", "settings": [
+  { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Renaissance Tee" },
+  { "type": "text", "id": "heading", "label": "Heading", "default": "One Tee, Four Ways" },
+  { "type": "text", "id": "link_text", "label": "Link text", "default": "Shop the Renaissance Tee" },
+  { "type": "url", "id": "link", "label": "Link" }
+], "presets": [{ "name": "Story block" }] }
+{% endschema %}

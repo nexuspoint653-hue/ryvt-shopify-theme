@@ -1,0 +1,53 @@
+{%- comment -%}
+  Full-bleed categorised row. Never leaves empty cells: if the collection holds
+  fewer products than the column count, the row closes with a promo tile and the
+  columns tighten so the cards grow instead of leaving gaps.
+{%- endcomment -%}
+{%- assign coll = collections[section.settings.collection] -%}
+{%- assign count = coll.products.size -%}
+{%- if count > section.settings.columns %}{% assign count = section.settings.columns %}{% endif -%}
+{%- assign cells = count -%}
+{%- if section.settings.show_promo and count < section.settings.columns -%}
+  {%- assign cells = count | plus: 1 -%}
+{%- endif -%}
+
+<section class="cat">
+  <div class="cat-head" data-rv>
+    <span class="t">{{ section.settings.heading | default: coll.title }}</span>
+    <a href="{{ coll.url | default: routes.all_products_collection_url }}">
+      View All <svg viewBox="0 0 24 12"><path d="M0 6h21M16 1l5 5-5 5"/></svg></a>
+  </div>
+
+  <div class="row stag" data-rv data-row data-max="{{ section.settings.columns }}">
+    {%- for product in coll.products limit: section.settings.columns -%}
+      {% render 'product-card', product: product %}
+    {%- endfor -%}
+
+    {%- if section.settings.show_promo and count < section.settings.columns -%}
+      <a class="pc" href="{{ coll.url | default: routes.all_products_collection_url }}">
+        <div class="pc-m" style="background:var(--bg2);display:grid;place-items:center;text-align:center">
+          <div style="padding:24px">
+            <div class="mini" style="margin-bottom:12px">{{ section.settings.heading | default: coll.title }}</div>
+            <div class="h3" style="margin-bottom:16px">{{ section.settings.promo_text }}</div>
+            <span class="ulink">Shop All</span>
+          </div>
+        </div>
+        <div class="pc-i" style="min-height:1px"></div>
+      </a>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Category row",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "text", "id": "heading", "label": "Heading (defaults to collection title)" },
+    { "type": "range", "id": "columns", "label": "Max columns", "min": 2, "max": 4, "step": 1, "default": 4 },
+    { "type": "checkbox", "id": "show_promo", "label": "Close short rows with a promo tile", "default": true },
+    { "type": "text", "id": "promo_text", "label": "Promo tile text", "default": "Shop the full range" }
+  ],
+  "presets": [{ "name": "Category row" }]
+}
+{% endschema %}

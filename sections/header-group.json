@@ -1,0 +1,25 @@
+{
+  "type": "header",
+  "name": "Header",
+  "sections": {
+    "header": {
+      "type": "header",
+      "blocks": {
+        "card1": { "type": "menu_card", "settings": { "position": 1, "label": "Shop Men" } },
+        "t1": { "type": "search_tile", "settings": { "label": "T-Shirts" } },
+        "t2": { "type": "search_tile", "settings": { "label": "Tanks" } },
+        "t3": { "type": "search_tile", "settings": { "label": "Bottoms" } },
+        "t4": { "type": "search_tile", "settings": { "label": "Accessories" } }
+      },
+      "block_order": ["card1", "t1", "t2", "t3", "t4"],
+      "settings": {
+        "menu": "main-menu",
+        "wordmark": "RYVT",
+        "soon_label": "Women",
+        "popular": "Heavyweight Tee, Tanks, Cargo Pants, Garment Dyed",
+        "fabric_title": "Our Fabric"
+      }
+    }
+  },
+  "order": ["header"]
+}
