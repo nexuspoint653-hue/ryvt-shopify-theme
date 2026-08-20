@@ -1,0 +1,101 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_text": "Skip to content",
+      "close": "Close",
+      "next": "Next",
+      "previous": "Previous",
+      "menu": "Menu"
+    },
+    "search": {
+      "search": "Search",
+      "placeholder": "What are you looking for?",
+      "results_count": {
+        "one": "{{ count }} result",
+        "other": "{{ count }} results"
+      }
+    },
+    "pagination": {
+      "label": "Pagination",
+      "page": "Page {{ number }}",
+      "next": "Next page",
+      "previous": "Previous page"
+    },
+    "newsletter_form": {
+      "email_placeholder": "Email address",
+      "button_label": "Subscribe",
+      "confirmation": "Thank you \u2014 you're on the list."
+    },
+    "continue_shopping": "Continue shopping",
+    "close": "Close"
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Add to Bag",
+      "sold_out": "Sold Out",
+      "unavailable": "Unavailable",
+      "on_sale": "Sale",
+      "regular_price": "Regular price",
+      "sale_price": "Sale price",
+      "quantity": "Quantity",
+      "size_guide": "Size Guide",
+      "view_details": "View details"
+    },
+    "facets": {
+      "sort_by_label": "Sort by",
+      "filter_by_label": "Filter",
+      "clear": "Clear",
+      "clear_all": "Clear all"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your Bag",
+      "empty": "Your bag is currently empty.",
+      "subtotal": "Subtotal",
+      "update": "Update Bag",
+      "checkout": "Checkout",
+      "taxes_and_shipping_at_checkout": "Shipping and taxes calculated at checkout.",
+      "remove": "Remove"
+    }
+  },
+  "customer": {
+    "account": {
+      "title": "Account",
+      "details": "Account details",
+      "orders": "Orders",
+      "return_to_account": "Return to account details"
+    },
+    "login": {
+      "title": "Sign In",
+      "email": "Email",
+      "password": "Password",
+      "sign_in": "Sign In",
+      "forgot_password": "Forgot your password?",
+      "create_account": "Create an account"
+    },
+    "register": {
+      "title": "Create Account",
+      "first_name": "First name",
+      "last_name": "Last name",
+      "submit": "Create"
+    }
+  },
+  "sections": {
+    "header": {
+      "announcement": "Announcement",
+      "cart_count": {
+        "one": "{{ count }} item",
+        "other": "{{ count }} items"
+      }
+    },
+    "footer": {
+      "copyright": "All rights reserved."
+    }
+  },
+  "shopify": {
+    "links": {
+      "powered_by_shopify": "Powered by Shopify"
+    }
+  }
+}
