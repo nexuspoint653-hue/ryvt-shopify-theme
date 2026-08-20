@@ -1,0 +1,69 @@
+{%- comment -%}
+  RYVT product card.
+  Params: product (required), badge (optional string), ghost (optional bool)
+{%- endcomment -%}
+{%- liquid
+  assign hover = product.images[1]
+  assign colour_count = 0
+  for opt in product.options_with_values
+    assign oname = opt.name | downcase
+    if oname contains 'colour' or oname contains 'color'
+      assign colour_count = opt.values.size
+    endif
+  endfor
+-%}
+<a class="pc" href="{{ product.url }}">
+  <div class="pc-m">
+    {%- if product.featured_image -%}
+      <img class="main" src="{{ product.featured_image | image_url: width: 900 }}"
+           srcset="{{ product.featured_image | image_url: width: 450 }} 450w, {{ product.featured_image | image_url: width: 900 }} 900w"
+           sizes="(max-width:860px) 50vw, 25vw"
+           alt="{{ product.featured_image.alt | escape }}" width="900" height="1125" loading="lazy">
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg main' }}
+    {%- endif -%}
+
+    {%- if hover -%}
+      <img class="alt" src="{{ hover | image_url: width: 900 }}" alt="" width="900" height="1125" loading="lazy">
+    {%- endif -%}
+
+    {%- if badge != blank -%}
+      <span class="pc-tag{% if ghost %} ghost{% endif %}">{{ badge }}</span>
+    {%- elsif product.compare_at_price > product.price -%}
+      <span class="pc-tag">Sale</span>
+    {%- elsif product.tags contains 'Best Seller' -%}
+      <span class="pc-tag">Best Seller</span>
+    {%- elsif product.tags contains 'New' -%}
+      <span class="pc-tag">New</span>
+    {%- endif -%}
+
+    <button type="button" class="pc-fav" aria-label="Save to wishlist" aria-pressed="false">
+      <svg viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-9a4 4 0 017-2.6A4 4 0 0119 11c0 4.5-7 9-7 9z"/></svg>
+    </button>
+
+    {%- if product.available -%}
+      <form method="post" action="{{ routes.cart_add_url }}" class="add-form">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button type="submit" class="add">+ Add to Bag</button>
+      </form>
+    {%- else -%}
+      <span class="add">Sold Out</span>
+    {%- endif -%}
+  </div>
+
+  <div class="pc-i">
+    <div class="pc-top">
+      <span class="pc-n">{{ product.title }}</span>
+      <span class="pc-p">
+        {%- if product.compare_at_price > product.price -%}
+          <s style="opacity:.5">{{ product.compare_at_price | money }}</s>
+        {%- endif -%}
+        {{ product.price | money }}
+      </span>
+    </div>
+    <div class="pc-r">{% render 'rating', product: product %}</div>
+    {%- if colour_count > 0 -%}
+      <div class="pc-c">{{ colour_count }} {% if colour_count == 1 %}colour{% else %}colours{% endif %}</div>
+    {%- endif -%}
+  </div>
+</a>
