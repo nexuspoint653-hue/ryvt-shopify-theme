@@ -1,0 +1,106 @@
+{%- comment -%}
+  Collection page. Filters run inline above the grid rather than in a left
+  sidebar, so the grid gets the full window width. Short result sets close the
+  row with suggestions instead of leaving white space.
+{%- endcomment -%}
+<div class="tabs">
+  <a class="tab{% unless collection.handle %} on{% endunless %}" href="{{ routes.all_products_collection_url }}">All</a>
+  <a class="tab on" href="{{ collection.url }}">{{ collection.title }}</a>
+</div>
+
+{%- paginate collection.products by section.settings.per_page -%}
+<div class="fbar">
+  {%- for filter in collection.filters -%}
+    {%- if filter.type == 'list' and filter.values.size > 0 -%}
+      {%- assign fname = filter.label | downcase -%}
+      <div class="fgrp">
+        <span>{{ filter.label }}</span>
+        <div style="display:flex;gap:{% if fname contains 'col' %}7{% else %}6{% endif %}px;flex-wrap:wrap">
+          {%- for v in filter.values limit: 8 -%}
+            {%- if fname contains 'col' and v.swatch.color -%}
+              <a class="sw-btn{% if v.active %} on{% endif %}" title="{{ v.label }}" aria-label="{{ v.label }}"
+                 style="background:{{ v.swatch.color }}" href="{{ v.url_to_add | default: v.url_to_remove }}"></a>
+            {%- else -%}
+              <a class="sz{% if v.active %} on{% endif %}" href="{{ v.url_to_add | default: v.url_to_remove }}">{{ v.label }}</a>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- if collection.filters.size == 0 -%}
+    <div class="fgrp"><span>Browse</span>
+      <div style="display:flex;gap:6px">
+        {%- for tag in collection.all_tags limit: 6 -%}
+          <a class="sz{% if current_tags contains tag %} on{% endif %}" href="{{ collection.url }}/{{ tag | handleize }}">{{ tag }}</a>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if current_tags or collection.current_type or collection.current_vendor -%}
+    <a class="clearf" href="{{ collection.url }}">Clear</a>
+  {%- endif -%}
+
+  <div class="right">
+    <span class="count">{{ collection.products_count }} {% if collection.products_count == 1 %}item{% else %}items{% endif %}</span>
+    <form method="get" action="{{ collection.url }}">
+      <select class="sortsel" name="sort_by" onchange="this.form.submit()" aria-label="Sort products">
+        {%- for o in collection.sort_options -%}
+          <option value="{{ o.value }}"{% if o.value == collection.sort_by %} selected{% endif %}>{{ o.name }}</option>
+        {%- endfor -%}
+      </select>
+    </form>
+  </div>
+</div>
+
+<h1 class="h2" style="padding:clamp(20px,2.6vw,34px) clamp(14px,2.6vw,34px) 6px">{{ collection.title }}</h1>
+{%- if collection.description != blank -%}
+  <div class="crumb rte" style="padding:0 clamp(14px,2.6vw,34px) 22px;max-width:70ch">{{ collection.description }}</div>
+{%- else -%}
+  <p class="crumb" style="padding:0 clamp(14px,2.6vw,34px) 22px">{{ collection.products_count }} pieces</p>
+{%- endif -%}
+
+{%- assign shown = collection.products.size -%}
+<div class="grid stag in" data-row data-max="4">
+  {%- for product in collection.products -%}
+    {% render 'product-card', product: product %}
+  {%- else -%}
+    <div class="empty">
+      <h3 class="h3">Nothing matches those filters</h3>
+      <p style="color:var(--muted);margin:10px 0 22px">Try clearing a filter to see more.</p>
+      <a class="btn" href="{{ collection.url }}">Clear filters</a>
+    </div>
+  {%- endfor -%}
+
+  {%- comment -%} keep the row full when the result set is thin {%- endcomment -%}
+  {%- if section.settings.fill_gaps and shown > 0 and shown < 4 -%}
+    {%- assign need = 4 | minus: shown -%}
+    {%- assign added = 0 -%}
+    {%- for p in collections.all.products -%}
+      {%- unless collection.products contains p -%}
+        {%- if added < need -%}
+          {% render 'product-card', product: p, badge: 'You might also like', ghost: true %}
+          {%- assign added = added | plus: 1 -%}
+        {%- endif -%}
+      {%- endunless -%}
+    {%- endfor -%}
+  {%- endif -%}
+</div>
+
+{%- if paginate.pages > 1 -%}
+  <div class="pagination">{{ paginate | default_pagination }}</div>
+{%- endif -%}
+{%- endpaginate -%}
+
+{% schema %}
+{
+  "name": "Collection",
+  "settings": [
+    { "type": "range", "id": "per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 },
+    { "type": "checkbox", "id": "fill_gaps", "label": "Fill short rows with suggestions", "default": true,
+      "info": "Stops a filtered collection from leaving empty cells." }
+  ]
+}
+{% endschema %}

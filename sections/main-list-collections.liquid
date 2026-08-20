@@ -1,0 +1,14 @@
+<div class="wrap" style="padding-block:clamp(26px,3vw,42px)"><h1 class="h2">Shop</h1></div>
+<div class="grid stag in" data-row data-max="4">
+  {%- for c in collections -%}
+    <a class="pc" href="{{ c.url }}">
+      <div class="pc-m">
+        {%- if c.featured_image -%}<img class="main" src="{{ c.featured_image | image_url: width: 900 }}" alt="" loading="lazy">
+        {%- else -%}{{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}{%- endif -%}
+      </div>
+      <div class="pc-i"><div class="pc-top"><span class="pc-n">{{ c.title }}</span></div>
+        <div class="pc-c">{{ c.products_count }} items</div></div>
+    </a>
+  {%- endfor -%}
+</div>
+{% schema %}{ "name": "Collections list" }{% endschema %}

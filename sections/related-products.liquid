@@ -1,0 +1,22 @@
+<section class="cat" style="padding-bottom:clamp(34px,5vw,64px)">
+  <div class="cat-head">
+    <span class="t">{{ section.settings.heading }}</span>
+    <a href="{{ routes.all_products_collection_url }}">View All <svg viewBox="0 0 24 12"><path d="M0 6h21M16 1l5 5-5 5"/></svg></a>
+  </div>
+  <div class="row" data-row data-max="4">
+    {%- assign source = collections[section.settings.collection].products | default: product.collections.first.products -%}
+    {%- assign n = 0 -%}
+    {%- for p in source -%}
+      {%- if p.id != product.id and n < 4 -%}
+        {% render 'product-card', product: p %}
+        {%- assign n = n | plus: 1 -%}
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+{% schema %}
+{ "name": "Related products", "settings": [
+  { "type": "text", "id": "heading", "label": "Heading", "default": "Complete the Look" },
+  { "type": "collection", "id": "collection", "label": "Source collection" }
+], "presets": [{ "name": "Related products" }] }
+{% endschema %}

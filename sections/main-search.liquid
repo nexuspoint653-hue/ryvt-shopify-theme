@@ -1,0 +1,16 @@
+<div class="wrap" style="padding-block:clamp(26px,3vw,42px)">
+  <h1 class="h2">{% if search.performed %}{{ search.results_count }} results{% else %}Search{% endif %}</h1>
+  <form action="{{ routes.search_url }}" method="get" class="nl" style="max-width:520px;margin-top:20px">
+    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search products" style="grid-column:1/-1">
+  </form>
+</div>
+{%- if search.performed -%}
+  <div class="grid stag in" data-row data-max="4">
+    {%- for item in search.results -%}
+      {%- if item.object_type == 'product' -%}{% render 'product-card', product: item %}{%- endif -%}
+    {%- else -%}
+      <div class="empty"><h3 class="h3">Nothing found for &ldquo;{{ search.terms }}&rdquo;</h3></div>
+    {%- endfor -%}
+  </div>
+{%- endif -%}
+{% schema %}{ "name": "Search" }{% endschema %}

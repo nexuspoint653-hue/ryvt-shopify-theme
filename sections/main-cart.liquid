@@ -1,0 +1,31 @@
+<div class="wrap" style="padding-block:clamp(26px,3vw,48px)">
+  <h1 class="h2">Your Bag</h1>
+  {%- if cart.item_count > 0 -%}
+    <form action="{{ routes.cart_url }}" method="post" novalidate style="margin-top:24px">
+      {%- for item in cart.items -%}
+        <div class="cart-row">
+          <a href="{{ item.url }}">{% if item.image %}<img src="{{ item.image | image_url: width: 200 }}" alt="">{% endif %}</a>
+          <div>
+            <a href="{{ item.url }}" class="pc-n">{{ item.product.title }}</a>
+            <div class="crumb" style="margin-top:4px">{{ item.variant.title | remove: 'Default Title' }}</div>
+          </div>
+          <div class="qty"><input type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="Quantity"></div>
+          <div class="pc-p">{{ item.final_line_price | money }}</div>
+        </div>
+      {%- endfor -%}
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:24px 0;flex-wrap:wrap;gap:16px">
+        <button type="submit" name="update" class="ulink">Update Bag</button>
+        <div style="text-align:right">
+          <div class="mini">Subtotal</div>
+          <div class="price">{{ cart.total_price | money }}</div>
+          <p class="crumb" style="margin-top:6px">Shipping and taxes calculated at checkout.</p>
+        </div>
+      </div>
+      <button type="submit" name="checkout" class="btn btn-solid" style="width:100%">Checkout</button>
+    </form>
+  {%- else -%}
+    <p style="color:var(--muted);margin-top:16px">Your bag is currently empty.</p>
+    <div style="margin-top:24px"><a class="btn" href="{{ routes.all_products_collection_url }}">Continue shopping</a></div>
+  {%- endif -%}
+</div>
+{% schema %}{ "name": "Cart" }{% endschema %}
