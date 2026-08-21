@@ -18,6 +18,7 @@
           "type": "menu_card",
           "settings": {
             "position": 1,
+            "image": "shopify://shop_images/the-foundry-wash-heavyweight-tee-brown-05.jpg",
             "label": "Shop Men",
             "link": ""
           }
