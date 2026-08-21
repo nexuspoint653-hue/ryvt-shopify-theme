@@ -15,6 +15,13 @@
   </nav>
 {%- endif -%}
 
+<div class="chead">
+  <p class="crumb">{% if collection.handle %}Shop / {{ collection.title }}{% else %}Shop{% endif %}</p>
+  <h1 class="h2">{{ collection.title | default: 'All products' }}</h1>
+  {%- if collection.description != blank -%}
+    <div class="chead-d rte">{{ collection.description }}</div>
+  {%- endif -%}
+</div>
 <div class="tabs">
   <a class="tab{% unless collection.handle %} on{% endunless %}" href="{{ routes.all_products_collection_url }}">All</a>
   <a class="tab on" href="{{ collection.url }}">{{ collection.title }}</a>
@@ -67,12 +74,6 @@
   </div>
 </div>
 
-<h1 class="h2" style="padding:clamp(20px,2.6vw,34px) clamp(14px,2.6vw,34px) 6px">{{ collection.title }}</h1>
-{%- if collection.description != blank -%}
-  <div class="crumb rte" style="padding:0 clamp(14px,2.6vw,34px) 22px;max-width:70ch">{{ collection.description }}</div>
-{%- else -%}
-  <p class="crumb" style="padding:0 clamp(14px,2.6vw,34px) 22px">{{ collection.products_count }} pieces</p>
-{%- endif -%}
 
 {%- assign shown = collection.products.size -%}
 <div class="grid stag in" data-row data-max="4">
