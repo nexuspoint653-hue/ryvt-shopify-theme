@@ -27,7 +27,9 @@
           "type": "menu_card",
           "settings": {
             "position": 1,
-            "label": "Shop Men"
+            "label": "The Detroit Renaissance Heavyweight Tee",
+            "tag": "Men",
+            "show_price": true
           }
         },
         "t1": {
@@ -53,6 +55,15 @@
           "settings": {
             "label": "Accessories"
           }
+        },
+        "card2": {
+          "type": "menu_card",
+          "settings": {
+            "position": 1,
+            "label": "Complete the Fit",
+            "caption": "Pairs with the Standard-Issue Cargo",
+            "tag": "Women"
+          }
         }
       },
       "block_order": [
@@ -60,6 +71,7 @@
         "a2",
         "a3",
         "card1",
+        "card2",
         "t1",
         "t2",
         "t3",
@@ -75,7 +87,8 @@
         "abar_dismiss": false,
         "search_placeholder": "Search for a tee, a fit, a fabric",
         "popular": "Heavyweight Tee, Tanks, Cargo Pants, Garment Dyed",
-        "fabric_title": "Our Fabric"
+        "fabric_title": "Our Fabric",
+        "types_label": "Shop by type"
       }
     }
   },

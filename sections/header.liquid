@@ -26,15 +26,15 @@
   <div class="hdr-in">
 
     <nav class="nav-c" aria-label="Main">
-      <button class="burger" id="burger" type="button" aria-label="Open menu" aria-expanded="false">
+      <button class="burger" id="burger" type="button" data-tap aria-label="Open menu" aria-expanded="false">
         <i></i><i></i><i></i>
       </button>
       {%- for link in menu.links limit: 5 -%}
         {%- if link.links.size > 0 -%}
-          <button type="button" class="nav-i" data-menu="mega-{{ forloop.index }}"
+          <button type="button" class="nav-i" data-tap data-menu="mega-{{ forloop.index }}"
                   aria-expanded="false" aria-controls="mega-{{ forloop.index }}">{{ link.title }}</button>
         {%- else -%}
-          <a href="{{ link.url }}" class="nav-i{% if link.active %} on{% endif %}">{{ link.title }}</a>
+          <a href="{{ link.url }}" class="nav-i{% if link.active %} on{% endif %}" data-tap>{{ link.title }}</a>
         {%- endif -%}
       {%- endfor -%}
       {%- if section.settings.soon_label != blank -%}
@@ -53,18 +53,18 @@
     </a>
 
     <div class="nav-r">
-      <button class="ico" id="searchBtn" type="button" aria-label="Search" aria-expanded="false">
+      <button class="ico" id="searchBtn" type="button" data-tap aria-label="Search" aria-expanded="false">
         <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg></button>
       {%- if section.settings.show_saved -%}
         <a href="{{ section.settings.saved_url | default: routes.all_products_collection_url }}"
-           class="ico" id="savedBtn" aria-label="Saved">
+           class="ico" id="savedBtn" data-tap aria-label="Saved">
           <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-5-6 5V3z"/></svg>
           <span class="cnt" data-saved-count>0</span>
         </a>
       {%- endif -%}
-      <a href="{{ routes.account_url }}" class="ico hide-sm" aria-label="Account">
+      <a href="{{ routes.account_url }}" class="ico hide-sm" data-tap aria-label="Account">
         <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></a>
-      <a href="{{ routes.cart_url }}" class="ico" aria-label="Bag ({{ cart.item_count }})">
+      <a href="{{ routes.cart_url }}" class="ico" data-tap aria-label="Bag ({{ cart.item_count }})">
         <svg viewBox="0 0 24 24"><path d="M6 8h12l1 12H5L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg>
         <span class="cnt{% if cart.item_count > 0 %} on{% endif %}" data-cart-count>{{ cart.item_count }}</span>
       </a>
@@ -76,35 +76,74 @@
     {%- for link in menu.links limit: 5 -%}
       {%- if link.links.size > 0 -%}
         {%- assign pos = forloop.index -%}
+        {%- comment -%} flat menu (types only) vs grouped menu {%- endcomment -%}
+        {%- assign grouped = false -%}
+        {%- for col in link.links -%}
+          {%- if col.links.size > 0 -%}{%- assign grouped = true -%}{%- break -%}{%- endif -%}
+        {%- endfor -%}
+
         <div class="mega-in" id="mega-{{ pos }}" role="region" aria-label="{{ link.title }}">
-          <div class="mega-cols">
-            {%- for col in link.links limit: 4 -%}
-              <div class="mcol">
-                <h4>{% if col.links.size > 0 %}{{ col.title }}{% else %}&nbsp;{% endif %}</h4>
-                <ul>
-                  {%- if col.links.size > 0 -%}
-                    {%- for item in col.links -%}<li><a href="{{ item.url }}">{{ item.title }}</a></li>{%- endfor -%}
-                  {%- else -%}
-                    <li><a href="{{ col.url }}">{{ col.title }}</a></li>
-                  {%- endif -%}
-                </ul>
+          <div class="mega-cols{% unless grouped %} mega-flat{% endunless %}">
+            {%- if grouped -%}
+              {%- for col in link.links limit: 4 -%}
+                <div class="mcol">
+                  <h4>{{ col.title }}</h4>
+                  <ul>
+                    {%- if col.links.size > 0 -%}
+                      {%- for item in col.links -%}<li><a href="{{ item.url }}">{{ item.title }}</a></li>{%- endfor -%}
+                    {%- else -%}
+                      <li><a href="{{ col.url }}">{{ col.title }}</a></li>
+                    {%- endif -%}
+                  </ul>
+                </div>
+              {%- endfor -%}
+              <div class="mcol mcol-all">
+                <h4>&nbsp;</h4>
+                <ul><li><a class="mall" href="{{ link.url }}">Shop all &rarr;</a></li></ul>
               </div>
-            {%- endfor -%}
-            <div class="mcol mcol-all">
-              <h4>&nbsp;</h4>
-              <ul><li><a class="mall" href="{{ link.url }}">Shop all {{ link.title | downcase }} &rarr;</a></li></ul>
-            </div>
+            {%- else -%}
+              <div class="mcol mcol-wide">
+                <h4>{{ section.settings.types_label | default: 'Shop by type' }}</h4>
+                <ul class="mlist">
+                  {%- for col in link.links -%}<li><a href="{{ col.url }}">{{ col.title }}</a></li>{%- endfor -%}
+                </ul>
+                <div class="mcol-foot"><a class="mall" href="{{ link.url }}">Shop all &rarr;</a></div>
+              </div>
+            {%- endif -%}
           </div>
+
           <div class="mega-cards">
             {%- for block in cards -%}
               {%- if block.settings.position == pos -%}
-                <a class="mcard" href="{{ block.settings.link | default: link.url }}" {{ block.shopify_attributes }}>
-                  {%- if block.settings.image != blank -%}
-                    <img src="{{ block.settings.image | image_url: width: 800 }}" alt="" loading="lazy">
-                  {%- else -%}
-                    {{ 'lifestyle-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                  {%- endif -%}
-                  <span>{{ block.settings.label }}</span>
+                {%- assign pr = block.settings.product -%}
+                {%- assign img_a = block.settings.image -%}
+                {%- assign img_b = block.settings.image_hover -%}
+                {%- if img_a == blank and pr != blank -%}{%- assign img_a = pr.featured_image -%}{%- endif -%}
+                {%- if img_b == blank and pr != blank and pr.images.size > 1 -%}{%- assign img_b = pr.images[1] -%}{%- endif -%}
+                {%- assign title = block.settings.label | default: pr.title -%}
+                {%- assign href = block.settings.link | default: pr.url | default: link.url -%}
+                <a class="mcard" href="{{ href }}" {{ block.shopify_attributes }}>
+                  <div class="mcard-m">
+                    {%- if img_a != blank -%}
+                      <img class="pri" src="{{ img_a | image_url: width: 700 }}" alt="{{ title | escape }}" loading="lazy">
+                    {%- else -%}
+                      <span class="ph ph-a"></span>
+                    {%- endif -%}
+                    {%- if img_b != blank -%}
+                      <img class="alt" src="{{ img_b | image_url: width: 700 }}" alt="" loading="lazy" aria-hidden="true">
+                    {%- else -%}
+                      <span class="ph ph-b alt"></span>
+                    {%- endif -%}
+                    {%- if block.settings.tag != blank -%}<span class="mcard-tag">{{ block.settings.tag }}</span>{%- endif -%}
+                  </div>
+                  <div class="mcard-b">
+                    <span class="mcard-t">{{ title }}</span>
+                    {%- if block.settings.caption != blank -%}
+                      <span class="mcard-c">{{ block.settings.caption }}</span>
+                    {%- elsif pr != blank and block.settings.show_price -%}
+                      <span class="mcard-c">{{ pr.price | money }}</span>
+                    {%- endif -%}
+                  </div>
                 </a>
               {%- endif -%}
             {%- endfor -%}
@@ -176,14 +215,14 @@
 <aside class="drawer" id="drawer" aria-label="Menu">
   <div class="drawer-h">
     <span class="mini">Menu</span>
-    <button class="x" id="drawerX" type="button" aria-label="Close"></button>
+    <button class="x" id="drawerX" type="button" data-tap aria-label="Close"></button>
   </div>
   <div class="drawer-b">
     <ul>
       {%- for link in menu.links -%}
         <li>
           {%- if link.links.size > 0 -%}
-            <button type="button" data-sub="dsub-{{ forloop.index }}" aria-expanded="false">
+            <button type="button" data-tap data-sub="dsub-{{ forloop.index }}" aria-expanded="false">
               {{ link.title }} <span aria-hidden="true">+</span></button>
             <div class="drawer-sub" id="dsub-{{ forloop.index }}">
               {%- for col in link.links -%}
@@ -217,6 +256,7 @@
     { "type": "range", "id": "logo_height", "label": "Logo height", "min": 16, "max": 64, "step": 2, "unit": "px", "default": 26 },
     { "type": "text", "id": "wordmark", "label": "Wordmark (used if no logo image)", "default": "RYVT" },
     { "type": "text", "id": "soon_label", "label": "Greyed-out nav item" },
+    { "type": "text", "id": "types_label", "label": "Heading over a flat Shop menu", "default": "Shop by type" },
     { "type": "header", "content": "Behaviour" },
     { "type": "checkbox", "id": "transparent", "label": "Transparent over a full-bleed first section", "default": true,
       "info": "White text over the hero, then solid white once you scroll past it." },
@@ -238,10 +278,16 @@
       { "type": "text", "id": "text", "label": "Text", "default": "Free shipping over $100" },
       { "type": "url", "id": "link", "label": "Link" }
     ]},
-    { "type": "menu_card", "name": "Mega menu image", "settings": [
+    { "type": "menu_card", "name": "Featured product card", "settings": [
       { "type": "range", "id": "position", "label": "Applies to menu item #", "min": 1, "max": 5, "step": 1, "default": 1 },
+      { "type": "product", "id": "product", "label": "Featured product",
+        "info": "Its first two photos become the hover swap. Images below override this." },
       { "type": "image_picker", "id": "image", "label": "Image" },
-      { "type": "text", "id": "label", "label": "Pill label", "default": "Shop Men" },
+      { "type": "image_picker", "id": "image_hover", "label": "Image on hover" },
+      { "type": "text", "id": "label", "label": "Title", "default": "The Detroit Renaissance Heavyweight Tee" },
+      { "type": "text", "id": "caption", "label": "Caption under title" },
+      { "type": "checkbox", "id": "show_price", "label": "Show price when a product is picked", "default": false },
+      { "type": "text", "id": "tag", "label": "Corner tag" },
       { "type": "url", "id": "link", "label": "Link" }
     ]},
     { "type": "search_tile", "name": "Search panel tile", "settings": [
