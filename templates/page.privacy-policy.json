@@ -1,0 +1,95 @@
+{
+  "sections": {
+    "doc": {
+      "type": "legal-doc",
+      "blocks": {
+        "c1": {
+          "type": "clause",
+          "settings": {
+            "title": "Who we are",
+            "body": "<p>RYVT is an athletic wear label based in Metro Detroit, Michigan. When we say <strong>we</strong> or <strong>us</strong> on this page, that is who we mean. Our store runs on Shopify, which processes orders and payments on our behalf.</p>"
+          }
+        },
+        "c2": {
+          "type": "clause",
+          "settings": {
+            "title": "What we collect",
+            "body": "<p>When you buy something, we collect the details needed to get it to you: your name, email, shipping and billing address, phone number if you give one, and what you ordered. Payment card details go straight to our payment processor \u2014 <strong>we never see or store your full card number.</strong></p><p>If you sign up to our emails we keep your address and first name. If you browse without buying, our analytics record anonymous page views and rough location by country.</p>"
+          }
+        },
+        "c3": {
+          "type": "clause",
+          "settings": {
+            "title": "Why we collect it",
+            "body": "<p>To fulfil your order, to answer your messages, to send the emails you asked for, and to understand which parts of the site people actually use so we can fix the parts they do not.</p><p>We do not sell your information to anyone. We do not share it beyond the companies that help us run the shop \u2014 payment processing, shipping carriers, and email delivery.</p>"
+          }
+        },
+        "c4": {
+          "type": "clause",
+          "settings": {
+            "title": "Cookies",
+            "body": "<p>We use a small number of cookies. Some are strictly necessary \u2014 they keep your cart intact between pages and remember whether you have dismissed this notice. Others are analytics cookies that tell us anonymously how the site performs.</p><p>You can clear or block cookies in your browser at any time. The necessary ones being blocked will break your cart; the rest are safe to refuse.</p>"
+          }
+        },
+        "c5": {
+          "type": "clause",
+          "settings": {
+            "title": "How long we keep it",
+            "body": "<p>Order records are kept for seven years because tax law requires it. Email subscribers stay on the list until they unsubscribe. Analytics data is aggregated and anonymised after twenty-six months.</p>"
+          }
+        },
+        "c6": {
+          "type": "clause",
+          "settings": {
+            "title": "Your rights",
+            "body": "<p>You can ask us for a copy of everything we hold on you, ask us to correct it, or ask us to delete it \u2014 except records we are legally required to keep. Email us and we will action it within thirty days, free of charge.</p><p>Every marketing email has a one-click unsubscribe. Using it does not affect order confirmations or shipping updates.</p>"
+          }
+        },
+        "c7": {
+          "type": "clause",
+          "settings": {
+            "title": "Keeping it safe",
+            "body": "<p>The site runs over HTTPS end to end. Our store platform is PCI-DSS compliant. Access to customer records is limited to the people who need it to do their job. If a breach ever affected your data, we would tell you and the relevant authority within seventy-two hours.</p>"
+          }
+        },
+        "c8": {
+          "type": "clause",
+          "settings": {
+            "title": "Children",
+            "body": "<p>This shop is not aimed at anyone under sixteen and we do not knowingly collect their information. If you believe a child has given us data, contact us and we will remove it.</p>"
+          }
+        },
+        "c9": {
+          "type": "clause",
+          "settings": {
+            "title": "Changes and contact",
+            "body": "<p>If this policy changes materially we will date-stamp the update at the top of this page and, where the change is significant, email subscribers directly.</p><p>Questions, requests or complaints: <a href='/pages/contact'>get in touch</a>. If you are unsatisfied with our response you have the right to complain to your local data protection authority.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7",
+        "c8",
+        "c9"
+      ],
+      "settings": {
+        "eyebrow": "Terms & Policies",
+        "heading": "Privacy Policy",
+        "updated": "August 2026",
+        "intro": "How RYVT handles your information, written in plain English rather than legalese. If anything here is unclear, ask us.",
+        "contact_text": "Something here unclear? We would rather explain it than have you guess.",
+        "contact_link": "/pages/contact",
+        "scheme": "light"
+      }
+    }
+  },
+  "order": [
+    "doc"
+  ]
+}

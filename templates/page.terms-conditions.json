@@ -1,0 +1,103 @@
+{
+  "sections": {
+    "doc": {
+      "type": "legal-doc",
+      "blocks": {
+        "c1": {
+          "type": "clause",
+          "settings": {
+            "title": "Agreeing to these terms",
+            "body": "<p>By browsing this site or placing an order you accept these terms. If you do not accept them, please do not use the site. We may update them; the version in force is the one published here when you order.</p>"
+          }
+        },
+        "c2": {
+          "type": "clause",
+          "settings": {
+            "title": "Orders and acceptance",
+            "body": "<p>Adding something to your bag is not a contract. Your order becomes binding only when we send a shipping confirmation. Until then we may decline it \u2014 for example if an item sells out, if we spot a pricing error, or if we suspect fraud. If we decline after payment, you get a full refund.</p>"
+          }
+        },
+        "c3": {
+          "type": "clause",
+          "settings": {
+            "title": "Pricing and payment",
+            "body": "<p>Prices are in US dollars and exclude sales tax and shipping unless stated. Tax and delivery are calculated at checkout before you pay. We take payment when the order is placed.</p><p>If an item is listed at an obviously wrong price, we will contact you before shipping and you may cancel for a full refund.</p>"
+          }
+        },
+        "c4": {
+          "type": "clause",
+          "settings": {
+            "title": "Shipping",
+            "body": "<p>Orders leave our studio within one business day. Delivery estimates shown at checkout are estimates, not guarantees \u2014 once a parcel is with the carrier its timing is outside our control. Risk passes to you on delivery.</p><p>International orders may attract duties and import taxes. Where these are calculated at checkout they are prepaid; where they are not, they are your responsibility.</p>"
+          }
+        },
+        "c5": {
+          "type": "clause",
+          "settings": {
+            "title": "Returns and exchanges",
+            "body": "<p>You have <strong>thirty days</strong> from delivery to return anything unworn with tags attached. US orders include a free return label. Refunds go back to the original payment method within five business days of the return arriving.</p><p>We cannot accept returns on items that have been worn, washed, altered, or that arrive without tags. Exchanges ship as soon as your return scans with the carrier \u2014 you do not wait for it to reach us.</p>"
+          }
+        },
+        "c6": {
+          "type": "clause",
+          "settings": {
+            "title": "Faulty goods",
+            "body": "<p>Our stitching is guaranteed for one year of normal wear. If something fails, send a photo and your order number and we will replace it without asking for the item back. This sits alongside your statutory rights, it does not replace them.</p>"
+          }
+        },
+        "c7": {
+          "type": "clause",
+          "settings": {
+            "title": "Using the site",
+            "body": "<p>You may not scrape the site, resell our products as new without written permission, misuse our imagery, or attempt to interfere with how the site runs. Accounts used fraudulently will be closed.</p>"
+          }
+        },
+        "c8": {
+          "type": "clause",
+          "settings": {
+            "title": "Our content",
+            "body": "<p>Everything on this site \u2014 photography, copy, garment designs, the RYVT name and marks \u2014 belongs to us or our licensors. You may share links freely. You may not reproduce our assets commercially without permission.</p>"
+          }
+        },
+        "c9": {
+          "type": "clause",
+          "settings": {
+            "title": "Liability",
+            "body": "<p>We are responsible for foreseeable loss caused by us breaking this contract. We are not liable for indirect or consequential loss, and our total liability for any order is limited to what you paid for it. Nothing here limits liability for death, personal injury, or fraud.</p>"
+          }
+        },
+        "c10": {
+          "type": "clause",
+          "settings": {
+            "title": "Governing law",
+            "body": "<p>These terms are governed by the laws of the State of Michigan, USA, and disputes fall to the courts of that state. If any clause is found unenforceable, the rest stand.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4",
+        "c5",
+        "c6",
+        "c7",
+        "c8",
+        "c9",
+        "c10"
+      ],
+      "settings": {
+        "eyebrow": "Terms & Policies",
+        "heading": "Terms & Conditions",
+        "updated": "August 2026",
+        "intro": "The agreement between you and RYVT when you use this site or buy from it. Short, and we mean all of it.",
+        "contact_text": "Something here unclear? We would rather explain it than have you guess.",
+        "contact_link": "/pages/contact",
+        "scheme": "light"
+      }
+    }
+  },
+  "order": [
+    "doc"
+  ]
+}
