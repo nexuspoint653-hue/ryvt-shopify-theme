@@ -92,12 +92,45 @@
         "f2",
         "f3"
       ]
+    },
+    "row_tees": {
+      "type": "category-row",
+      "settings": {
+        "heading": "New: Heavyweight Tees",
+        "columns": 4,
+        "show_promo": true,
+        "promo_text": "Shop the full range",
+        "scheme": "light"
+      }
+    },
+    "row_tanks": {
+      "type": "category-row",
+      "settings": {
+        "heading": "Tank Tops",
+        "columns": 4,
+        "show_promo": true,
+        "promo_text": "Shop the full range",
+        "scheme": "light"
+      }
+    },
+    "row_bottoms": {
+      "type": "category-row",
+      "settings": {
+        "heading": "Bottoms",
+        "columns": 4,
+        "show_promo": true,
+        "promo_text": "Shop the full range",
+        "scheme": "light"
+      }
     }
   },
   "order": [
     "hero",
     "cats",
+    "row_tees",
     "story",
+    "row_tanks",
+    "row_bottoms",
     "feat"
   ]
 }
