@@ -136,7 +136,7 @@ function initBands(root){
   }
   window.__ryvtPar=window.__ryvtPar.concat(bands);
 }
-function boot(root){ initRows(root); initTap(root); initNavFx(root); initCards(root); initCount(root); initPin(root); initAcc(root); initProduct(root); initFav(root); initBands(root); observe(root); }
+function boot(root){ initRows(root); initTap(root); initNavFx(root); initCards(root); initNums(root); initCount(root); initPin(root); initAcc(root); initProduct(root); initFav(root); initBands(root); observe(root); }
 document.addEventListener("DOMContentLoaded",function(){ initHeader(); initPanels(); boot(document); });
 document.addEventListener("shopify:section:load",function(e){ initHeader(); initPanels(); boot(e.target); });
 
@@ -286,6 +286,48 @@ function initCards(root){
 }
 
 /* count numbers up from zero when they scroll into view */
+/* wrap every number in copy so it can count up */
+function initNums(root){
+  root = root || document;
+  var host = (root.nodeType === 9) ? root.body : root;
+  if(!host || !host.querySelectorAll) return;
+  var SKIP = "script,style,noscript,template,input,textarea,select,option,svg,code,pre," +
+             "[data-variants],[data-nocount],[data-count],.cnum,.rte,.acc-b,.doc-b," +
+             ".qty,.opt-row,.cnt,.ck,.f-legal,.sz,.sw-btn,.doc-meta,.fbot,time," +
+             ".nfx,.fx-host,[data-fx]";
+  var walker = document.createTreeWalker(host, NodeFilter.SHOW_TEXT, {
+    acceptNode: function(n){
+      if(!/[0-9]/.test(n.nodeValue)) return NodeFilter.FILTER_REJECT;
+      var p = n.parentElement;
+      if(!p || p.closest(SKIP)) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  var nodes = [], n;
+  while((n = walker.nextNode())) nodes.push(n);
+  nodes.forEach(function(t){
+    var s = t.nodeValue, re = /[0-9][0-9.,]*/g, frag = document.createDocumentFragment(),
+        last = 0, m, hit = false;
+    while((m = re.exec(s))){
+      var num = m[0].replace(/[.,]+$/, "");
+      re.lastIndex = m.index + num.length;
+      if(num.length > 12) continue;
+      if(/^(18|19|20)[0-9][0-9]$/.test(num)) continue;   /* leave years alone */
+      hit = true;
+      if(m.index > last) frag.appendChild(document.createTextNode(s.slice(last, m.index)));
+      var sp = document.createElement("span");
+      sp.className = "cnum";
+      sp.setAttribute("data-count", "");
+      sp.textContent = num;
+      frag.appendChild(sp);
+      last = m.index + num.length;
+    }
+    if(!hit) return;
+    if(last < s.length) frag.appendChild(document.createTextNode(s.slice(last)));
+    t.parentNode.replaceChild(frag, t);
+  });
+}
+
 function initCount(root){
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   (root||document).querySelectorAll("[data-count]").forEach(function(el, idx){
@@ -298,14 +340,21 @@ function initCount(root){
     var decimals = (numStr.split(".")[1] || "").length;
     var target = parseFloat(numStr.replace(/,/g, ""));
     if(isNaN(target)) return;
+    var pad = (!decimals && numStr.length > 1 && numStr.charAt(0) === "0") ? numStr.length : 0;
     function fmt(v){
       var out = decimals ? v.toFixed(decimals) : String(Math.round(v));
+      while(pad && out.length < pad) out = "0" + out;
       if(hasComma) out = out.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
       return pre + out + suf;
     }
     el.setAttribute("aria-label", raw);
 
     el.textContent = fmt(target);
+    var box = el.getBoundingClientRect();
+    if(!box.width && !box.height) return;          /* hidden: leave it final, never stuck at 0 */
+    if(el.classList.contains("cnum") && !el.style.minWidth && box.width){
+      el.style.minWidth = (Math.ceil(box.width * 100) / 100) + "px";
+    }
 
     /* once per page-life: a stat that has already counted stays counted */
     window.__cntDone = window.__cntDone || {};
@@ -346,6 +395,20 @@ function initCount(root){
         ents.forEach(function(en){ if(en.isIntersecting){ run(); io.disconnect(); } });
       }, { threshold: 0.35 });
       io.observe(el);
+      /* an element parked off to the side of a horizontal rail never meets the
+         viewport, so fall back to watching the rail itself */
+      var rail = null, up = el.parentElement, depth = 0;
+      while(up && depth++ < 6){
+        var ox = getComputedStyle(up).overflowX;
+        if((ox === "auto" || ox === "scroll" || ox === "hidden") && up.scrollWidth > up.clientWidth + 4){ rail = up; break; }
+        up = up.parentElement;
+      }
+      if(rail){
+        var io2 = new IntersectionObserver(function(ents){
+          ents.forEach(function(en){ if(en.isIntersecting){ run(); io2.disconnect(); io.disconnect(); } });
+        }, { threshold: 0.2 });
+        io2.observe(rail);
+      }
     } else run();
   });
 }
