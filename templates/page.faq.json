@@ -134,7 +134,6 @@
         "scheme": "light",
         "pad_top": 40,
         "pad_bottom": 40,
-        "marker": "04",
         "grain": false
       }
     },

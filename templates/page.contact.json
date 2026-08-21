@@ -54,7 +54,6 @@
         "scheme": "light",
         "pad_top": 40,
         "pad_bottom": 40,
-        "marker": "05",
         "grain": false
       }
     },
@@ -72,7 +71,6 @@
         "p1"
       ],
       "settings": {
-        "marker": "06",
         "eyebrow": "Self Serve",
         "heading": "Answers",
         "heading_accent": "Right Now",
