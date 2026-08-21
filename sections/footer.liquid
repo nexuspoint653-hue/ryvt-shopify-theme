@@ -1,3 +1,4 @@
+{% render 'section-style', s: section %}
 <footer>
   <div class="f-main">
     <div>
@@ -53,16 +54,111 @@
   "name": "Footer",
   "max_blocks": 3,
   "settings": [
-    { "type": "text", "id": "nl_title", "label": "Newsletter heading", "default": "Join the movement" },
-    { "type": "textarea", "id": "nl_body", "label": "Newsletter body", "default": "First to know about new drops, exclusive offers, and stories from Detroit." },
-    { "type": "textarea", "id": "consent", "label": "Consent text", "default": "By signing up you consent to receive marketing messages from RYVT. Message frequency varies. Unsubscribe at any time." },
-    { "type": "link_list", "id": "legal_menu", "label": "Legal menu" }
+    {
+      "type": "text",
+      "id": "nl_title",
+      "label": "Newsletter heading",
+      "default": "Join the movement"
+    },
+    {
+      "type": "textarea",
+      "id": "nl_body",
+      "label": "Newsletter body",
+      "default": "First to know about new drops, exclusive offers, and stories from Detroit."
+    },
+    {
+      "type": "textarea",
+      "id": "consent",
+      "label": "Consent text",
+      "default": "By signing up you consent to receive marketing messages from RYVT. Message frequency varies. Unsubscribe at any time."
+    },
+    {
+      "type": "link_list",
+      "id": "legal_menu",
+      "label": "Legal menu"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "select",
+      "id": "scheme",
+      "label": "Background",
+      "default": "light",
+      "options": [
+        {
+          "value": "light",
+          "label": "White"
+        },
+        {
+          "value": "alt",
+          "label": "Off-white"
+        },
+        {
+          "value": "sand",
+          "label": "Sand"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_custom",
+      "label": "Custom background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_custom",
+      "label": "Custom text",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Extra top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Extra bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    }
   ],
   "blocks": [
-    { "type": "menu", "name": "Link column", "settings": [
-      { "type": "text", "id": "title", "label": "Title" },
-      { "type": "link_list", "id": "menu", "label": "Menu" }
-    ]}
+    {
+      "type": "menu",
+      "name": "Link column",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "link_list",
+          "id": "menu",
+          "label": "Menu"
+        }
+      ]
+    }
   ]
 }
 {% endschema %}

@@ -1,0 +1,60 @@
+{% render 'section-style', s: section %}
+<section class="sec-pad">
+  <div class="wrap-narrow">
+    {%- if section.settings.eyebrow != blank -%}<div class="mini">{{ section.settings.eyebrow }}</div>{%- endif -%}
+    {%- if section.settings.heading != blank -%}<h2 class="h2" style="margin-top:8px">{{ section.settings.heading }}</h2>{%- endif -%}
+    {%- if section.settings.intro != blank -%}<p class="lede">{{ section.settings.intro }}</p>{%- endif -%}
+
+    <div class="faq" style="margin-top:28px">
+      {%- assign group = '' -%}
+      {%- for block in section.blocks -%}
+        {%- if block.settings.group != blank and block.settings.group != group -%}
+          {%- assign group = block.settings.group -%}
+          <h3 class="faq-group">{{ group }}</h3>
+        {%- endif -%}
+        <div class="acc" {{ block.shopify_attributes }}>
+          <button type="button" class="acc-h" aria-expanded="false">{{ block.settings.q }} <span>+</span></button>
+          <div class="acc-b"><div class="rte">{{ block.settings.a }}</div></div>
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if section.settings.foot != blank -%}
+      <div class="faq-foot">
+        <p>{{ section.settings.foot }}</p>
+        {%- if section.settings.foot_link_text != blank -%}
+          <a class="btn" href="{{ section.settings.foot_link }}">{{ section.settings.foot_link_text }}</a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Help Centre" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently Asked Questions" },
+    { "type": "text", "id": "intro", "label": "Intro" },
+    { "type": "text", "id": "foot", "label": "Footer note", "default": "Still need a hand?" },
+    { "type": "text", "id": "foot_link_text", "label": "Footer button", "default": "Contact Us" },
+    { "type": "url", "id": "foot_link", "label": "Footer button link" },
+    { "type": "header", "content": "Appearance" },
+    { "type": "select", "id": "scheme", "label": "Background", "default": "light",
+      "options": [{"value":"light","label":"White"},{"value":"alt","label":"Off-white"},
+                  {"value":"sand","label":"Sand"},{"value":"dark","label":"Dark"},{"value":"custom","label":"Custom"}] },
+    { "type": "color", "id": "bg_custom", "label": "Custom background", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_custom", "label": "Custom text", "default": "#111111" },
+    { "type": "range", "id": "pad_top", "label": "Extra top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 },
+    { "type": "range", "id": "pad_bottom", "label": "Extra bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 }
+  ],
+  "blocks": [
+    { "type": "qa", "name": "Question", "settings": [
+      { "type": "text", "id": "group", "label": "Group heading", "info": "Only shown when it changes — use it to start a new group." },
+      { "type": "text", "id": "q", "label": "Question", "default": "How long does shipping take?" },
+      { "type": "richtext", "id": "a", "label": "Answer", "default": "<p>Your delivery estimate is shown at checkout, before you pay.</p>" }
+    ]}
+  ],
+  "presets": [{ "name": "FAQ", "blocks": [{"type":"qa"},{"type":"qa"},{"type":"qa"}] }]
+}
+{% endschema %}

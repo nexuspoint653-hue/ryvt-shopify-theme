@@ -1,3 +1,4 @@
+{% render 'section-style', s: section %}
 <section class="hero">
   {%- if section.settings.image != blank -%}
     <img src="{{ section.settings.image | image_url: width: 2400 }}" alt="" width="2400" height="1200" fetchpriority="high">
@@ -15,11 +16,106 @@
   </div>
 </section>
 {% schema %}
-{ "name": "Hero", "settings": [
-  { "type": "image_picker", "id": "image", "label": "Image" },
-  { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Premium Athletic Wear" },
-  { "type": "text", "id": "heading", "label": "Heading", "default": "Detroit, On Your Back" },
-  { "type": "text", "id": "link_text", "label": "Button", "default": "Shop Men" },
-  { "type": "url", "id": "link", "label": "Link" }
-], "presets": [{ "name": "Hero" }] }
+{
+  "name": "Hero",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Premium Athletic Wear"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Detroit, On Your Back"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Button",
+      "default": "Shop Men"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "select",
+      "id": "scheme",
+      "label": "Background",
+      "default": "light",
+      "options": [
+        {
+          "value": "light",
+          "label": "White"
+        },
+        {
+          "value": "alt",
+          "label": "Off-white"
+        },
+        {
+          "value": "sand",
+          "label": "Sand"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_custom",
+      "label": "Custom background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_custom",
+      "label": "Custom text",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Extra top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Extra bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero"
+    }
+  ]
+}
 {% endschema %}
