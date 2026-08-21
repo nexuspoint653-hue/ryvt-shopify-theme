@@ -30,7 +30,7 @@
         <p class="mband-s">{{ section.settings.overlay_sub }}</p>
       {%- endif -%}
       {%- if section.settings.link_text != blank -%}
-        <a class="ibtn {% if section.settings.cta_copper %}ibtn-cu{% else %}ibtn-w{% endif %}" href="{{ section.settings.link }}">{{ section.settings.link_text }}</a>
+        <a class="ibtn {% if section.settings.cta_solid %}ibtn-cu{% else %}ibtn-w{% endif %}" href="{{ section.settings.link }}">{{ section.settings.link_text }}</a>
       {%- endif -%}
     </div>
   {%- endif -%}
@@ -65,11 +65,11 @@
     { "type": "checkbox", "id": "scrim", "label": "Darken behind text", "default": true },
     { "type": "text", "id": "link_text", "label": "Button" },
     { "type": "url", "id": "link", "label": "Button link" },
-    { "type": "checkbox", "id": "cta_copper", "label": "Copper button", "default": false },
+    { "type": "checkbox", "id": "cta_solid", "label": "Filled button", "default": false },
     { "type": "header", "content": "Appearance" },
-    { "type": "select", "id": "scheme", "label": "Background", "default": "bone",
+    { "type": "select", "id": "scheme", "label": "Background", "default": "light",
       "options": [{"value":"light","label":"White"},{"value":"alt","label":"Off-white"},
-                  {"value":"bone","label":"Bone"},{"value":"concrete","label":"Concrete"},{"value":"sand","label":"Sand"},{"value":"copper","label":"Copper"},{"value":"dark","label":"Dark"},{"value":"custom","label":"Custom"}] },
+                  {"value":"sand","label":"Sand"},{"value":"dark","label":"Dark"},{"value":"custom","label":"Custom"}] },
     { "type": "color", "id": "bg_custom", "label": "Custom background", "default": "#FFFFFF" },
     { "type": "color", "id": "text_custom", "label": "Custom text", "default": "#111111" }
   ],
