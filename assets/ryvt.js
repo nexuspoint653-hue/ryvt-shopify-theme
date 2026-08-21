@@ -136,7 +136,7 @@ function initBands(root){
   }
   window.__ryvtPar=window.__ryvtPar.concat(bands);
 }
-function boot(root){ initRows(root); initTap(root); initNavFx(root); initPin(root); initAcc(root); initProduct(root); initFav(root); initBands(root); observe(root); }
+function boot(root){ initRows(root); initTap(root); initNavFx(root); initCards(root); initPin(root); initAcc(root); initProduct(root); initFav(root); initBands(root); observe(root); }
 document.addEventListener("DOMContentLoaded",function(){ initHeader(); initPanels(); boot(document); });
 document.addEventListener("shopify:section:load",function(e){ initHeader(); initPanels(); boot(e.target); });
 
@@ -186,15 +186,18 @@ function initTap(root){
   });
 }
 
-/* split each nav label into two stacked rows of letters for the roll */
+/* one motion language: letter roll + press punch on every text CTA */
+var FX_SEL = ".nav-i, .ulink, .mall, .ilink, .btn, .ibtn, .chip, .ssubmit, .faqx-tabs button, .pc-more, .dall, [data-fx]";
 function initNavFx(root){
-  (root||document).querySelectorAll(".nav-i").forEach(function(el){
+  (root||document).querySelectorAll(FX_SEL).forEach(function(el){
     if(el.dataset.fx || el.classList.contains("dim")) return;
     if(el.querySelector(".soon") || el.querySelector(".nfx")) return;
-    var txt = (el.textContent||"").trim();
-    if(!txt || txt.length > 28) return;
+    var txt=(el.textContent||"").trim();
+    if(!txt || txt.length>34) return;
     el.dataset.fx="1";
-    function row(cls, hide){
+    el.classList.add("fx-host");
+    if(!el.hasAttribute("data-tap")) el.setAttribute("data-tap","");
+    function row(cls,hide){
       var r=document.createElement("span");
       r.className=cls;
       if(hide) r.setAttribute("aria-hidden","true");
@@ -209,11 +212,76 @@ function initNavFx(root){
     }
     var wrap=document.createElement("span");
     wrap.className="nfx";
-    wrap.appendChild(row("nfx-a", false));
-    wrap.appendChild(row("nfx-b", true));
+    wrap.appendChild(row("nfx-a",false));
+    wrap.appendChild(row("nfx-b",true));
     el.textContent="";
-    el.setAttribute("aria-label", txt);
+    if(!el.getAttribute("aria-label")) el.setAttribute("aria-label", txt);
     el.appendChild(wrap);
+  });
+  initTap(root);
+}
+
+/* product card: colour circles swap the image, sizes add straight to bag */
+function initCards(root){
+  (root||document).querySelectorAll(".pc").forEach(function(card){
+    if(card.dataset.cardReady) return; card.dataset.cardReady="1";
+    var main=card.querySelector("[data-pc-main]"), alt=card.querySelector("[data-pc-alt]");
+
+    card.querySelectorAll("[data-sw]").forEach(function(dot){
+      function pick(){
+        card.querySelectorAll("[data-sw]").forEach(function(d){
+          d.classList.toggle("on", d===dot);
+          d.setAttribute("aria-pressed", d===dot ? "true":"false");
+        });
+        var src=dot.getAttribute("data-img");
+        if(src && main){
+          if(!main.dataset.orig) main.dataset.orig=main.getAttribute("src");
+          main.setAttribute("src", src);
+          main.removeAttribute("srcset");
+          if(alt) alt.style.display="none";
+        }
+        var vid=dot.getAttribute("data-vid");
+        if(vid) card.querySelectorAll(".pc-add1").forEach(function(b){ b.setAttribute("data-vid", vid); });
+      }
+      dot.addEventListener("click", function(e){ e.preventDefault(); pick(); });
+      dot.addEventListener("pointerenter", function(){ if(CAN_HOVER) pick(); });
+    });
+
+    function flash(btn, label){
+      var msg=card.querySelector("[data-quick-msg]");
+      btn.classList.add("added");
+      if(msg){ msg.textContent=label; msg.classList.add("on"); }
+      setTimeout(function(){
+        btn.classList.remove("added");
+        if(msg){ msg.classList.remove("on"); setTimeout(function(){ msg.textContent=""; },260); }
+      }, 1600);
+    }
+    function addToBag(btn){
+      var id=btn.getAttribute("data-vid");
+      if(!id || btn.disabled) return;
+      btn.disabled=true;
+      fetch("/cart/add.js", {
+        method:"POST",
+        headers:{"Content-Type":"application/json","Accept":"application/json"},
+        body:JSON.stringify({items:[{id:Number(id), quantity:1}]})
+      }).then(function(r){ return r.ok ? r.json() : Promise.reject(r); })
+        .then(function(){
+          flash(btn, "Added to bag");
+          return fetch("/cart.js").then(function(r){ return r.json(); });
+        })
+        .then(function(cart){
+          document.querySelectorAll("[data-cart-count]").forEach(function(el){
+            el.textContent=cart.item_count;
+            el.classList.toggle("on", cart.item_count>0);
+          });
+          document.dispatchEvent(new CustomEvent("ryvt:cart", {detail:cart}));
+        })
+        .catch(function(){ flash(btn, "Try again"); })
+        .then(function(){ btn.disabled=false; });
+    }
+    card.querySelectorAll(".pc-size:not(.out), .pc-add1").forEach(function(btn){
+      btn.addEventListener("click", function(e){ e.preventDefault(); e.stopPropagation(); addToBag(btn); });
+    });
   });
 }
 
