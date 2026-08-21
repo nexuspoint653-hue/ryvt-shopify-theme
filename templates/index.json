@@ -3,9 +3,13 @@
     "hero": {
       "type": "hero",
       "settings": {
+        "pin": true,
+        "pin_fade": 60,
+        "height": "full",
         "eyebrow": "Premium Athletic Wear",
-        "heading": "Detroit, On Your Back",
-        "link_text": "Shop Men"
+        "heading": "Detroit, On Your Back.",
+        "link_text": "Shop the collection",
+        "scheme": "light"
       }
     },
     "story": {
@@ -13,16 +17,14 @@
       "settings": {
         "eyebrow": "The Renaissance Tee",
         "heading": "One Tee, Four Ways",
-        "link_text": "Shop the Renaissance Tee"
+        "link_text": "Shop the Renaissance Tee",
+        "height": "tall",
+        "align": "center",
+        "scheme": "dark"
       }
     },
     "cats": {
       "type": "category-grid",
-      "settings": {
-        "eyebrow": "Shop by category",
-        "heading": "Find your fit",
-        "scheme": "light"
-      },
       "blocks": {
         "t1": {
           "type": "tile",
@@ -33,13 +35,13 @@
         "t2": {
           "type": "tile",
           "settings": {
-            "label": "Tanks"
+            "label": "Tank Tops"
           }
         },
         "t3": {
           "type": "tile",
           "settings": {
-            "label": "Bottoms"
+            "label": "Cargo Pants"
           }
         },
         "t4": {
@@ -54,13 +56,152 @@
         "t2",
         "t3",
         "t4"
-      ]
+      ],
+      "settings": {
+        "eyebrow": "Shop by category",
+        "heading": "Find your fit",
+        "scheme": "light"
+      }
+    },
+    "row_tees": {
+      "type": "category-row",
+      "settings": {
+        "heading": "New: Heavyweight Tees",
+        "columns": 4,
+        "show_promo": true,
+        "promo_text": "Shop the full range",
+        "scheme": "light"
+      }
+    },
+    "band_mid": {
+      "type": "media-band",
+      "settings": {
+        "band_height": "tall",
+        "parallax": true,
+        "overlay_tag": "Built in Metro Detroit",
+        "overlay_title": "Made where we train.",
+        "overlay_sub": "Cut and finished within twenty miles of the studio. Tested by the people who wear it.",
+        "overlay_pos": "bl",
+        "scrim": true,
+        "link_text": "Our story",
+        "link": "/pages/about",
+        "scheme": "light"
+      }
+    },
+    "row_tanks": {
+      "type": "category-row",
+      "settings": {
+        "heading": "Tank Tops",
+        "columns": 4,
+        "show_promo": true,
+        "promo_text": "Shop the full range",
+        "scheme": "light"
+      }
+    },
+    "fabric": {
+      "type": "content-split",
+      "settings": {
+        "flip": false,
+        "eyebrow": "The Fabric",
+        "heading": "Heavyweight cotton, garment dyed",
+        "body": "<p>240gsm combed ring-spun cotton, dyed after it is sewn so the colour settles into the fibre instead of sitting on top of it. It softens with every wash and holds its shape through all of them.</p>",
+        "link_text": "How we make it",
+        "link": "/pages/about",
+        "scheme": "alt"
+      }
+    },
+    "row_bottoms": {
+      "type": "category-row",
+      "settings": {
+        "heading": "Bottoms",
+        "columns": 4,
+        "show_promo": true,
+        "promo_text": "Shop the full range",
+        "scheme": "light"
+      }
+    },
+    "stats": {
+      "type": "stat-band",
+      "blocks": {
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "value": "2019",
+            "label": "First cut sewn"
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "value": "240",
+            "label": "GSM heavyweight cotton"
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "value": "20mi",
+            "label": "From studio to seam"
+          }
+        },
+        "s4": {
+          "type": "stat",
+          "settings": {
+            "value": "30",
+            "label": "Day returns, no questions"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {
+        "scheme": "dark"
+      }
+    },
+    "duo": {
+      "type": "media-duo",
+      "blocks": {
+        "d1": {
+          "type": "tile",
+          "settings": {
+            "title": "Made in Detroit",
+            "caption": "Cut and finished within twenty miles of where we train.",
+            "link": "/pages/about"
+          }
+        },
+        "d2": {
+          "type": "tile",
+          "settings": {
+            "title": "Built to last",
+            "caption": "Fabric chosen for the fiftieth wash, not the first.",
+            "link": "/collections/all"
+          }
+        },
+        "d3": {
+          "type": "tile",
+          "settings": {
+            "title": "The crew",
+            "caption": "Athletes and coaches who test every cut before it ships.",
+            "link": "/pages/about"
+          }
+        }
+      },
+      "block_order": [
+        "d1",
+        "d2",
+        "d3"
+      ],
+      "settings": {
+        "eyebrow": "The Work",
+        "scheme": "light"
+      }
     },
     "feat": {
       "type": "feature-icons",
-      "settings": {
-        "scheme": "alt"
-      },
       "blocks": {
         "f1": {
           "type": "feature",
@@ -75,7 +216,7 @@
           "settings": {
             "icon": "return",
             "title": "30-day returns",
-            "body": "Unworn items, easy exchanges."
+            "body": "Unworn, tags on, free label in every US order."
           }
         },
         "f3": {
@@ -83,7 +224,7 @@
           "settings": {
             "icon": "stitch",
             "title": "Heavyweight build",
-            "body": "240gsm cotton, garment-dyed, four-needle stitched."
+            "body": "240gsm cotton, garment dyed, made to wear out slowly."
           }
         }
       },
@@ -91,46 +232,24 @@
         "f1",
         "f2",
         "f3"
-      ]
-    },
-    "row_tees": {
-      "type": "category-row",
+      ],
       "settings": {
-        "heading": "New: Heavyweight Tees",
-        "columns": 4,
-        "show_promo": true,
-        "promo_text": "Shop the full range",
-        "scheme": "light"
-      }
-    },
-    "row_tanks": {
-      "type": "category-row",
-      "settings": {
-        "heading": "Tank Tops",
-        "columns": 4,
-        "show_promo": true,
-        "promo_text": "Shop the full range",
-        "scheme": "light"
-      }
-    },
-    "row_bottoms": {
-      "type": "category-row",
-      "settings": {
-        "heading": "Bottoms",
-        "columns": 4,
-        "show_promo": true,
-        "promo_text": "Shop the full range",
-        "scheme": "light"
+        "heading": "",
+        "scheme": "alt"
       }
     }
   },
   "order": [
     "hero",
+    "story",
     "cats",
     "row_tees",
-    "story",
+    "band_mid",
     "row_tanks",
+    "fabric",
     "row_bottoms",
+    "stats",
+    "duo",
     "feat"
   ]
 }
