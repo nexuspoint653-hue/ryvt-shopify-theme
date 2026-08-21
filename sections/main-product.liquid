@@ -2,6 +2,11 @@
 {%- assign v = product.selected_or_first_available_variant -%}
 <div class="pdp" data-picker>
   <div class="pdp-l">
+    <nav class="pdp-jump" aria-label="Jump to">
+      <a href="#details">Details</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#look">Complete the look</a>
+    </nav>
     <div class="crumb" style="margin-bottom:10px">{{ product.type | default: 'Shop' }}</div>
     <h1 class="h2">{{ product.title }}</h1>
     <div style="margin-top:12px">{% render 'rating', product: product %}</div>
@@ -10,7 +15,7 @@
     {%- endif -%}
 
     {%- if product.description != blank -%}
-      <div class="acc"><button type="button" class="acc-h" aria-expanded="false">Details <span>+</span></button>
+      <div class="acc" id="details"><button type="button" class="acc-h" aria-expanded="false">Details <span>+</span></button>
         <div class="acc-b"><div class="rte">{{ product.description }}</div></div></div>
     {%- endif -%}
     {%- for block in section.blocks -%}
