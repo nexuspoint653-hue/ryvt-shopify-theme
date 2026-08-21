@@ -1,5 +1,12 @@
 {% render 'section-style', s: section %}
-<section class="hero">
+{%- if section.settings.pin -%}
+<style>
+  #shopify-section-{{ section.id }}{position:sticky;top:0;z-index:0}
+  #shopify-section-{{ section.id }} ~ *{position:relative;z-index:1}
+  @media(prefers-reduced-motion:reduce){#shopify-section-{{ section.id }}{position:relative}}
+</style>
+{%- endif -%}
+<section class="hero hero--{{ section.settings.height }}{% if section.settings.pin %} hero-pin{% endif %}"{% if section.settings.pin %} data-pin data-pin-fade="{{ section.settings.pin_fade }}"{% endif %}>
   {%- if section.settings.image != blank -%}
     <img src="{{ section.settings.image | image_url: width: 2400 }}" alt="" width="2400" height="1200" fetchpriority="high">
   {%- else -%}
@@ -19,6 +26,31 @@
 {
   "name": "Hero",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "pin",
+      "label": "Pin while the next section scrolls over it",
+      "default": true,
+      "info": "The hero holds still and the section below slides up to cover it."
+    },
+    {
+      "type": "range",
+      "id": "pin_fade",
+      "label": "Fade hero content as it is covered",
+      "min": 0, "max": 100, "step": 10, "unit": "%",
+      "default": 60
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "Height",
+      "default": "std",
+      "options": [
+        { "value": "full", "label": "Full screen" },
+        { "value": "tall", "label": "Tall (82%)" },
+        { "value": "std",  "label": "Standard" }
+      ]
+    },
     {
       "type": "image_picker",
       "id": "image",
