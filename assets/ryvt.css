@@ -383,17 +383,20 @@ body.no-scroll{overflow:hidden}
 }
 
 /* ---------- category rows (home) ---------- */
-.cat{padding-top:clamp(30px,4vw,56px)}
-.cat-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 clamp(14px,2.6vw,34px) 16px}
+.cat{padding-top:clamp(34px,4.5vw,64px);padding-bottom:clamp(6px,1vw,14px)}
+.cat-in{max-width:1720px;margin:0 auto;padding-inline:clamp(14px,2.6vw,34px)}
+.cat-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 0 18px}
 .cat-head .t{font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:800}
 .cat-head a{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--muted);
   display:inline-flex;align-items:center;gap:8px}
 .cat-head a:hover{color:var(--ink)}
 .cat-head a svg{width:16px;height:10px;fill:none;stroke:currentColor;stroke-width:1.4;transition:transform .4s var(--e)}
 .cat-head a:hover svg{transform:translateX(4px)}
-.row{display:grid;grid-template-columns:repeat(4,1fr);gap:0 1px;background:var(--line)}
-.row>*{background:#fff}
-.row .pc-i{padding-inline:clamp(10px,1.1vw,16px)}
+.row{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(8px,.9vw,14px);background:none}
+.row>*{background:transparent;min-width:0}
+.row .pc-i{padding-inline:0}
+@media(max-width:900px){.row{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.row{grid-template-columns:repeat(2,1fr);gap:8px}}
 
 /* ---------- collection page ---------- */
 .tabs{display:flex;gap:26px;border-bottom:1px solid var(--line);padding:0 clamp(14px,2.6vw,34px)}
