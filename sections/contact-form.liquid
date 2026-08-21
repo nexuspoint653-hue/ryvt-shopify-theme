@@ -1,19 +1,24 @@
 {% render 'section-style', s: section %}
-<section class="cform sec-pad">
+<section class="cform sec-pad{% if section.settings.grain %} grain{% endif %}">
   <div class="cform-in">
     <div class="cform-l">
-      {%- if section.settings.eyebrow != blank -%}<div class="mini">{{ section.settings.eyebrow }}</div>{%- endif -%}
-      {%- if section.settings.heading != blank -%}
-        <h2 class="ed-h ed-serif" style="margin-top:14px;text-align:left">{{ section.settings.heading }}</h2>
-      {%- endif -%}
-      {%- if section.settings.body != blank -%}<div class="rte cform-body">{{ section.settings.body }}</div>{%- endif -%}
+      <div class="cform-h" data-rv>
+        <div class="mf-mark" style="border:0;padding:0;margin-bottom:14px">
+          {%- if section.settings.marker != blank -%}<span class="num">{{ section.settings.marker }}</span>{%- endif -%}
+          {%- if section.settings.eyebrow != blank -%}<span class="tag">{{ section.settings.eyebrow }}</span>{%- endif -%}
+        </div>
+        {%- if section.settings.heading != blank -%}
+          <h2 class="dsp dsp-l">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.body != blank -%}<div class="rte cform-body" data-rv>{{ section.settings.body }}</div>{%- endif -%}
       <div class="cform-meta">
         {%- for block in section.blocks -%}
           <div class="cform-item" {{ block.shopify_attributes }}>
-            <div class="mini">{{ block.settings.label }}</div>
+            <div class="tag">{{ block.settings.label }}</div>
             <div class="cform-val">
               {%- if block.settings.link != blank -%}
-                <a class="ed-link" href="{{ block.settings.link }}">{{ block.settings.value }}</a>
+                <a class="ilink" href="{{ block.settings.link }}">{{ block.settings.value }}</a>
               {%- else -%}{{ block.settings.value }}{%- endif -%}
             </div>
           </div>
@@ -24,37 +29,37 @@
     <div class="cform-r">
       {%- form 'contact', class: 'cf' -%}
         {%- if form.posted_successfully? -%}
-          <p class="cf-ok">{{ section.settings.success | default: 'Thanks — we will come back to you within one business day.' }}</p>
+          <p class="cf-ok">{{ section.settings.success }}</p>
         {%- endif -%}
         {%- if form.errors -%}
           <p class="cf-err">{{ form.errors | default_errors }}</p>
         {%- endif -%}
         <div class="cf-row">
           <label class="cf-f">
-            <span class="mini">Name</span>
+            <span class="tag">Name</span>
             <input type="text" name="contact[name]" value="{{ form.name }}" autocomplete="name" required>
           </label>
           <label class="cf-f">
-            <span class="mini">Email</span>
+            <span class="tag">Email</span>
             <input type="email" name="contact[email]" value="{{ form.email }}" autocomplete="email" required>
           </label>
         </div>
         <label class="cf-f">
-          <span class="mini">Subject</span>
+          <span class="tag">Subject</span>
           <select name="contact[subject]">
             {%- assign subs = section.settings.subjects | split: ',' -%}
             {%- for s in subs -%}<option value="{{ s | strip }}">{{ s | strip }}</option>{%- endfor -%}
           </select>
         </label>
         <label class="cf-f">
-          <span class="mini">Order number <em>(optional)</em></span>
+          <span class="tag">Order number <em>(optional)</em></span>
           <input type="text" name="contact[order]" placeholder="#1024">
         </label>
         <label class="cf-f">
-          <span class="mini">Message</span>
+          <span class="tag">Message</span>
           <textarea name="contact[body]" rows="6" required>{{ form.body }}</textarea>
         </label>
-        <button type="submit" class="btn btn-solid cf-send">{{ section.settings.button | default: 'Send message' }}</button>
+        <button type="submit" class="ibtn ibtn-cu cf-send">{{ section.settings.button }}</button>
         <p class="cf-note">{{ section.settings.note }}</p>
       {%- endform -%}
     </div>
@@ -65,8 +70,10 @@
   "name": "Contact form",
   "tag": "section",
   "settings": [
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Customer Care" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Talk to us" },
+    { "type": "text", "id": "marker", "label": "Marker", "default": "05" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Direct Line" },
+    { "type": "checkbox", "id": "grain", "label": "Film grain overlay", "default": true },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Talk To Us" },
     { "type": "richtext", "id": "body", "label": "Body",
       "default": "<p>Sizing, orders, returns or wholesale — a real person reads every message. We answer within one business day, Monday to Friday.</p>" },
     { "type": "text", "id": "subjects", "label": "Subject options (comma separated)",
@@ -75,9 +82,9 @@
     { "type": "text", "id": "success", "label": "Success message", "default": "Thanks — we will come back to you within one business day." },
     { "type": "text", "id": "note", "label": "Small print", "default": "We only use your details to answer this message." },
     { "type": "header", "content": "Appearance" },
-    { "type": "select", "id": "scheme", "label": "Background", "default": "light",
+    { "type": "select", "id": "scheme", "label": "Background", "default": "bone",
       "options": [{"value":"light","label":"White"},{"value":"alt","label":"Off-white"},
-                  {"value":"sand","label":"Sand"},{"value":"dark","label":"Dark"},{"value":"custom","label":"Custom"}] },
+                  {"value":"bone","label":"Bone"},{"value":"concrete","label":"Concrete"},{"value":"sand","label":"Sand"},{"value":"copper","label":"Copper"},{"value":"dark","label":"Dark"},{"value":"custom","label":"Custom"}] },
     { "type": "color", "id": "bg_custom", "label": "Custom background", "default": "#FFFFFF" },
     { "type": "color", "id": "text_custom", "label": "Custom text", "default": "#111111" },
     { "type": "range", "id": "pad_top", "label": "Extra top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 },
