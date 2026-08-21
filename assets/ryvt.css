@@ -1079,3 +1079,28 @@ body.no-scroll{overflow:hidden}
   .doc-grid{grid-template-columns:1fr;gap:30px}
   .doc-toc{position:static}
 }
+
+/* ================= BUTTON BLOOM ================= */
+/* A soft light pooling under anything actionable. Sits below the element,
+   never behind it, so it reads as a glow rather than a drop shadow. */
+:root{ --glow:rgba(17,17,17,.42); }
+.btn,.btn-solid,.ibtn,.sub,.cf-send,.ssubmit,.pc-add1,.promo-form button,.ck-ok,.add{
+  box-shadow:0 9px 20px -14px var(--glow);
+  transition:box-shadow .38s var(--e),background .35s var(--e),color .35s var(--e),
+             border-color .35s var(--e),opacity .3s var(--e),transform .18s var(--e);
+}
+.btn:hover,.btn-solid:hover,.ibtn:hover,.sub:hover,.cf-send:hover,.ssubmit:hover,
+.pc-add1:hover,.promo-form button:hover,.ck-ok:hover,.add:hover{
+  box-shadow:0 13px 26px -14px var(--glow);
+}
+.btn:active,.ibtn:active,.sub:active,.cf-send:active,.ssubmit:active,
+.pc-add1:active,.promo-form button:active,.ck-ok:active{
+  box-shadow:0 5px 13px -12px var(--glow);
+}
+/* quick-add sizes get a whisper of it as a group, not per button */
+.pc-quick{box-shadow:0 4px 18px rgba(0,0,0,.08), 0 11px 22px -16px var(--glow)}
+/* the offer popup and cookie card float, so they keep their own deeper shadow */
+.promo-form button{box-shadow:0 10px 22px -15px rgba(17,17,17,.5)}
+@media(prefers-reduced-motion:reduce){
+  .btn,.ibtn,.sub,.cf-send,.ssubmit,.pc-add1,.ck-ok,.add{transition:none}
+}
