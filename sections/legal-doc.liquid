@@ -1,0 +1,85 @@
+{% render 'section-style', s: section %}
+<section class="doc">
+  <div class="doc-head">
+    {%- if section.settings.eyebrow != blank -%}<div class="mini">{{ section.settings.eyebrow }}</div>{%- endif -%}
+    <h1 class="h2">{{ section.settings.heading | default: page.title }}</h1>
+    <div class="doc-meta">
+      {%- if section.settings.updated != blank -%}<span>Last updated {{ section.settings.updated }}</span>{%- endif -%}
+      {%- if section.settings.intro != blank -%}<p class="doc-intro">{{ section.settings.intro }}</p>{%- endif -%}
+    </div>
+  </div>
+
+  <div class="doc-grid">
+    <nav class="doc-toc" aria-label="Contents">
+      <div class="mini doc-toc-h">Contents</div>
+      <ol>
+        {%- for block in section.blocks -%}
+          <li><a href="#s-{{ forloop.index }}" data-doc-link>{{ block.settings.title }}</a></li>
+        {%- endfor -%}
+      </ol>
+      {%- if section.settings.contact_text != blank -%}
+        <div class="doc-help">
+          <p>{{ section.settings.contact_text }}</p>
+          <a class="ulink" href="{{ section.settings.contact_link | default: '/pages/contact' }}">Contact us</a>
+        </div>
+      {%- endif -%}
+    </nav>
+
+    <div class="doc-body">
+      {%- for block in section.blocks -%}
+        <article class="doc-s" id="s-{{ forloop.index }}" {{ block.shopify_attributes }}>
+          <div class="doc-n">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
+          <h2 class="doc-t">{{ block.settings.title }}</h2>
+          <div class="doc-c rte">{{ block.settings.body }}</div>
+        </article>
+      {%- endfor -%}
+      {%- if page.content != blank -%}
+        <article class="doc-s"><div class="doc-c rte">{{ page.content }}</div></article>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  var toc = document.querySelectorAll('[data-doc-link]');
+  var secs = document.querySelectorAll('.doc-s[id]');
+  if(!toc.length || !secs.length || !('IntersectionObserver' in window)) return;
+  var io = new IntersectionObserver(function(ents){
+    ents.forEach(function(en){
+      if(!en.isIntersecting) return;
+      var id = en.target.id;
+      toc.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href') === '#' + id); });
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  secs.forEach(function(s){ io.observe(s); });
+})();
+</script>
+{% schema %}
+{
+  "name": "Legal document",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Terms & Policies" },
+    { "type": "text", "id": "heading", "label": "Heading" },
+    { "type": "text", "id": "updated", "label": "Last updated", "default": "August 2026" },
+    { "type": "textarea", "id": "intro", "label": "Intro" },
+    { "type": "text", "id": "contact_text", "label": "Sidebar help text", "default": "Something here unclear? We would rather explain it than have you guess." },
+    { "type": "url", "id": "contact_link", "label": "Sidebar link" },
+    { "type": "header", "content": "Appearance" },
+    { "type": "select", "id": "scheme", "label": "Background", "default": "light",
+      "options": [{"value":"light","label":"White"},{"value":"alt","label":"Off-white"},
+                  {"value":"sand","label":"Sand"},{"value":"dark","label":"Dark"},{"value":"custom","label":"Custom"}] },
+    { "type": "color", "id": "bg_custom", "label": "Custom background", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_custom", "label": "Custom text", "default": "#111111" },
+    { "type": "range", "id": "pad_top", "label": "Extra top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 },
+    { "type": "range", "id": "pad_bottom", "label": "Extra bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 }
+  ],
+  "blocks": [
+    { "type": "clause", "name": "Section", "settings": [
+      { "type": "text", "id": "title", "label": "Title", "default": "What we collect" },
+      { "type": "richtext", "id": "body", "label": "Body", "default": "<p>Write the clause here.</p>" }
+    ]}
+  ],
+  "presets": [{ "name": "Legal document", "blocks": [{"type":"clause"},{"type":"clause"},{"type":"clause"}] }]
+}
+{% endschema %}

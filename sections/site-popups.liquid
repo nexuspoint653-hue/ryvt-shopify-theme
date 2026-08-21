@@ -1,0 +1,121 @@
+{% comment %} Cookie notice + first-visit offer. Both remember their own dismissal. {% endcomment %}
+{%- if section.settings.cookie_on -%}
+  <aside class="ck" id="ryvtCookie" role="region" aria-label="Cookie notice" hidden>
+    <button type="button" class="ck-x" data-ck-close aria-label="Dismiss"></button>
+    <div class="ck-rule"></div>
+    <div class="ck-eyebrow">{{ section.settings.cookie_eyebrow }}</div>
+    <p class="ck-body">{{ section.settings.cookie_body }}</p>
+    <div class="ck-act">
+      <button type="button" class="ck-ok" data-ck-accept>{{ section.settings.cookie_accept }}</button>
+      <a class="ck-link" href="{{ section.settings.cookie_link | default: '/pages/privacy-policy' }}">{{ section.settings.cookie_link_text }}</a>
+    </div>
+  </aside>
+{%- endif -%}
+
+{%- if section.settings.promo_on -%}
+  <div class="promo" id="ryvtPromo" role="dialog" aria-modal="true" aria-labelledby="promoTitle" hidden>
+    <div class="promo-veil" data-promo-close></div>
+    <div class="promo-box">
+      <button type="button" class="promo-x" data-promo-close aria-label="Close"></button>
+      <div class="promo-art"{% if section.settings.promo_image != blank %} style="background-image:url({{ section.settings.promo_image | image_url: width: 900 }})"{% endif %}></div>
+      <div class="promo-in">
+        <div class="promo-eyebrow">{{ section.settings.promo_eyebrow }}</div>
+        <h2 class="promo-t" id="promoTitle">{{ section.settings.promo_title }}</h2>
+        <p class="promo-b">{{ section.settings.promo_body }}</p>
+        {% form 'customer', class: 'promo-form' %}
+          <input type="hidden" name="contact[tags]" value="newsletter,popup">
+          <label class="sr" for="promoEmail">Email address</label>
+          <input id="promoEmail" type="email" name="contact[email]" placeholder="{{ section.settings.promo_placeholder }}" required>
+          <button type="submit">{{ section.settings.promo_button }}</button>
+          {%- if form.posted_successfully? -%}<p class="promo-ok">Check your inbox — your code is on the way.</p>{%- endif -%}
+        {% endform %}
+        <button type="button" class="promo-no" data-promo-close>{{ section.settings.promo_decline }}</button>
+        <p class="promo-fine">{{ section.settings.promo_fine }}</p>
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+<script>
+(function(){
+  var store = {
+    get: function(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } },
+    set: function(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  };
+
+  var ck = document.getElementById('ryvtCookie');
+  if(ck && !store.get('ryvt-cookie')){
+    setTimeout(function(){ ck.hidden = false; requestAnimationFrame(function(){ ck.classList.add('on'); }); },
+      {{ section.settings.cookie_delay | times: 1000 }});
+    function ckClose(accepted){
+      ck.classList.remove('on');
+      store.set('ryvt-cookie', accepted ? 'accepted' : 'dismissed');
+      setTimeout(function(){ ck.hidden = true; }, 420);
+    }
+    ck.querySelectorAll('[data-ck-close]').forEach(function(b){ b.addEventListener('click', function(){ ckClose(false); }); });
+    ck.querySelectorAll('[data-ck-accept]').forEach(function(b){ b.addEventListener('click', function(){ ckClose(true); }); });
+  }
+
+  var pr = document.getElementById('ryvtPromo');
+  if(pr && !store.get('ryvt-promo')){
+    var opened = false, lastFocus = null;
+    function open(){
+      if(opened) return; opened = true;
+      lastFocus = document.activeElement;
+      pr.hidden = false;
+      requestAnimationFrame(function(){ pr.classList.add('on'); });
+      document.body.classList.add('no-scroll');
+      var f = pr.querySelector('input[type=email]'); if(f) setTimeout(function(){ f.focus(); }, 420);
+    }
+    function close(){
+      pr.classList.remove('on');
+      store.set('ryvt-promo', 'seen');
+      document.body.classList.remove('no-scroll');
+      setTimeout(function(){ pr.hidden = true; }, 420);
+      if(lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    var t = setTimeout(open, {{ section.settings.promo_delay | times: 1000 }});
+    pr.querySelectorAll('[data-promo-close]').forEach(function(b){ b.addEventListener('click', close); });
+    document.addEventListener('keydown', function(e){
+      if(e.key === 'Escape' && !pr.hidden) close();
+      if(e.key === 'Tab' && !pr.hidden){
+        var f = pr.querySelectorAll('button, input, a[href]');
+        if(!f.length) return;
+        var first = f[0], last = f[f.length-1];
+        if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+        else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+      }
+    });
+    var form = pr.querySelector('form');
+    if(form) form.addEventListener('submit', function(){ store.set('ryvt-promo','joined'); });
+  }
+})();
+</script>
+{% schema %}
+{
+  "name": "Popups",
+  "settings": [
+    { "type": "header", "content": "Cookie notice" },
+    { "type": "checkbox", "id": "cookie_on", "label": "Show cookie notice", "default": true },
+    { "type": "range", "id": "cookie_delay", "label": "Appears after", "min": 0, "max": 10, "step": 1, "unit": "s", "default": 2 },
+    { "type": "text", "id": "cookie_eyebrow", "label": "Eyebrow", "default": "Cookies" },
+    { "type": "textarea", "id": "cookie_body", "label": "Text",
+      "default": "We use a few cookies to keep the site working and to see what people actually look at. Nothing sold on, nothing creepy." },
+    { "type": "text", "id": "cookie_accept", "label": "Accept button", "default": "Fine by me" },
+    { "type": "text", "id": "cookie_link_text", "label": "Link text", "default": "Read the policy" },
+    { "type": "url", "id": "cookie_link", "label": "Link" },
+    { "type": "header", "content": "First-visit offer" },
+    { "type": "checkbox", "id": "promo_on", "label": "Show offer popup", "default": true },
+    { "type": "range", "id": "promo_delay", "label": "Appears after", "min": 5, "max": 60, "step": 5, "unit": "s", "default": 15 },
+    { "type": "image_picker", "id": "promo_image", "label": "Image" },
+    { "type": "text", "id": "promo_eyebrow", "label": "Eyebrow", "default": "Welcome to Detroit" },
+    { "type": "text", "id": "promo_title", "label": "Heading", "default": "15% off your first order" },
+    { "type": "textarea", "id": "promo_body", "label": "Body",
+      "default": "Join the movement. First to know about new drops, and 15% off the moment you sign up." },
+    { "type": "text", "id": "promo_placeholder", "label": "Field placeholder", "default": "Email address" },
+    { "type": "text", "id": "promo_button", "label": "Button", "default": "Get my 15%" },
+    { "type": "text", "id": "promo_decline", "label": "Decline text", "default": "No thanks, I'll pay full price" },
+    { "type": "text", "id": "promo_fine", "label": "Small print", "default": "One use per customer. Full-price items only." }
+  ]
+}
+{% endschema %}
