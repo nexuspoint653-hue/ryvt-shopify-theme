@@ -1,0 +1,38 @@
+{%- comment -%}
+  Per-section colour scheme. Every section calls this to emit scoped CSS vars,
+  so background and text colour are editable in the theme editor.
+  Usage: {% render 'section-style', s: section %}
+{%- endcomment -%}
+{%- liquid
+  assign scheme = s.settings.scheme | default: 'light'
+  assign pt = s.settings.pad_top | default: 0
+  assign pb = s.settings.pad_bottom | default: 0
+-%}
+{%- case scheme -%}
+  {%- when 'light'  -%}{%- assign bg = '#FFFFFF' -%}{%- assign fg = '#111111' -%}{%- assign mut = '#6B6B6B' -%}{%- assign ln = '#E6E6E3' -%}
+  {%- when 'alt'    -%}{%- assign bg = '#F7F7F6' -%}{%- assign fg = '#111111' -%}{%- assign mut = '#6B6B6B' -%}{%- assign ln = '#E2E2DF' -%}
+  {%- when 'sand'   -%}{%- assign bg = '#EFEAE2' -%}{%- assign fg = '#1A1A18' -%}{%- assign mut = '#6E6A62' -%}{%- assign ln = '#DCD5C9' -%}
+  {%- when 'dark'   -%}{%- assign bg = '#111111' -%}{%- assign fg = '#F5F5F3' -%}{%- assign mut = '#A0A0A0' -%}{%- assign ln = '#2C2C2C' -%}
+  {%- when 'custom' -%}
+    {%- assign bg = s.settings.bg_custom | default: '#FFFFFF' -%}
+    {%- assign fg = s.settings.text_custom | default: '#111111' -%}
+    {%- assign mut = fg -%}{%- assign ln = fg -%}
+{%- endcase -%}
+<style>
+  #shopify-section-{{ s.id }}{
+    --sec-bg:{{ bg }}; --sec-fg:{{ fg }}; --sec-muted:{{ mut }}; --sec-line:{{ ln }};
+    background:var(--sec-bg); color:var(--sec-fg);
+    {% if pt > 0 %}padding-top:{{ pt }}px;{% endif %}
+    {% if pb > 0 %}padding-bottom:{{ pb }}px;{% endif %}
+  }
+  #shopify-section-{{ s.id }} .mini,
+  #shopify-section-{{ s.id }} .crumb,
+  #shopify-section-{{ s.id }} .pc-c{ color:var(--sec-muted) }
+  #shopify-section-{{ s.id }} .btn{ border-color:var(--sec-fg); color:var(--sec-fg) }
+  #shopify-section-{{ s.id }} .btn:hover{ background:var(--sec-fg); color:var(--sec-bg) }
+  #shopify-section-{{ s.id }} .btn-solid{ background:var(--sec-fg); color:var(--sec-bg) }
+  #shopify-section-{{ s.id }} .btn-solid:hover{ background:transparent; color:var(--sec-fg) }
+  {%- if scheme == 'custom' -%}
+  #shopify-section-{{ s.id }} .mini,#shopify-section-{{ s.id }} .crumb{ opacity:.7 }
+  {%- endif -%}
+</style>
