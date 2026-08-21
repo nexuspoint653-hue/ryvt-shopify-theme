@@ -13,6 +13,7 @@
 {%- endif -%}
 
 <section class="cat">
+ <div class="cat-in">
   <div class="cat-head" data-rv>
     <span class="t">{{ section.settings.heading | default: coll.title }}</span>
     <a href="{{ coll.url | default: routes.all_products_collection_url }}">
@@ -37,6 +38,7 @@
       </a>
     {%- endif -%}
   </div>
+ </div>
 </section>
 
 {% schema %}
