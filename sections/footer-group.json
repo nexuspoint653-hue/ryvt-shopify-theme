@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "footer",
   "name": "Footer",
@@ -5,21 +14,71 @@
     "split": {
       "type": "editorial-split",
       "blocks": {
-        "p1": { "type": "panel", "settings": { "title": "Discover RYVT", "body": "Premium athletic wear built in Metro Detroit — heavyweight cotton, garment-dyed, made to outlast the season." } },
-        "p2": { "type": "panel", "settings": { "title": "The Fabric", "body": "How we choose our cotton, why we garment-dye every piece, and what that means after fifty washes." } }
+        "p1": {
+          "type": "panel",
+          "settings": {
+            "image": "shopify://shop_images/ryvt-spirit-of-detroit.jpg",
+            "title": "Discover RYVT",
+            "body": "Premium athletic wear built in Metro Detroit — heavyweight cotton, garment-dyed, made to outlast the season.",
+            "link": ""
+          }
+        },
+        "p2": {
+          "type": "panel",
+          "settings": {
+            "image": "shopify://shop_images/the-kinetic-cuffed-joggers-gry-02.jpg",
+            "title": "The Fabric",
+            "body": "How we choose our cotton, why we garment-dye every piece, and what that means after fifty washes.",
+            "link": ""
+          }
+        }
       },
-      "block_order": ["p1", "p2"]
+      "block_order": [
+        "p1",
+        "p2"
+      ],
+      "settings": {}
     },
     "footer": {
       "type": "footer",
       "blocks": {
-        "f1": { "type": "menu", "settings": { "title": "Shop", "menu": "footer" } },
-        "f2": { "type": "menu", "settings": { "title": "Company", "menu": "footer" } },
-        "f3": { "type": "menu", "settings": { "title": "Support", "menu": "footer" } }
+        "f1": {
+          "type": "menu",
+          "settings": {
+            "title": "Shop",
+            "menu": "footer"
+          }
+        },
+        "f2": {
+          "type": "menu",
+          "settings": {
+            "title": "Company",
+            "menu": "footer"
+          }
+        },
+        "f3": {
+          "type": "menu",
+          "settings": {
+            "title": "Support",
+            "menu": "footer"
+          }
+        }
       },
-      "block_order": ["f1", "f2", "f3"],
-      "settings": { "nl_title": "Join the movement" }
+      "block_order": [
+        "f1",
+        "f2",
+        "f3"
+      ],
+      "settings": {
+        "nl_title": "Join the movement",
+        "nl_body": "First to know about new drops, exclusive offers, and stories from Detroit.",
+        "consent": "By signing up you consent to receive marketing messages from RYVT. Message frequency varies. Unsubscribe at any time.",
+        "legal_menu": ""
+      }
     }
   },
-  "order": ["split", "footer"]
+  "order": [
+    "split",
+    "footer"
+  ]
 }
