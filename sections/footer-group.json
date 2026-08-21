@@ -49,13 +49,6 @@
             "menu": "footer"
           }
         },
-        "f2": {
-          "type": "menu",
-          "settings": {
-            "title": "Company",
-            "menu": "footer"
-          }
-        },
         "f3": {
           "type": "menu",
           "settings": {
@@ -66,7 +59,6 @@
       },
       "block_order": [
         "f1",
-        "f2",
         "f3"
       ],
       "settings": {

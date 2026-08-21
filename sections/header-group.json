@@ -68,6 +68,7 @@
       ],
       "settings": {
         "menu": "main-menu",
+        "logo": "shopify://shop_images/ryvt-wordmark.png",
         "logo_height": 26,
         "wordmark": "RYVT",
         "soon_label": "Women",
