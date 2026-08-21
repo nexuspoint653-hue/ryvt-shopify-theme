@@ -7,7 +7,7 @@
     </div>
     <div class="cgrid" data-row data-max="{{ section.blocks.size | at_most: 4 }}">
       {%- for block in section.blocks -%}
-        {%- assign c = collections[block.settings.collection] -%}
+        {%- assign c = block.settings.collection -%}
         <a class="ctile" href="{{ block.settings.link | default: c.url | default: routes.all_products_collection_url }}" {{ block.shopify_attributes }}>
           <div class="ctile-m">
             {%- if block.settings.image != blank -%}
@@ -20,7 +20,8 @@
           </div>
           <div class="ctile-b">
             <span class="ctile-t">{{ block.settings.label | default: c.title }}</span>
-            {%- if c.products_count > 0 -%}<span class="ctile-c">{{ c.products_count }} items</span>{%- endif -%}
+            {%- assign ccount = c.products_count | plus: 0 -%}
+            {%- if ccount > 0 -%}<span class="ctile-c">{{ ccount }} item{% unless ccount == 1 %}s{% endunless %}</span>{%- endif -%}
           </div>
         </a>
       {%- endfor -%}

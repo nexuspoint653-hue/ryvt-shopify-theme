@@ -5,7 +5,7 @@
     <a href="{{ routes.all_products_collection_url }}">View All <svg viewBox="0 0 24 12"><path d="M0 6h21M16 1l5 5-5 5"/></svg></a>
   </div>
   <div class="row" data-row data-max="4">
-    {%- assign source = collections[section.settings.collection].products | default: product.collections.first.products -%}
+    {%- assign source = section.settings.collection.products | default: product.collections.first.products -%}
     {%- assign n = 0 -%}
     {%- for p in source -%}
       {%- if p.id != product.id and n < 4 -%}

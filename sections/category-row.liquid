@@ -4,8 +4,8 @@
   fewer products than the column count, the row closes with a promo tile and the
   columns tighten so the cards grow instead of leaving gaps.
 {%- endcomment -%}
-{%- assign coll = collections[section.settings.collection] -%}
-{%- assign count = coll.products.size -%}
+{%- assign coll = section.settings.collection -%}
+{%- assign count = coll.products.size | plus: 0 -%}
 {%- if count > section.settings.columns %}{% assign count = section.settings.columns %}{% endif -%}
 {%- assign cells = count -%}
 {%- if section.settings.show_promo and count < section.settings.columns -%}

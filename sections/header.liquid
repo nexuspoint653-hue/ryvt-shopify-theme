@@ -94,7 +94,7 @@
       <h5 class="sh">Shop by Category</h5>
       <div class="stiles">
         {%- for block in tiles -%}
-          {%- assign coll = collections[block.settings.collection] -%}
+          {%- assign coll = block.settings.collection -%}
           <a class="stile" href="{{ block.settings.link | default: coll.url | default: routes.all_products_collection_url }}" {{ block.shopify_attributes }}>
             {%- if block.settings.image != blank -%}
               <img src="{{ block.settings.image | image_url: width: 600 }}" alt="" loading="lazy">
