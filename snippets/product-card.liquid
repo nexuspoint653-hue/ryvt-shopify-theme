@@ -1,69 +1,149 @@
 {%- comment -%}
-  RYVT product card.
-  Params: product (required), badge (optional string), ghost (optional bool)
+  RYVT product card — engineered for conversion.
+  Params: product (required), badge (optional), ghost (optional bool),
+          quick (optional bool, default true), swatches (optional bool, default true)
 {%- endcomment -%}
 {%- liquid
-  assign hover = product.images[1]
-  assign colour_count = 0
+  assign hover_img = product.images[1]
+  assign colour_opt = nil
+  assign colour_pos = 0
   for opt in product.options_with_values
     assign oname = opt.name | downcase
     if oname contains 'colour' or oname contains 'color'
-      assign colour_count = opt.values.size
+      assign colour_opt = opt
+      assign colour_pos = forloop.index
     endif
   endfor
+  assign size_opt = nil
+  assign size_pos = 0
+  for opt in product.options_with_values
+    assign oname = opt.name | downcase
+    if oname contains 'size'
+      assign size_opt = opt
+      assign size_pos = forloop.index
+    endif
+  endfor
+  assign colour_count = colour_opt.values.size | default: 0
+  assign show_quick = quick | default: true, allow_false: true
+  assign show_sw = swatches | default: true, allow_false: true
+  assign cur = product.selected_or_first_available_variant
 -%}
-<a class="pc" href="{{ product.url }}">
+<article class="pc" data-pid="{{ product.id }}">
   <div class="pc-m">
-    {%- if product.featured_image -%}
-      <img class="main" src="{{ product.featured_image | image_url: width: 900 }}"
-           srcset="{{ product.featured_image | image_url: width: 450 }} 450w, {{ product.featured_image | image_url: width: 900 }} 900w"
-           sizes="(max-width:860px) 50vw, 25vw"
-           alt="{{ product.featured_image.alt | escape }}" width="900" height="1125" loading="lazy">
-    {%- else -%}
-      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg main' }}
-    {%- endif -%}
+    <a class="pc-link" href="{{ product.url }}" aria-label="{{ product.title | escape }}">
+      {%- if product.featured_image -%}
+        <img class="main" src="{{ product.featured_image | image_url: width: 900 }}"
+             srcset="{{ product.featured_image | image_url: width: 450 }} 450w, {{ product.featured_image | image_url: width: 900 }} 900w"
+             sizes="(max-width:860px) 50vw, 25vw"
+             alt="{{ product.featured_image.alt | escape }}" width="900" height="1125" loading="lazy" data-pc-main>
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg main' }}
+      {%- endif -%}
+      {%- if hover_img -%}
+        <img class="alt" src="{{ hover_img | image_url: width: 900 }}" alt="" width="900" height="1125" loading="lazy" data-pc-alt>
+      {%- endif -%}
+    </a>
 
-    {%- if hover -%}
-      <img class="alt" src="{{ hover | image_url: width: 900 }}" alt="" width="900" height="1125" loading="lazy">
-    {%- endif -%}
+    <div class="pc-tags">
+      {%- if badge != blank -%}
+        <span class="pc-tag{% if ghost %} ghost{% endif %}">{{ badge }}</span>
+      {%- elsif product.compare_at_price > product.price -%}
+        <span class="pc-tag pc-tag--sale">Sale</span>
+      {%- elsif product.tags contains 'New' or product.tags contains 'New In' -%}
+        <span class="pc-tag">New In</span>
+      {%- elsif product.tags contains 'Best Seller' -%}
+        <span class="pc-tag">Best Seller</span>
+      {%- endif -%}
+      {%- if product.tags contains 'Free Delivery' -%}
+        <span class="pc-tag pc-tag--soft">Free Delivery</span>
+      {%- endif -%}
+      {%- unless product.available -%}<span class="pc-tag pc-tag--out">Sold Out</span>{%- endunless -%}
+    </div>
 
-    {%- if badge != blank -%}
-      <span class="pc-tag{% if ghost %} ghost{% endif %}">{{ badge }}</span>
-    {%- elsif product.compare_at_price > product.price -%}
-      <span class="pc-tag">Sale</span>
-    {%- elsif product.tags contains 'Best Seller' -%}
-      <span class="pc-tag">Best Seller</span>
-    {%- elsif product.tags contains 'New' -%}
-      <span class="pc-tag">New</span>
-    {%- endif -%}
-
-    <button type="button" class="pc-fav" aria-label="Save to wishlist" aria-pressed="false">
-      <svg viewBox="0 0 24 24"><path d="M12 20s-7-4.5-7-9a4 4 0 017-2.6A4 4 0 0119 11c0 4.5-7 9-7 9z"/></svg>
+    <button type="button" class="pc-fav" data-fav-id="{{ product.id }}"
+            aria-label="Save {{ product.title | escape }}" aria-pressed="false">
+      <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-5-6 5V3z"/></svg>
     </button>
 
-    {%- if product.available -%}
-      <form method="post" action="{{ routes.cart_add_url }}" class="add-form">
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-        <button type="submit" class="add">+ Add to Bag</button>
-      </form>
-    {%- else -%}
-      <span class="add">Sold Out</span>
+    {%- if show_quick and product.available -%}
+      <div class="pc-quick" data-quick>
+        {%- if size_opt and size_opt.values.size > 1 -%}
+          <div class="pc-q-l">Quick add</div>
+          <div class="pc-sizes">
+            {%- for val in size_opt.values -%}
+              {%- assign match = nil -%}
+              {%- for v in product.variants -%}
+                {%- assign vopt = v.options[size_pos | minus: 1] -%}
+                {%- if vopt == val -%}
+                  {%- if colour_opt -%}
+                    {%- assign vcol = v.options[colour_pos | minus: 1] -%}
+                    {%- assign ccol = cur.options[colour_pos | minus: 1] -%}
+                    {%- if vcol == ccol -%}{%- assign match = v -%}{%- break -%}{%- endif -%}
+                  {%- else -%}
+                    {%- assign match = v -%}{%- break -%}
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if match -%}
+                <button type="button" class="pc-size{% unless match.available %} out{% endunless %}"
+                        data-vid="{{ match.id }}"{% unless match.available %} disabled aria-disabled="true"{% endunless %}
+                        aria-label="Add size {{ val }}">{{ val }}</button>
+              {%- else -%}
+                <button type="button" class="pc-size out" disabled aria-disabled="true">{{ val }}</button>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- else -%}
+          <button type="button" class="pc-add1" data-vid="{{ cur.id }}">Add to bag</button>
+        {%- endif -%}
+        <div class="pc-q-msg" data-quick-msg role="status" aria-live="polite"></div>
+      </div>
     {%- endif -%}
   </div>
 
   <div class="pc-i">
-    <div class="pc-top">
-      <span class="pc-n">{{ product.title }}</span>
+    <a class="pc-n" href="{{ product.url }}">{{ product.title }}</a>
+    <div class="pc-meta">
+      <span class="pc-c">
+        {%- if colour_count > 1 -%}{{ colour_count }} colours
+        {%- elsif colour_count == 1 -%}1 colour{%- endif -%}
+      </span>
       <span class="pc-p">
         {%- if product.compare_at_price > product.price -%}
-          <s style="opacity:.5">{{ product.compare_at_price | money }}</s>
+          <s>{{ product.compare_at_price | money }}</s>
         {%- endif -%}
         {{ product.price | money }}
       </span>
     </div>
-    <div class="pc-r">{% render 'rating', product: product %}</div>
-    {%- if colour_count > 0 -%}
-      <div class="pc-c">{{ colour_count }} {% if colour_count == 1 %}colour{% else %}colours{% endif %}</div>
+
+    {%- if show_sw and colour_opt and colour_count > 1 -%}
+      <div class="pc-sw" role="group" aria-label="Colours">
+        {%- assign shown = 0 -%}
+        {%- for val in colour_opt.values -%}
+          {%- if shown < 2 -%}
+            {%- assign cv = nil -%}
+            {%- for v in product.variants -%}
+              {%- assign vc = v.options[colour_pos | minus: 1] -%}
+              {%- if vc == val -%}{%- assign cv = v -%}{%- break -%}{%- endif -%}
+            {%- endfor -%}
+            {%- capture hexc %}{% render 'swatch-color', name: val %}{% endcapture -%}
+            {%- assign hexv = hexc | strip -%}
+            {%- assign vimg = cv.featured_image | default: product.featured_image -%}
+            <button type="button" class="pc-dot{% if forloop.first %} on{% endif %}"
+              data-sw
+              {% if cv %}data-vid="{{ cv.id }}"{% endif %}
+              {% if vimg %}data-img="{{ vimg | image_url: width: 900 }}"{% endif %}
+              {% if hexv != blank %}style="--dot:{{ hexv }}"{% elsif vimg %}style="--dotimg:url({{ vimg | image_url: width: 60 }})"{% endif %}
+              aria-label="{{ val }}" aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+              title="{{ val }}"><span></span></button>
+            {%- assign shown = shown | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if colour_count > 2 -%}
+          {%- assign more = colour_count | minus: 2 -%}
+          <a class="pc-more" href="{{ product.url }}">+{{ more }}</a>
+        {%- endif -%}
+      </div>
     {%- endif -%}
   </div>
-</a>
+</article>

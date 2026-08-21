@@ -1,0 +1,23 @@
+{%- comment -%}
+  Maps a colour option value to a CSS colour. Falls back to the variant image.
+  Params: name (string)
+{%- endcomment -%}
+{%- assign h = name | handleize -%}
+{%- case h -%}
+  {%- when 'black','jet-black','true-black','onyx' -%}#111111
+  {%- when 'white','optic-white','off-white','ecru','ivory','cream','bone' -%}#F2F0EA
+  {%- when 'grey','gray','heather-grey','heather-gray','charcoal' -%}#8A8A86
+  {%- when 'navy','midnight','indigo','deep-navy' -%}#243049
+  {%- when 'blue','sky','washed-blue','denim' -%}#5C7A9E
+  {%- when 'olive','army','military-green','sage' -%}#6B7259
+  {%- when 'green','forest' -%}#3C5A45
+  {%- when 'red','crimson','rust' -%}#B4362B
+  {%- when 'burgundy','maroon','wine' -%}#5E2231
+  {%- when 'sand','tan','khaki','stone','taupe' -%}#C3B49B
+  {%- when 'brown','chocolate','espresso' -%}#5A4436
+  {%- when 'pink','blush','rose' -%}#D8A3A3
+  {%- when 'purple','lilac','lavender' -%}#7C6B94
+  {%- when 'yellow','mustard','gold' -%}#C9A227
+  {%- when 'orange','clay','terracotta' -%}#C46A3A
+  {%- else -%}
+{%- endcase -%}
