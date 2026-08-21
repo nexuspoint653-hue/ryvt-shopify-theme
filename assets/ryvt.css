@@ -491,10 +491,10 @@ body.clean .badge{display:none}
 .mf--md .mf-in{padding-block:clamp(54px,6.5vw,96px)}
 .mf--lg .mf-in{padding-block:clamp(68px,8.5vw,130px)}
 .mf--xl .mf-in{padding-block:clamp(90px,11vw,170px)}
-.mf-mark{display:flex;align-items:baseline;gap:14px;padding-bottom:13px;
+.mf-mark{display:flex;align-items:baseline;gap:12px;padding-bottom:13px;
   border-bottom:1px solid var(--sec-line,var(--line));margin-bottom:clamp(24px,3vw,44px)}
 .mf-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4.5vw,72px);align-items:start}
-.mf-h em{font-style:normal;display:block;color:var(--sec-muted,var(--muted))}
+.mf-h em{font-style:normal;display:block;color:inherit}
 .mf-body{padding-top:6px}
 .mf-body .copy{max-width:52ch}
 .mf-body .copy+.copy{margin-top:18px}
