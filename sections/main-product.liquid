@@ -26,12 +26,12 @@
     {%- endfor -%}
   </div>
 
-  <div>
+  <div class="gal-wrap">
     <div class="gal">
       <div class="gal-main">
         {%- if product.featured_image -%}
           <img data-main-image src="{{ product.featured_image | image_url: width: 1400 }}"
-               alt="{{ product.featured_image.alt | escape }}" width="1200" height="1200">
+               alt="{{ product.featured_image.alt | escape }}" width="1200" height="1500">
         {%- else -%}
           {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
         {%- endif -%}
@@ -42,11 +42,12 @@
       </span>
     </div>
     {%- if product.images.size > 1 -%}
-      <div class="thumbs">
-        {%- for img in product.images limit: 8 -%}
-          <button type="button" class="{% if forloop.first %}on{% endif %}" data-thumb="{{ img | image_url: width: 1400 }}"
+      <div class="gal-grid">
+        {%- for img in product.images limit: 9 -%}
+          <button type="button" class="gcard{% if forloop.first %} on{% endif %}"
+                  data-thumb="{{ img | image_url: width: 1400 }}"
                   aria-label="View image {{ forloop.index }}">
-            <img src="{{ img | image_url: width: 200 }}" alt="" loading="lazy">
+            <img src="{{ img | image_url: width: 700 }}" alt="" loading="lazy">
           </button>
         {%- endfor -%}
       </div>
