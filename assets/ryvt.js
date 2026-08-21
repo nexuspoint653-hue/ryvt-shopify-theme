@@ -136,7 +136,7 @@ function initBands(root){
   }
   window.__ryvtPar=window.__ryvtPar.concat(bands);
 }
-function boot(root){ initRows(root); initAcc(root); initProduct(root); initFav(root); initBands(root); observe(root); }
+function boot(root){ initRows(root); initTap(root); initAcc(root); initProduct(root); initFav(root); initBands(root); observe(root); }
 document.addEventListener("DOMContentLoaded",function(){ initHeader(); initPanels(); boot(document); });
 document.addEventListener("shopify:section:load",function(e){ initHeader(); initPanels(); boot(e.target); });
 
@@ -159,6 +159,38 @@ function closeDrawer(){
   var sc=document.getElementById("scrim");
   if(sc && !document.body.classList.contains("search-open") && !document.body.classList.contains("mega-open"))
     sc.classList.remove("on");
+}
+
+function initTap(root){
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  (root||document).querySelectorAll("[data-tap]").forEach(function(el){
+    if(el.dataset.tapReady) return; el.dataset.tapReady="1";
+    function press(e){
+      el.classList.add("is-tap");
+      if(!reduce){
+        var r=el.getBoundingClientRect();
+        var x=(e.clientX!=null? e.clientX-r.left : r.width/2);
+        var y=(e.clientY!=null? e.clientY-r.top  : r.height/2);
+        var d=Math.max(r.width,r.height)*2.2;
+        var s=document.createElement("span");
+        s.className="rip";
+        s.style.width=s.style.height=d+"px";
+        s.style.left=x+"px"; s.style.top=y+"px";
+        el.appendChild(s);
+        setTimeout(function(){ if(s.parentNode) s.parentNode.removeChild(s); },560);
+      }
+    }
+    function release(){ el.classList.remove("is-tap"); }
+    el.addEventListener("pointerdown", press);
+    el.addEventListener("pointerup", release);
+    el.addEventListener("pointercancel", release);
+    el.addEventListener("pointerleave", release);
+    el.addEventListener("keydown", function(e){
+      if(e.key==="Enter"||e.key===" "){ press({}); }
+    });
+    el.addEventListener("keyup", release);
+    el.addEventListener("blur", release);
+  });
 }
 
 function initHeader(){
@@ -268,6 +300,8 @@ function initHeader(){
     if(e.key==="Escape"){ closeMega(); closeSearch(); closeDrawer(); }
   });
   window.__ryvtCloseMega = closeMega;
+  initTap(hdr);
+  initTap(document.getElementById("drawer"));
 
   /* --- announcement bar --- */
   if(abar){
