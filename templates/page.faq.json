@@ -5,7 +5,7 @@
       "settings": {
         "band_height": "short",
         "parallax": true,
-        "scheme": "bone",
+        "scheme": "light",
         "overlay_tag": "",
         "overlay_title": ""
       }
@@ -131,17 +131,17 @@
         "foot": "Still stuck? Talk to a human.",
         "foot_link_text": "Contact us",
         "foot_link": "/pages/contact",
-        "scheme": "bone",
+        "scheme": "light",
         "pad_top": 40,
         "pad_bottom": 40,
         "marker": "04",
-        "grain": true
+        "grain": false
       }
     },
     "feat": {
       "type": "feature-icons",
       "settings": {
-        "scheme": "concrete"
+        "scheme": "alt"
       }
     }
   },

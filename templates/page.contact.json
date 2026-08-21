@@ -5,7 +5,7 @@
       "settings": {
         "band_height": "mid",
         "parallax": true,
-        "scheme": "bone"
+        "scheme": "light"
       }
     },
     "form": {
@@ -51,11 +51,11 @@
       "settings": {
         "eyebrow": "Direct Line",
         "heading": "Talk To Us",
-        "scheme": "bone",
+        "scheme": "light",
         "pad_top": 40,
         "pad_bottom": 40,
         "marker": "05",
-        "grain": true
+        "grain": false
       }
     },
     "faqlink": {
@@ -82,8 +82,8 @@
         "grain": false,
         "link_text": "Read the FAQ",
         "link": "/pages/faq",
-        "cta_copper": true,
-        "scheme": "dark"
+        "scheme": "dark",
+        "cta_solid": true
       }
     }
   },
