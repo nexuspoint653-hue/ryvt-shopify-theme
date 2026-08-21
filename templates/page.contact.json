@@ -2,27 +2,94 @@
   "sections": {
     "band": {
       "type": "media-band",
-      "settings": { "band_height": "mid", "parallax": true, "scheme": "light" }
+      "settings": {
+        "band_height": "mid",
+        "parallax": true,
+        "scheme": "bone"
+      }
     },
     "form": {
       "type": "contact-form",
       "blocks": {
-        "d1": { "type": "detail", "settings": { "label": "Email", "value": "hello@wearryvt.com", "link": "mailto:hello@wearryvt.com" } },
-        "d2": { "type": "detail", "settings": { "label": "Instagram", "value": "@wearryvt", "link": "https://instagram.com/wearryvt" } },
-        "d3": { "type": "detail", "settings": { "label": "Studio", "value": "Metro Detroit, Michigan" } },
-        "d4": { "type": "detail", "settings": { "label": "Hours", "value": "Monday to Friday, 9am – 5pm ET" } }
+        "d1": {
+          "type": "detail",
+          "settings": {
+            "label": "Email",
+            "value": "hello@wearryvt.com",
+            "link": "mailto:hello@wearryvt.com"
+          }
+        },
+        "d2": {
+          "type": "detail",
+          "settings": {
+            "label": "Instagram",
+            "value": "@wearryvt",
+            "link": "https://instagram.com/wearryvt"
+          }
+        },
+        "d3": {
+          "type": "detail",
+          "settings": {
+            "label": "Studio",
+            "value": "Metro Detroit, Michigan"
+          }
+        },
+        "d4": {
+          "type": "detail",
+          "settings": {
+            "label": "Hours",
+            "value": "Monday to Friday, 9am \u2013 5pm ET"
+          }
+        }
       },
-      "block_order": ["d1", "d2", "d3", "d4"],
-      "settings": { "eyebrow": "Customer Care", "heading": "Talk to us", "scheme": "light", "pad_top": 40, "pad_bottom": 40 }
+      "block_order": [
+        "d1",
+        "d2",
+        "d3",
+        "d4"
+      ],
+      "settings": {
+        "eyebrow": "Direct Line",
+        "heading": "Talk To Us",
+        "scheme": "bone",
+        "pad_top": 40,
+        "pad_bottom": 40,
+        "marker": "05",
+        "grain": true
+      }
     },
     "faqlink": {
       "type": "statement",
       "blocks": {
-        "p1": { "type": "para", "settings": { "body": "<p>Sizing, shipping and returns are answered in full on our help page — it is usually faster than waiting on us.</p>" } }
+        "p1": {
+          "type": "para",
+          "settings": {
+            "body": "<p>Sizing, shipping and returns are answered in full on our help page \u2014 it is usually faster than waiting on us.</p>"
+          }
+        }
       },
-      "block_order": ["p1"],
-      "settings": { "heading": "Answers, right now", "serif": true, "size": "md", "link_text": "Read the FAQ", "link": "/pages/faq", "scheme": "alt" }
+      "block_order": [
+        "p1"
+      ],
+      "settings": {
+        "marker": "06",
+        "eyebrow": "Self Serve",
+        "heading": "Answers",
+        "heading_accent": "Right Now",
+        "scale": "m",
+        "align": "left",
+        "size": "md",
+        "grain": false,
+        "link_text": "Read the FAQ",
+        "link": "/pages/faq",
+        "cta_copper": true,
+        "scheme": "dark"
+      }
     }
   },
-  "order": ["band", "form", "faqlink"]
+  "order": [
+    "band",
+    "form",
+    "faqlink"
+  ]
 }

@@ -2,43 +2,54 @@
   "sections": {
     "band_open": {
       "type": "media-band",
-      "settings": { "band_height": "full", "parallax": true, "scheme": "light" }
+      "settings": { "band_height": "full", "parallax": true, "overlay_tag": "Metro Detroit, Michigan", "overlay_title": "Rebirth", "overlay_sub": "A city that got written off and kept working anyway. We make kit for the people still putting in the hours.", "overlay_pos": "bl", "scrim": true, "scheme": "bone" }
     },
-    "intro": {
+    "who": {
       "type": "statement",
       "blocks": {
-        "p1": { "type": "para", "settings": { "body": "<p>RYVT is an athletic wear label out of Metro Detroit, built for people who train hard and then keep the same clothes on for the rest of the day.</p>" } },
-        "p2": { "type": "para", "settings": { "body": "<p>We are a small team — pattern cutters, athletes, a couple of stubborn perfectionists — making a short, deliberate range instead of a long, forgettable one. Every piece earns its place or it does not ship.</p>" } }
+        "p1": { "type": "para", "settings": { "body": "<p>RYVT was built in Metro Detroit for people who train hard and then keep the same clothes on for the rest of the day. No logos shouting. No seasonal noise. A short, deliberate range instead of a long, forgettable one.</p>" } },
+        "p2": { "type": "para", "settings": { "body": "<p>We are a small crew — pattern cutters, athletes, a couple of stubborn perfectionists. Every piece earns its place or it does not ship.</p>" } }
       },
       "block_order": ["p1", "p2"],
-      "settings": { "heading": "About Us", "serif": true, "size": "lg", "scheme": "light" }
+      "settings": { "marker": "01", "eyebrow": "The City", "heading": "Built Where", "heading_accent": "It's Hard", "scale": "l", "align": "left", "size": "lg", "grain": true, "scheme": "bone" }
     },
     "band_2": {
       "type": "media-band",
-      "settings": { "band_height": "full", "parallax": true, "scheme": "light" }
+      "settings": { "band_height": "tall", "parallax": true, "scheme": "bone" }
     },
-    "mission": {
+    "cut": {
       "type": "statement",
       "blocks": {
-        "p1": { "type": "para", "settings": { "body": "<p>Founded in Detroit, RYVT exists to prove that performance kit does not have to shout. Clean lines, fabric that behaves, fit that holds its shape after fifty washes.</p>" } },
-        "p2": { "type": "para", "settings": { "body": "<p>Our mission is simple: fewer, better pieces — cut properly, priced honestly, made to be worn until they wear out. We design in the city, test in the city, and we do not release anything we would not train in ourselves.</p>" } }
+        "p1": { "type": "para", "settings": { "body": "<p>Performance kit does not have to shout. Clean lines, fabric that behaves, fit that holds its shape after fifty washes. We design in the city, test in the city, and we do not release anything we would not train in ourselves.</p>" } },
+        "p2": { "type": "para", "settings": { "body": "<p>Fewer, better pieces — cut properly, priced honestly, made to be worn until they wear out.</p>" } }
       },
       "block_order": ["p1", "p2"],
-      "settings": { "heading": "Mission & Vision", "serif": true, "size": "lg", "scheme": "light" }
+      "settings": { "marker": "02", "eyebrow": "The Cut", "heading": "Nothing", "heading_accent": "Wasted", "scale": "l", "align": "left", "size": "lg", "grain": true, "link_text": "Shop the range", "link": "/collections/all", "cta_copper": true, "scheme": "bone" }
+    },
+    "record": {
+      "type": "timeline",
+      "blocks": {
+        "r1": { "type": "row", "settings": { "year": "2019", "title": "First cut", "body": "One tee, sewn in a rented studio on the east side. Sold out to friends before it had a name." } },
+        "r2": { "type": "row", "settings": { "year": "2021", "title": "The Renaissance Tee", "body": "The cut that made the label. Still the piece most people buy twice." } },
+        "r3": { "type": "row", "settings": { "year": "2023", "title": "Training range", "body": "Tanks and bottoms added — tested by coaches across the metro before a single unit shipped." } },
+        "r4": { "type": "row", "settings": { "year": "Now", "title": "Same city, same crew", "body": "Cut and finished within twenty miles of where we train. That does not change." } }
+      },
+      "block_order": ["r1", "r2", "r3", "r4"],
+      "settings": { "marker": "03", "eyebrow": "The Record", "heading": "How We Got Here", "grain": true, "scheme": "concrete" }
     },
     "duo": {
       "type": "media-duo",
       "blocks": {
-        "t1": { "type": "tile", "settings": { "title": "Made in Detroit", "caption": "Cut and finished within twenty miles of where we train.", "link": "/pages/about" } },
-        "t2": { "type": "tile", "settings": { "title": "Built to Last", "caption": "Fabric chosen for the fiftieth wash, not the first.", "link": "/collections/all" } },
-        "t3": { "type": "tile", "settings": { "title": "The Collective", "caption": "Athletes and coaches who test every cut before it ships.", "link": "/collections/all" } }
+        "t1": { "type": "tile", "settings": { "title": "Made In Detroit", "caption": "Cut and finished within twenty miles of where we train.", "link": "/pages/about" } },
+        "t2": { "type": "tile", "settings": { "title": "Built To Last", "caption": "Fabric chosen for the fiftieth wash, not the first.", "link": "/collections/all" } },
+        "t3": { "type": "tile", "settings": { "title": "The Crew", "caption": "Athletes and coaches who test every cut before it ships.", "link": "/collections/all" } }
       },
       "block_order": ["t1", "t2", "t3"],
-      "settings": { "eyebrow": "On Brand", "scheme": "light" }
+      "settings": { "eyebrow": "The Work", "scheme": "bone" }
     },
     "band_3": {
       "type": "media-band",
-      "settings": { "band_height": "tall", "parallax": true, "overlay_title": "One tee. Four ways.", "overlay_sub": "The Renaissance Tee — our longest-running cut, still the one we wear most.", "overlay_pos": "center", "scrim": true, "link_text": "Shop the range", "link": "/collections/all", "scheme": "light" }
+      "settings": { "band_height": "tall", "parallax": true, "overlay_tag": "The Renaissance Tee", "overlay_title": "One Tee. Four Ways.", "overlay_sub": "Our longest-running cut, still the one we wear most.", "overlay_pos": "center", "scrim": true, "link_text": "Shop the tee", "link": "/collections/all", "cta_copper": true, "scheme": "bone" }
     },
     "close": {
       "type": "statement",
@@ -46,8 +57,8 @@
         "p1": { "type": "para", "settings": { "body": "<p>Questions about fit, fabric or wholesale? We answer every message ourselves.</p>" } }
       },
       "block_order": ["p1"],
-      "settings": { "heading": "Say hello", "serif": true, "size": "md", "link_text": "Contact us", "link": "/pages/contact", "scheme": "alt" }
+      "settings": { "marker": "06", "eyebrow": "Direct Line", "heading": "Say", "heading_accent": "Something", "scale": "m", "align": "left", "size": "md", "grain": false, "link_text": "Contact us", "link": "/pages/contact", "scheme": "dark" }
     }
   },
-  "order": ["band_open", "intro", "band_2", "mission", "duo", "band_3", "close"]
+  "order": ["band_open", "who", "band_2", "cut", "record", "duo", "band_3", "close"]
 }
