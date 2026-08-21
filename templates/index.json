@@ -16,31 +16,6 @@
         "link_text": "Shop the Renaissance Tee"
       }
     },
-    "row_tees": {
-      "type": "category-row",
-      "settings": {
-        "heading": "T-Shirts",
-        "columns": 4,
-        "show_promo": true
-      }
-    },
-    "row_tanks": {
-      "type": "category-row",
-      "settings": {
-        "heading": "Tank Tops",
-        "columns": 4,
-        "show_promo": true,
-        "scheme": "alt"
-      }
-    },
-    "row_bottoms": {
-      "type": "category-row",
-      "settings": {
-        "heading": "Bottoms",
-        "columns": 4,
-        "show_promo": true
-      }
-    },
     "cats": {
       "type": "category-grid",
       "settings": {
@@ -122,10 +97,7 @@
   "order": [
     "hero",
     "cats",
-    "row_tees",
     "story",
-    "row_tanks",
-    "row_bottoms",
     "feat"
   ]
 }
