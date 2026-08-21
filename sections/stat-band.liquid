@@ -1,10 +1,10 @@
 {% render 'section-style', s: section %}
 <section class="sec-pad">
   <div class="wrap">
-    <div class="stats" data-row data-max="{{ section.blocks.size | at_most: 4 }}">
+    <div class="stats" data-row data-count-group data-max="{{ section.blocks.size | at_most: 4 }}">
       {%- for block in section.blocks -%}
         <div class="stat" {{ block.shopify_attributes }}>
-          <div class="stat-n">{{ block.settings.value }}</div>
+          <div class="stat-n" data-count>{{ block.settings.value }}</div>
           <div class="stat-l">{{ block.settings.label }}</div>
         </div>
       {%- endfor -%}
