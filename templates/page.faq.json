@@ -1,0 +1,25 @@
+{
+  "sections": {
+    "faq": { "type": "faq",
+      "settings": { "eyebrow": "Help Centre", "heading": "Frequently Asked Questions",
+        "foot": "Still need a hand?", "foot_link_text": "Contact Us", "scheme": "light" },
+      "blocks": {
+        "q1": { "type": "qa", "settings": { "group": "Shipping", "q": "How much does shipping cost?", "a": "<p>Rates are calculated at checkout based on your address and order weight.</p>" } },
+        "q2": { "type": "qa", "settings": { "q": "Do you offer free shipping?", "a": "<p>Orders of $100 or more, measured after discounts, ship free within the United States.</p>" } },
+        "q3": { "type": "qa", "settings": { "q": "How long does shipping take?", "a": "<p>Your delivery estimate is shown at checkout before you pay, along with every option available to you.</p>" } },
+        "q4": { "type": "qa", "settings": { "q": "Do you ship internationally?", "a": "<p>At this time we ship within the contiguous United States only.</p>" } },
+        "q5": { "type": "qa", "settings": { "group": "Returns", "q": "What is your return policy?", "a": "<p>Returns are accepted within 30 days of delivery on unworn items.</p>" } },
+        "q6": { "type": "qa", "settings": { "q": "What can I do with a return?", "a": "<p>Exchange, take store credit, or request a refund. Exchanges and store credit ship free with a prepaid label.</p>" } },
+        "q7": { "type": "qa", "settings": { "group": "Sizing", "q": "How does the fit run?", "a": "<p>True to size with a relaxed body. If you are between sizes and want it closer, take the smaller one.</p>" } },
+        "q8": { "type": "qa", "settings": { "q": "Where is the size guide?", "a": "<p>Linked on every product page next to the size selector.</p>" } }
+      },
+      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7", "q8"] },
+    "feat": { "type": "feature-icons",
+      "blocks": {
+        "f1": { "type": "feature", "settings": { "icon": "truck", "title": "Free shipping over $100", "body": "Standard shipping, contiguous US." } },
+        "f2": { "type": "feature", "settings": { "icon": "return", "title": "30-day returns", "body": "Unworn items, easy exchanges." } },
+        "f3": { "type": "feature", "settings": { "icon": "ruler", "title": "Size guide", "body": "On every product page." } }
+      }, "block_order": ["f1", "f2", "f3"], "settings": { "scheme": "alt" } }
+  },
+  "order": ["faq", "feat"]
+}

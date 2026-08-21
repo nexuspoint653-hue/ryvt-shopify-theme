@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "intro": { "type": "main-page", "settings": { "scheme": "light" } },
+    "split1": { "type": "content-split", "settings": {
+      "eyebrow": "Our Mission", "heading": "Engineered for movement",
+      "body": "<p>Athletic wear that carries from the gym to the office to the street without asking you to compromise on any of them. Every piece is cut for how bodies actually move.</p>",
+      "scheme": "alt", "flip": false } },
+    "stats": { "type": "stat-band",
+      "blocks": {
+        "s1": { "type": "stat", "settings": { "value": "240gsm", "label": "Heavyweight cotton" } },
+        "s2": { "type": "stat", "settings": { "value": "4-needle", "label": "Stitched hems" } },
+        "s3": { "type": "stat", "settings": { "value": "Detroit", "label": "Where it started" } }
+      }, "block_order": ["s1", "s2", "s3"], "settings": { "scheme": "dark" } },
+    "split2": { "type": "content-split", "settings": {
+      "eyebrow": "Our Story", "heading": "Built for the long run",
+      "body": "<p>Garment-dyed so the colour settles into the fabric rather than sitting on top of it. Made to look right after fifty washes, not just the first one.</p>",
+      "scheme": "light", "flip": true } },
+    "feat": { "type": "feature-icons",
+      "blocks": {
+        "f1": { "type": "feature", "settings": { "icon": "stitch", "title": "Heavyweight construction", "body": "240gsm cotton, four-needle stitched, built to hold shape." } },
+        "f2": { "type": "feature", "settings": { "icon": "pin", "title": "Metro Detroit", "body": "Designed where the brand started." } },
+        "f3": { "type": "feature", "settings": { "icon": "return", "title": "30-day returns", "body": "Easy exchanges if the fit isn't right." } }
+      }, "block_order": ["f1", "f2", "f3"], "settings": { "scheme": "alt" } }
+  },
+  "order": ["intro", "split1", "stats", "split2", "feat"]
+}

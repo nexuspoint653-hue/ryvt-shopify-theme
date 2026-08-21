@@ -1,0 +1,12 @@
+{
+  "sections": {
+    "main": { "type": "main-page", "settings": { "scheme": "light" } },
+    "feat": { "type": "feature-icons", "settings": { "scheme": "alt" },
+      "blocks": {
+        "f1": { "type": "feature", "settings": { "icon": "truck", "title": "Order questions", "body": "Tracking, changes and delivery." } },
+        "f2": { "type": "feature", "settings": { "icon": "return", "title": "Returns", "body": "Exchanges and refunds within 30 days." } },
+        "f3": { "type": "feature", "settings": { "icon": "ruler", "title": "Sizing help", "body": "Not sure of your fit? Ask us." } }
+      }, "block_order": ["f1", "f2", "f3"] }
+  },
+  "order": ["main", "feat"]
+}

@@ -1,22 +1,11 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "hero": {
       "type": "hero",
       "settings": {
-        "image": "shopify://shop_images/ryvt-shoot-hero.jpg",
         "eyebrow": "Premium Athletic Wear",
         "heading": "Detroit, On Your Back",
-        "link_text": "Shop Men",
-        "link": ""
+        "link_text": "Shop Men"
       }
     },
     "story": {
@@ -24,46 +13,119 @@
       "settings": {
         "eyebrow": "The Renaissance Tee",
         "heading": "One Tee, Four Ways",
-        "link_text": "Shop the Renaissance Tee",
-        "link": ""
+        "link_text": "Shop the Renaissance Tee"
       }
     },
     "row_tees": {
       "type": "category-row",
       "settings": {
-        "collection": "men-shirts",
         "heading": "T-Shirts",
         "columns": 4,
-        "show_promo": true,
-        "promo_text": "Shop the full range"
+        "show_promo": true
       }
     },
     "row_tanks": {
       "type": "category-row",
       "settings": {
-        "collection": "men-tanks",
         "heading": "Tank Tops",
         "columns": 4,
         "show_promo": true,
-        "promo_text": "Shop the full range"
+        "scheme": "alt"
       }
     },
     "row_bottoms": {
       "type": "category-row",
       "settings": {
-        "collection": "men-pants",
         "heading": "Bottoms",
         "columns": 4,
-        "show_promo": true,
-        "promo_text": "Shop the full range"
+        "show_promo": true
       }
+    },
+    "cats": {
+      "type": "category-grid",
+      "settings": {
+        "eyebrow": "Shop by category",
+        "heading": "Find your fit",
+        "scheme": "light"
+      },
+      "blocks": {
+        "t1": {
+          "type": "tile",
+          "settings": {
+            "label": "Heavyweight Tees"
+          }
+        },
+        "t2": {
+          "type": "tile",
+          "settings": {
+            "label": "Tanks"
+          }
+        },
+        "t3": {
+          "type": "tile",
+          "settings": {
+            "label": "Bottoms"
+          }
+        },
+        "t4": {
+          "type": "tile",
+          "settings": {
+            "label": "Accessories"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ]
+    },
+    "feat": {
+      "type": "feature-icons",
+      "settings": {
+        "scheme": "alt"
+      },
+      "blocks": {
+        "f1": {
+          "type": "feature",
+          "settings": {
+            "icon": "truck",
+            "title": "Free shipping over $100",
+            "body": "Standard shipping within the contiguous US."
+          }
+        },
+        "f2": {
+          "type": "feature",
+          "settings": {
+            "icon": "return",
+            "title": "30-day returns",
+            "body": "Unworn items, easy exchanges."
+          }
+        },
+        "f3": {
+          "type": "feature",
+          "settings": {
+            "icon": "stitch",
+            "title": "Heavyweight build",
+            "body": "240gsm cotton, garment-dyed, four-needle stitched."
+          }
+        }
+      },
+      "block_order": [
+        "f1",
+        "f2",
+        "f3"
+      ]
     }
   },
   "order": [
     "hero",
-    "story",
+    "cats",
     "row_tees",
+    "story",
     "row_tanks",
-    "row_bottoms"
+    "row_bottoms",
+    "feat"
   ]
 }
