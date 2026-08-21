@@ -187,7 +187,7 @@ function initTap(root){
 }
 
 /* one motion language: letter roll + press punch on every text CTA */
-var FX_SEL = ".nav-i, .ulink, .mall, .ilink, .btn, .ibtn, .chip, .ssubmit, .faqx-tabs button, .pc-more, .dall, [data-fx]";
+var FX_SEL = ".nav-i, .ulink, .mall, .ilink, .btn, .ibtn, .chip, .ssubmit, .faqx-tabs button, .pc-more, .dall, .sub, .ck-ok, [data-fx]";
 function initNavFx(root){
   (root||document).querySelectorAll(FX_SEL).forEach(function(el){
     if(el.dataset.fx || el.classList.contains("dim")) return;

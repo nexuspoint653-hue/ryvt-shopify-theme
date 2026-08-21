@@ -524,13 +524,12 @@ body.no-scroll{overflow:hidden}
 .rmeta{font-size:11.5px;color:var(--dim);margin-top:9px}
 
 /* ---------- footer ---------- */
-.f-cols a,.f-bottom a{transition:color .28s var(--e),opacity .28s var(--e)}
-.f-cols a:hover,.f-bottom a:hover{color:#fff;opacity:1}
-.f-cols li{position:relative}
 .sub{position:relative;overflow:hidden;isolation:isolate}
 .sub::before{content:"";position:absolute;inset:0;background:var(--sec-fg,#fff);z-index:-1;
   transform:translateY(101%);transition:transform .42s var(--e)}
-.sub:hover{color:var(--sec-bg,#111)}
+.sub .nfx i{transition:color .2s var(--e);transition-delay:calc(var(--i) * 32ms)}
+.sub.fx-host:hover .nfx i,.sub.fx-host:focus-visible .nfx i{transform:none;color:var(--sec-bg,#111)}
+.sub:focus-visible{outline:2px solid currentColor;outline-offset:3px}
 .sub:hover::before{transform:translateY(0)}
 .f-panels{display:grid;grid-template-columns:1fr 1fr;width:100vw;margin-left:calc(50% - 50vw)}
 .f-panel{position:relative;display:block;aspect-ratio:16/11;overflow:hidden;background:#1b1b1b}
@@ -576,17 +575,30 @@ body.no-scroll{overflow:hidden}
   text-transform:uppercase;font-weight:800;margin-top:13px;transition:.35s var(--e)}
 .sub:hover{background:var(--ink);color:#fff}
 .f-cols{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,3vw,40px)}
-.f-cols h5{margin:0 0 14px;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;color:var(--dim)}
+.f-cols h5{margin:0 0 14px;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:800;
+  color:var(--sec-muted,var(--dim))}
 .f-cols ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
-.f-cols a{font-size:13px;color:#333}
-.f-cols a:hover{color:#000;text-decoration:underline;text-underline-offset:3px}
+.f-cols a{font-size:13px;color:var(--sec-muted,var(--muted));position:relative;display:inline-block;
+  transition:color .26s var(--e)}
+.f-cols a::after{content:"";position:absolute;left:0;bottom:-2px;height:1px;width:100%;background:#fff;
+  transform:scaleX(0);transform-origin:left;transition:transform .34s var(--e)}
+.f-cols a:hover,.f-cols a:focus-visible{color:#fff}
+.f-cols a:hover::after,.f-cols a:focus-visible::after{transform:scaleX(1)}
 .f-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
-  border-top:1px solid var(--line);padding:20px clamp(14px,2.6vw,34px);font-size:11.5px;color:var(--muted)}
+  border-top:1px solid var(--sec-line,var(--line));padding:20px clamp(14px,2.6vw,34px);
+  font-size:11.5px;color:var(--sec-muted,var(--muted))}
+.f-bottom a{color:var(--sec-muted,var(--muted));transition:color .26s var(--e);position:relative}
+.f-bottom a::after{content:"";position:absolute;left:0;bottom:-3px;height:1px;width:100%;background:#fff;
+  transform:scaleX(0);transform-origin:left;transition:transform .34s var(--e)}
+.f-bottom a:hover,.f-bottom a:focus-visible{color:#fff}
+.f-bottom a:hover::after,.f-bottom a:focus-visible::after{transform:scaleX(1)}
 .socials{display:flex;gap:16px;align-items:center}
 .socials a{width:auto;height:auto;border:0;border-radius:0;display:grid;place-items:center;
   transition:transform .3s var(--e),opacity .3s var(--e)}
 .soc svg{width:21px;height:21px}
-.soc-fb svg,.soc-ig svg{fill:none}
+.soc-mask{display:block;width:21px;height:21px;
+  background:radial-gradient(circle at 30% 107%, #FDF497 0%, #FDF497 5%, #FD5949 45%, #D6249F 60%, #285AEB 90%);
+  -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.72 3.72 0 01-1.38-.9 3.72 3.72 0 01-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.9 5.9 0 00-2.13 1.38A5.9 5.9 0 00.63 4.14c-.3.76-.5 1.64-.56 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.79.72 1.46 1.38 2.13a5.9 5.9 0 002.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.9 5.9 0 002.13-1.38 5.9 5.9 0 001.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 00-1.38-2.13A5.9 5.9 0 0019.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0z'/><path d='M12 5.84A6.16 6.16 0 1018.16 12 6.16 6.16 0 0012 5.84zM12 16a4 4 0 114-4 4 4 0 01-4 4z'/><circle cx='18.41' cy='5.59' r='1.44'/></svg>") center/contain no-repeat;mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.72 3.72 0 01-1.38-.9 3.72 3.72 0 01-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41 1.27-.06 1.65-.07 4.85-.07M12 0C8.74 0 8.33.01 7.05.07 5.78.13 4.9.33 4.14.63a5.9 5.9 0 00-2.13 1.38A5.9 5.9 0 00.63 4.14c-.3.76-.5 1.64-.56 2.91C.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.06 1.27.26 2.15.56 2.91.3.79.72 1.46 1.38 2.13a5.9 5.9 0 002.13 1.38c.76.3 1.64.5 2.91.56C8.33 23.99 8.74 24 12 24s3.67-.01 4.95-.07c1.27-.06 2.15-.26 2.91-.56a5.9 5.9 0 002.13-1.38 5.9 5.9 0 001.38-2.13c.3-.76.5-1.64.56-2.91.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.06-1.27-.26-2.15-.56-2.91a5.9 5.9 0 00-1.38-2.13A5.9 5.9 0 0019.86.63c-.76-.3-1.64-.5-2.91-.56C15.67.01 15.26 0 12 0z'/><path d='M12 5.84A6.16 6.16 0 1018.16 12 6.16 6.16 0 0012 5.84zM12 16a4 4 0 114-4 4 4 0 01-4 4z'/><circle cx='18.41' cy='5.59' r='1.44'/></svg>") center/contain no-repeat}
 .soc-tt{color:var(--sec-fg,#fff)}
 .soc:hover{transform:translateY(-2px) scale(1.06)}
 .soc:focus-visible{outline:2px solid currentColor;outline-offset:4px}
