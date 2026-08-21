@@ -88,21 +88,23 @@ body.no-scroll{overflow:hidden}
   text-transform:uppercase;color:var(--h-fg);background:none;border:0;cursor:pointer;white-space:nowrap;
   font-family:inherit;line-height:1.2;text-align:left}
 .nav-i .soon{display:block;font-size:8px;letter-spacing:.16em;opacity:.6;font-weight:700;margin-top:2px}
-.nav-i::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:1.5px;background:currentColor;
-  transform:scaleX(0);transform-origin:left;transition:transform .4s var(--e)}
-.nav-i:hover::after,.nav-i.on::after,.nav-i[aria-expanded="true"]::after{transform:scaleX(1)}
+.nav-i::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1.5px;background:currentColor;
+  opacity:0;transition:opacity .25s var(--e)}
+.nav-i.on::after,.nav-i[aria-expanded="true"]::after{opacity:1}
 .nav-i.dim{opacity:.5;cursor:default}
 .nav-i.dim::after{display:none}
 .nav-r{display:flex;gap:2px;justify-self:end;align-items:center}
-.ico{width:38px;height:38px;display:grid;place-items:center;border-radius:50%;position:relative;
-  color:var(--h-fg);transition:background .3s var(--e)}
-.ico:hover{background:var(--h-hover)}
+.ico{width:38px;height:38px;display:grid;place-items:center;position:relative;
+  color:var(--h-fg);opacity:.86;transition:opacity .3s var(--e)}
+.ico:hover{opacity:1}
 .ico svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.5;
   stroke-linecap:round;stroke-linejoin:round}
-.cnt{position:absolute;top:4px;right:2px;background:var(--h-fg);color:var(--h-bg);font-size:9px;
+.ico>.cnt{position:absolute;top:3px;right:0;background:var(--h-fg);color:var(--h-bg);font-size:9px;
   font-weight:800;min-width:15px;height:15px;border-radius:50%;display:grid;place-items:center;
   padding:0 3px;line-height:1;text-shadow:none}
-.hdr.is-clear .cnt{background:#fff;color:#111}
+.hdr.is-clear .ico>.cnt{background:#fff;color:#111}
+.ico>.cnt{opacity:0;transform:scale(.6);transition:opacity .3s var(--e),transform .3s var(--e)}
+.ico>.cnt.on{opacity:1;transform:none}
 .burger{display:none;width:20px;height:14px;position:relative;margin-right:14px;background:none;border:0;
   cursor:pointer;padding:0;color:var(--h-fg)}
 .burger i{position:absolute;left:0;width:100%;height:1.5px;background:currentColor;transition:.35s var(--e)}
@@ -160,20 +162,30 @@ body.no-scroll{overflow:hidden}
 .mcol ul.mlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:11px 30px}
 .mega-flat{grid-template-columns:minmax(0,1fr)}
 
-/* ---- tap / press feedback ---- */
+/* ---- press feedback: punch, no circles ---- */
 [data-tap]{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
-.ico,.burger{overflow:hidden;transition:background .3s var(--e),transform .16s var(--e)}
-.ico.is-tap,.burger.is-tap{transform:scale(.86)}
-.nav-i{transition:opacity .16s var(--e),transform .16s var(--e)}
-.nav-i.is-tap{transform:translateY(1px);opacity:.62}
-.rip{position:absolute;border-radius:50%;background:currentColor;opacity:.3;pointer-events:none;
-  transform:translate(-50%,-50%) scale(0);animation:rip .55s var(--e) forwards;z-index:0}
-.nav-i .rip{opacity:.16}
-@keyframes rip{to{transform:translate(-50%,-50%) scale(1);opacity:0}}
-.ico svg,.ico .cnt,.burger i{position:relative;z-index:1}
+.ico svg,.burger i{transition:transform .18s var(--e)}
+.ico.is-tap svg{transform:scale(.8)}
+.burger.is-tap i{transform:scaleX(.78)}
+@keyframes punch{0%{transform:scale(.8)}55%{transform:scale(1.16)}100%{transform:scale(1)}}
+.ico.punch svg{animation:punch .4s var(--e)}
+@keyframes punchx{0%{transform:scaleX(.78)}55%{transform:scaleX(1.12)}100%{transform:scaleX(1)}}
+.burger.punch i{animation:punchx .4s var(--e)}
+.nav-i.is-tap{opacity:.6}
+.nav-i{transition:opacity .18s var(--e)}
+
+/* ---- nav label: stuttered letter roll ---- */
+.nfx{position:relative;display:inline-block;overflow:hidden;vertical-align:top;line-height:1.25}
+.nfx-a,.nfx-b{display:block;white-space:nowrap}
+.nfx-b{position:absolute;left:0;top:0;transform:translateY(100%)}
+.nfx i{display:inline-block;font-style:normal;will-change:transform;
+  transition:transform .46s var(--e);transition-delay:calc(var(--i) * 26ms)}
+.nav-i:hover .nfx i,.nav-i:focus-visible .nfx i,.nav-i[aria-expanded="true"] .nfx i{transform:translateY(-100%)}
+.nfx i.sp{width:.32em}
 @media(prefers-reduced-motion:reduce){
-  .rip{display:none}
-  .ico.is-tap,.burger.is-tap,.nav-i.is-tap{transform:none}
+  .nfx i{transition:none}
+  .ico.is-tap svg,.burger.is-tap i{transform:none}
+  .ico.punch svg,.burger.punch i{animation:none}
 }
 
 .scrim{position:fixed;inset:0;background:rgba(17,17,17,.34);opacity:0;pointer-events:none;

@@ -136,7 +136,7 @@ function initBands(root){
   }
   window.__ryvtPar=window.__ryvtPar.concat(bands);
 }
-function boot(root){ initRows(root); initTap(root); initAcc(root); initProduct(root); initFav(root); initBands(root); observe(root); }
+function boot(root){ initRows(root); initTap(root); initNavFx(root); initAcc(root); initProduct(root); initFav(root); initBands(root); observe(root); }
 document.addEventListener("DOMContentLoaded",function(){ initHeader(); initPanels(); boot(document); });
 document.addEventListener("shopify:section:load",function(e){ initHeader(); initPanels(); boot(e.target); });
 
@@ -165,31 +165,55 @@ function initTap(root){
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   (root||document).querySelectorAll("[data-tap]").forEach(function(el){
     if(el.dataset.tapReady) return; el.dataset.tapReady="1";
-    function press(e){
-      el.classList.add("is-tap");
-      if(!reduce){
-        var r=el.getBoundingClientRect();
-        var x=(e.clientX!=null? e.clientX-r.left : r.width/2);
-        var y=(e.clientY!=null? e.clientY-r.top  : r.height/2);
-        var d=Math.max(r.width,r.height)*2.2;
-        var s=document.createElement("span");
-        s.className="rip";
-        s.style.width=s.style.height=d+"px";
-        s.style.left=x+"px"; s.style.top=y+"px";
-        el.appendChild(s);
-        setTimeout(function(){ if(s.parentNode) s.parentNode.removeChild(s); },560);
-      }
+    var timer=null;
+    function down(){ el.classList.remove("punch"); el.classList.add("is-tap"); }
+    function up(){
+      if(!el.classList.contains("is-tap")) return;
+      el.classList.remove("is-tap");
+      if(reduce) return;
+      void el.offsetWidth;
+      el.classList.add("punch");
+      clearTimeout(timer);
+      timer=setTimeout(function(){ el.classList.remove("punch"); },420);
     }
-    function release(){ el.classList.remove("is-tap"); }
-    el.addEventListener("pointerdown", press);
-    el.addEventListener("pointerup", release);
-    el.addEventListener("pointercancel", release);
-    el.addEventListener("pointerleave", release);
-    el.addEventListener("keydown", function(e){
-      if(e.key==="Enter"||e.key===" "){ press({}); }
-    });
-    el.addEventListener("keyup", release);
-    el.addEventListener("blur", release);
+    el.addEventListener("pointerdown", down);
+    el.addEventListener("pointerup", up);
+    el.addEventListener("pointercancel", function(){ el.classList.remove("is-tap"); });
+    el.addEventListener("pointerleave", function(){ el.classList.remove("is-tap"); });
+    el.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" ") down(); });
+    el.addEventListener("keyup", up);
+    el.addEventListener("blur", function(){ el.classList.remove("is-tap"); });
+  });
+}
+
+/* split each nav label into two stacked rows of letters for the roll */
+function initNavFx(root){
+  (root||document).querySelectorAll(".nav-i").forEach(function(el){
+    if(el.dataset.fx || el.classList.contains("dim")) return;
+    if(el.querySelector(".soon") || el.querySelector(".nfx")) return;
+    var txt = (el.textContent||"").trim();
+    if(!txt || txt.length > 28) return;
+    el.dataset.fx="1";
+    function row(cls, hide){
+      var r=document.createElement("span");
+      r.className=cls;
+      if(hide) r.setAttribute("aria-hidden","true");
+      txt.split("").forEach(function(ch,i){
+        var c=document.createElement("i");
+        c.style.setProperty("--i", i);
+        if(ch===" "){ c.className="sp"; c.innerHTML="&nbsp;"; }
+        else c.textContent=ch;
+        r.appendChild(c);
+      });
+      return r;
+    }
+    var wrap=document.createElement("span");
+    wrap.className="nfx";
+    wrap.appendChild(row("nfx-a", false));
+    wrap.appendChild(row("nfx-b", true));
+    el.textContent="";
+    el.setAttribute("aria-label", txt);
+    el.appendChild(wrap);
   });
 }
 
@@ -302,6 +326,7 @@ function initHeader(){
   window.__ryvtCloseMega = closeMega;
   initTap(hdr);
   initTap(document.getElementById("drawer"));
+  initNavFx(hdr);
 
   /* --- announcement bar --- */
   if(abar){
