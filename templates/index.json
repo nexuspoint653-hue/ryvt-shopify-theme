@@ -126,22 +126,22 @@
         "s1": {
           "type": "stat",
           "settings": {
-            "value": "2019",
-            "label": "First cut sewn"
+            "value": "240",
+            "label": "GSM heavyweight cotton"
           }
         },
         "s2": {
           "type": "stat",
           "settings": {
-            "value": "240",
-            "label": "GSM heavyweight cotton"
+            "value": "7",
+            "label": "Years cut in Detroit"
           }
         },
         "s3": {
           "type": "stat",
           "settings": {
             "value": "20mi",
-            "label": "From studio to seam"
+            "label": "Studio to finished seam"
           }
         },
         "s4": {
