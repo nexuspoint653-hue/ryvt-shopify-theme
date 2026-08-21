@@ -1,0 +1,72 @@
+{% render 'section-style', s: section %}
+{%- assign h = section.settings.band_height -%}
+<section class="mband mband--{{ h }}"{% if section.settings.parallax %} data-mband-par{% endif %}>
+  {%- if section.settings.video != blank -%}
+    <video class="mband-m" autoplay muted loop playsinline
+      {% if section.settings.poster %}poster="{{ section.settings.poster | image_url: width: 1600 }}"{% endif %}
+      src="{{ section.settings.video }}"></video>
+  {%- elsif section.settings.image != blank -%}
+    <img class="mband-m" src="{{ section.settings.image | image_url: width: 2400 }}"
+      srcset="{{ section.settings.image | image_url: width: 900 }} 900w,
+              {{ section.settings.image | image_url: width: 1500 }} 1500w,
+              {{ section.settings.image | image_url: width: 2400 }} 2400w"
+      sizes="100vw" alt="{{ section.settings.image.alt | escape }}"
+      loading="lazy" decoding="async">
+  {%- else -%}
+    <div class="mband-m mband-ph"></div>
+  {%- endif -%}
+
+  {%- if section.settings.overlay_title != blank or section.settings.overlay_sub != blank -%}
+    <div class="mband-ov mband-ov--{{ section.settings.overlay_pos }}">
+      {%- if section.settings.overlay_title != blank -%}
+        <h2 class="mband-t">{{ section.settings.overlay_title }}</h2>
+      {%- endif -%}
+      {%- if section.settings.overlay_sub != blank -%}
+        <p class="mband-s">{{ section.settings.overlay_sub }}</p>
+      {%- endif -%}
+      {%- if section.settings.link_text != blank -%}
+        <a class="btn btn-ghost" href="{{ section.settings.link }}">{{ section.settings.link_text }}</a>
+      {%- endif -%}
+    </div>
+    {%- if section.settings.scrim -%}<div class="mband-scrim"></div>{%- endif -%}
+  {%- endif -%}
+</section>
+{% schema %}
+{
+  "name": "Media band",
+  "tag": "section",
+  "settings": [
+    { "type": "paragraph", "content": "A full-bleed image or video band. Leave the overlay text empty for a silent, edge-to-edge panel between copy blocks." },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "url", "id": "video", "label": "Video file URL", "info": "Upload an MP4 under Content > Files, then paste its URL here. Overrides the image." },
+    { "type": "image_picker", "id": "poster", "label": "Video poster" },
+    { "type": "select", "id": "band_height", "label": "Height", "default": "full",
+      "options": [
+        { "value": "full", "label": "Full screen" },
+        { "value": "tall", "label": "Tall (80%)" },
+        { "value": "mid",  "label": "Medium (60%)" },
+        { "value": "short","label": "Short (42%)" }
+      ]},
+    { "type": "checkbox", "id": "parallax", "label": "Subtle parallax drift", "default": true },
+    { "type": "header", "content": "Overlay (optional)" },
+    { "type": "text", "id": "overlay_title", "label": "Title" },
+    { "type": "text", "id": "overlay_sub", "label": "Caption" },
+    { "type": "select", "id": "overlay_pos", "label": "Position", "default": "center",
+      "options": [
+        { "value": "center", "label": "Centre" },
+        { "value": "bl", "label": "Bottom left" },
+        { "value": "bc", "label": "Bottom centre" }
+      ]},
+    { "type": "checkbox", "id": "scrim", "label": "Darken behind text", "default": true },
+    { "type": "text", "id": "link_text", "label": "Button" },
+    { "type": "url", "id": "link", "label": "Button link" },
+    { "type": "header", "content": "Appearance" },
+    { "type": "select", "id": "scheme", "label": "Background", "default": "light",
+      "options": [{"value":"light","label":"White"},{"value":"alt","label":"Off-white"},
+                  {"value":"sand","label":"Sand"},{"value":"dark","label":"Dark"},{"value":"custom","label":"Custom"}] },
+    { "type": "color", "id": "bg_custom", "label": "Custom background", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_custom", "label": "Custom text", "default": "#111111" }
+  ],
+  "presets": [{ "name": "Media band" }]
+}
+{% endschema %}

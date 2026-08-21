@@ -1,8 +1,12 @@
 {% render 'section-style', s: section %}
-<div class="wrap" style="padding-block:clamp(30px,4vw,56px)">
-  <h1 class="h2">{{ page.title }}</h1>
-  <div class="rte" style="max-width:76ch;margin-top:20px">{{ page.content }}</div>
-</div>
+<section class="pagex">
+  <div class="pagex-in">
+    <h1 class="ed-h ed-serif" data-rv>{{ page.title }}</h1>
+    {%- if page.content != blank -%}
+      <div class="ed-rte rte" data-rv>{{ page.content }}</div>
+    {%- endif -%}
+  </div>
+</section>
 {% schema %}
 {
   "name": "Page",

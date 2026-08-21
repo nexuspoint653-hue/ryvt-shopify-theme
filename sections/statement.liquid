@@ -1,0 +1,57 @@
+{% render 'section-style', s: section %}
+<section class="stmt stmt--{{ section.settings.size }}">
+  <div class="stmt-in">
+    {%- if section.settings.eyebrow != blank -%}
+      <div class="mini stmt-eb" data-rv>{{ section.settings.eyebrow }}</div>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="ed-h {% if section.settings.serif %}ed-serif{% endif %}" data-rv>{{ section.settings.heading }}</h2>
+    {%- endif -%}
+    {%- for block in section.blocks -%}
+      {%- if block.settings.body != blank -%}
+        <div class="ed-p rte" data-rv {{ block.shopify_attributes }}>{{ block.settings.body }}</div>
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if section.settings.link_text != blank -%}
+      <div class="stmt-cta" data-rv>
+        <a class="ed-link" href="{{ section.settings.link }}">{{ section.settings.link_text }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Statement",
+  "tag": "section",
+  "settings": [
+    { "type": "paragraph", "content": "A centred editorial block — the quiet copy that sits between full-bleed media bands." },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "About Us" },
+    { "type": "checkbox", "id": "serif", "label": "Serif heading", "default": true },
+    { "type": "select", "id": "size", "label": "Breathing room", "default": "lg",
+      "options": [
+        { "value": "sm", "label": "Tight" },
+        { "value": "md", "label": "Normal" },
+        { "value": "lg", "label": "Generous" },
+        { "value": "xl", "label": "Cinematic" }
+      ]},
+    { "type": "text", "id": "link_text", "label": "Link" },
+    { "type": "url", "id": "link", "label": "Link URL" },
+    { "type": "header", "content": "Appearance" },
+    { "type": "select", "id": "scheme", "label": "Background", "default": "light",
+      "options": [{"value":"light","label":"White"},{"value":"alt","label":"Off-white"},
+                  {"value":"sand","label":"Sand"},{"value":"dark","label":"Dark"},{"value":"custom","label":"Custom"}] },
+    { "type": "color", "id": "bg_custom", "label": "Custom background", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_custom", "label": "Custom text", "default": "#111111" },
+    { "type": "range", "id": "pad_top", "label": "Extra top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 },
+    { "type": "range", "id": "pad_bottom", "label": "Extra bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 }
+  ],
+  "blocks": [
+    { "type": "para", "name": "Paragraph", "settings": [
+      { "type": "richtext", "id": "body", "label": "Text",
+        "default": "<p>RYVT is built in Metro Detroit for people who train, move and live in the same clothes. Considered cuts, honest fabric, nothing loud.</p>" }
+    ]}
+  ],
+  "presets": [{ "name": "Statement", "blocks": [{ "type": "para" }, { "type": "para" }] }]
+}
+{% endschema %}

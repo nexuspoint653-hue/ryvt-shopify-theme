@@ -1,34 +1,87 @@
 {% render 'section-style', s: section %}
-<section class="sec-pad">
-  <div class="wrap-narrow">
-    {%- if section.settings.eyebrow != blank -%}<div class="mini">{{ section.settings.eyebrow }}</div>{%- endif -%}
-    {%- if section.settings.heading != blank -%}<h2 class="h2" style="margin-top:8px">{{ section.settings.heading }}</h2>{%- endif -%}
-    {%- if section.settings.intro != blank -%}<p class="lede">{{ section.settings.intro }}</p>{%- endif -%}
-
-    <div class="faq" style="margin-top:28px">
-      {%- assign group = '' -%}
-      {%- for block in section.blocks -%}
-        {%- if block.settings.group != blank and block.settings.group != group -%}
-          {%- assign group = block.settings.group -%}
-          <h3 class="faq-group">{{ group }}</h3>
-        {%- endif -%}
-        <div class="acc" {{ block.shopify_attributes }}>
-          <button type="button" class="acc-h" aria-expanded="false">{{ block.settings.q }} <span>+</span></button>
-          <div class="acc-b"><div class="rte">{{ block.settings.a }}</div></div>
-        </div>
-      {%- endfor -%}
-    </div>
-
-    {%- if section.settings.foot != blank -%}
-      <div class="faq-foot">
-        <p>{{ section.settings.foot }}</p>
-        {%- if section.settings.foot_link_text != blank -%}
-          <a class="btn" href="{{ section.settings.foot_link }}">{{ section.settings.foot_link_text }}</a>
-        {%- endif -%}
-      </div>
+<section class="faqx sec-pad">
+  <div class="faqx-head">
+    {%- if section.settings.eyebrow != blank -%}<div class="mini" data-rv>{{ section.settings.eyebrow }}</div>{%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h2 class="ed-h ed-serif" data-rv style="margin-top:14px">{{ section.settings.heading }}</h2>
     {%- endif -%}
+    {%- if section.settings.intro != blank -%}<p class="ed-p" data-rv>{{ section.settings.intro }}</p>{%- endif -%}
   </div>
+
+  {%- assign groups = '' -%}
+  {%- for block in section.blocks -%}
+    {%- if block.settings.group != blank -%}
+      {%- unless groups contains block.settings.group -%}
+        {%- assign groups = groups | append: block.settings.group | append: '|' -%}
+      {%- endunless -%}
+    {%- endif -%}
+  {%- endfor -%}
+  {%- assign glist = groups | split: '|' -%}
+
+  {%- if glist.size > 1 -%}
+    <nav class="faqx-tabs" aria-label="Topics">
+      <button type="button" class="on" data-faq-tab="all">All</button>
+      {%- for g in glist -%}
+        <button type="button" data-faq-tab="{{ g | handleize }}">{{ g }}</button>
+      {%- endfor -%}
+    </nav>
+  {%- endif -%}
+
+  <div class="faqx-body">
+    {%- assign group = '' -%}
+    {%- for block in section.blocks -%}
+      {%- if block.settings.group != blank and block.settings.group != group -%}
+        {%- assign group = block.settings.group -%}
+        <div class="faqx-g" data-faq-group="{{ group | handleize }}">
+          <div class="mini faqx-gl">{{ group }}</div>
+        </div>
+      {%- endif -%}
+      <div class="faqx-row" data-faq-group="{{ group | handleize }}" {{ block.shopify_attributes }}>
+        <button type="button" class="faqx-q" aria-expanded="false">
+          <span>{{ block.settings.q }}</span>
+          <i class="faqx-i" aria-hidden="true"></i>
+        </button>
+        <div class="faqx-a"><div class="rte">{{ block.settings.a }}</div></div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- if section.settings.foot != blank -%}
+    <div class="faqx-foot" data-rv>
+      <p class="ed-p" style="margin:0">{{ section.settings.foot }}</p>
+      {%- if section.settings.foot_link_text != blank -%}
+        <a class="btn" href="{{ section.settings.foot_link }}">{{ section.settings.foot_link_text }}</a>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
 </section>
+<script>
+(function(){
+  document.querySelectorAll('.faqx').forEach(function(root){
+    root.querySelectorAll('.faqx-q').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var open = btn.getAttribute('aria-expanded') === 'true';
+        root.querySelectorAll('.faqx-q[aria-expanded="true"]').forEach(function(o){
+          if(o !== btn){ o.setAttribute('aria-expanded','false'); o.parentElement.classList.remove('on'); }
+        });
+        btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+        btn.parentElement.classList.toggle('on', !open);
+      });
+    });
+    var tabs = root.querySelectorAll('[data-faq-tab]');
+    tabs.forEach(function(t){
+      t.addEventListener('click', function(){
+        tabs.forEach(function(x){ x.classList.remove('on'); });
+        t.classList.add('on');
+        var key = t.getAttribute('data-faq-tab');
+        root.querySelectorAll('[data-faq-group]').forEach(function(el){
+          el.style.display = (key === 'all' || el.getAttribute('data-faq-group') === key) ? '' : 'none';
+        });
+      });
+    });
+  });
+})();
+</script>
 {% schema %}
 {
   "name": "FAQ",

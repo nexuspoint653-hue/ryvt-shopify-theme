@@ -1,0 +1,95 @@
+{% render 'section-style', s: section %}
+<section class="cform sec-pad">
+  <div class="cform-in">
+    <div class="cform-l">
+      {%- if section.settings.eyebrow != blank -%}<div class="mini">{{ section.settings.eyebrow }}</div>{%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="ed-h ed-serif" style="margin-top:14px;text-align:left">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}<div class="rte cform-body">{{ section.settings.body }}</div>{%- endif -%}
+      <div class="cform-meta">
+        {%- for block in section.blocks -%}
+          <div class="cform-item" {{ block.shopify_attributes }}>
+            <div class="mini">{{ block.settings.label }}</div>
+            <div class="cform-val">
+              {%- if block.settings.link != blank -%}
+                <a class="ed-link" href="{{ block.settings.link }}">{{ block.settings.value }}</a>
+              {%- else -%}{{ block.settings.value }}{%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <div class="cform-r">
+      {%- form 'contact', class: 'cf' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="cf-ok">{{ section.settings.success | default: 'Thanks — we will come back to you within one business day.' }}</p>
+        {%- endif -%}
+        {%- if form.errors -%}
+          <p class="cf-err">{{ form.errors | default_errors }}</p>
+        {%- endif -%}
+        <div class="cf-row">
+          <label class="cf-f">
+            <span class="mini">Name</span>
+            <input type="text" name="contact[name]" value="{{ form.name }}" autocomplete="name" required>
+          </label>
+          <label class="cf-f">
+            <span class="mini">Email</span>
+            <input type="email" name="contact[email]" value="{{ form.email }}" autocomplete="email" required>
+          </label>
+        </div>
+        <label class="cf-f">
+          <span class="mini">Subject</span>
+          <select name="contact[subject]">
+            {%- assign subs = section.settings.subjects | split: ',' -%}
+            {%- for s in subs -%}<option value="{{ s | strip }}">{{ s | strip }}</option>{%- endfor -%}
+          </select>
+        </label>
+        <label class="cf-f">
+          <span class="mini">Order number <em>(optional)</em></span>
+          <input type="text" name="contact[order]" placeholder="#1024">
+        </label>
+        <label class="cf-f">
+          <span class="mini">Message</span>
+          <textarea name="contact[body]" rows="6" required>{{ form.body }}</textarea>
+        </label>
+        <button type="submit" class="btn btn-solid cf-send">{{ section.settings.button | default: 'Send message' }}</button>
+        <p class="cf-note">{{ section.settings.note }}</p>
+      {%- endform -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Contact form",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Customer Care" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Talk to us" },
+    { "type": "richtext", "id": "body", "label": "Body",
+      "default": "<p>Sizing, orders, returns or wholesale — a real person reads every message. We answer within one business day, Monday to Friday.</p>" },
+    { "type": "text", "id": "subjects", "label": "Subject options (comma separated)",
+      "default": "Order help, Sizing & fit, Returns & exchanges, Wholesale, Something else" },
+    { "type": "text", "id": "button", "label": "Button", "default": "Send message" },
+    { "type": "text", "id": "success", "label": "Success message", "default": "Thanks — we will come back to you within one business day." },
+    { "type": "text", "id": "note", "label": "Small print", "default": "We only use your details to answer this message." },
+    { "type": "header", "content": "Appearance" },
+    { "type": "select", "id": "scheme", "label": "Background", "default": "light",
+      "options": [{"value":"light","label":"White"},{"value":"alt","label":"Off-white"},
+                  {"value":"sand","label":"Sand"},{"value":"dark","label":"Dark"},{"value":"custom","label":"Custom"}] },
+    { "type": "color", "id": "bg_custom", "label": "Custom background", "default": "#FFFFFF" },
+    { "type": "color", "id": "text_custom", "label": "Custom text", "default": "#111111" },
+    { "type": "range", "id": "pad_top", "label": "Extra top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 },
+    { "type": "range", "id": "pad_bottom", "label": "Extra bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 }
+  ],
+  "blocks": [
+    { "type": "detail", "name": "Detail", "settings": [
+      { "type": "text", "id": "label", "label": "Label", "default": "Email" },
+      { "type": "text", "id": "value", "label": "Value", "default": "hello@wearryvt.com" },
+      { "type": "url", "id": "link", "label": "Link" }
+    ]}
+  ],
+  "presets": [{ "name": "Contact form", "blocks": [{ "type": "detail" }, { "type": "detail" }] }]
+}
+{% endschema %}
