@@ -136,7 +136,7 @@ function initBands(root){
   }
   window.__ryvtPar=window.__ryvtPar.concat(bands);
 }
-function boot(root){ initRows(root); initTap(root); initNavFx(root); initAcc(root); initProduct(root); initFav(root); initBands(root); observe(root); }
+function boot(root){ initRows(root); initTap(root); initNavFx(root); initPin(root); initAcc(root); initProduct(root); initFav(root); initBands(root); observe(root); }
 document.addEventListener("DOMContentLoaded",function(){ initHeader(); initPanels(); boot(document); });
 document.addEventListener("shopify:section:load",function(e){ initHeader(); initPanels(); boot(e.target); });
 
@@ -214,6 +214,41 @@ function initNavFx(root){
     el.textContent="";
     el.setAttribute("aria-label", txt);
     el.appendChild(wrap);
+  });
+}
+
+/* hero pin: the next section scrolls up over a held hero */
+function initPin(root){
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  (root||document).querySelectorAll("[data-pin]").forEach(function(el){
+    if(el.dataset.pinReady) return; el.dataset.pinReady="1";
+    var fade = (parseFloat(el.dataset.pinFade||"60")/100);
+    el.style.setProperty("--pin-fade", fade);
+    if(reduce) return;
+    if(!window.__pinList){
+      window.__pinList=[];
+      var t=false;
+      function frame(){
+        window.__pinList.forEach(function(h){
+          var wrap = h.parentElement || h;
+          var next = wrap.nextElementSibling;
+          var span = h.offsetHeight || wrap.offsetHeight || 1;
+          var covered;
+          if(next){
+            covered = (span - next.getBoundingClientRect().top) / span;
+          } else {
+            covered = window.scrollY / span;
+          }
+          covered = Math.min(1, Math.max(0, covered));
+          h.style.setProperty("--pin-p", covered.toFixed(3));
+        });
+        t=false;
+      }
+      window.addEventListener("scroll",function(){ if(!t){ t=true; requestAnimationFrame(frame); } },{passive:true});
+      window.addEventListener("resize",frame);
+      frame();
+    }
+    window.__pinList.push(el);
   });
 }
 
