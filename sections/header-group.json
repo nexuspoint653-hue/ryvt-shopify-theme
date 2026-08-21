@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "type": "header",
   "name": "Header",
@@ -5,21 +14,70 @@
     "header": {
       "type": "header",
       "blocks": {
-        "card1": { "type": "menu_card", "settings": { "position": 1, "label": "Shop Men" } },
-        "t1": { "type": "search_tile", "settings": { "label": "T-Shirts" } },
-        "t2": { "type": "search_tile", "settings": { "label": "Tanks" } },
-        "t3": { "type": "search_tile", "settings": { "label": "Bottoms" } },
-        "t4": { "type": "search_tile", "settings": { "label": "Accessories" } }
+        "card1": {
+          "type": "menu_card",
+          "settings": {
+            "position": 1,
+            "label": "Shop Men",
+            "link": ""
+          }
+        },
+        "t1": {
+          "type": "search_tile",
+          "settings": {
+            "collection": "",
+            "image": "shopify://shop_images/original_75d199da-8e1c-49ef-ba9a-4526a4ee109f.png",
+            "label": "T-Shirts",
+            "link": ""
+          }
+        },
+        "t2": {
+          "type": "search_tile",
+          "settings": {
+            "collection": "",
+            "image": "shopify://shop_images/original_d2499fbd-0f85-4298-b7cf-98a58afb6532.png",
+            "label": "Tanks",
+            "link": ""
+          }
+        },
+        "t3": {
+          "type": "search_tile",
+          "settings": {
+            "collection": "",
+            "image": "shopify://shop_images/original_11202830-dcae-492e-b1a2-94ad4ac23eb3.png",
+            "label": "Bottoms",
+            "link": ""
+          }
+        },
+        "t4": {
+          "type": "search_tile",
+          "settings": {
+            "collection": "",
+            "image": "shopify://shop_images/original_f2168c7e-779e-4a7f-b93f-7d6ea5795a74.png",
+            "label": "Accessories",
+            "link": ""
+          }
+        }
       },
-      "block_order": ["card1", "t1", "t2", "t3", "t4"],
+      "block_order": [
+        "card1",
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
       "settings": {
         "menu": "main-menu",
+        "logo_height": 26,
         "wordmark": "RYVT",
         "soon_label": "Women",
         "popular": "Heavyweight Tee, Tanks, Cargo Pants, Garment Dyed",
-        "fabric_title": "Our Fabric"
+        "fabric_title": "Our Fabric",
+        "fabric_menu": ""
       }
     }
   },
-  "order": ["header"]
+  "order": [
+    "header"
+  ]
 }
