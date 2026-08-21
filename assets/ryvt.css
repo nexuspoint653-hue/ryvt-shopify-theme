@@ -269,9 +269,17 @@ body.no-scroll{overflow:hidden}
 .hero-c{position:absolute;z-index:2;left:clamp(14px,5vw,76px);top:50%;transform:translateY(-50%);max-width:540px}
 
 /* ---------- untouched storytelling ---------- */
-.tee-sec{position:relative;background:var(--bg2);padding:clamp(56px,8vw,120px) 0;overflow:hidden}
-.tee-sec .glyph{position:absolute;right:-3%;top:50%;transform:translateY(-50%);width:min(42vw,560px);opacity:.05}
-.tee-sec .wrap{position:relative;z-index:2}
+.tee-sec{position:relative;background:var(--bg2);padding:clamp(56px,8vw,120px) 0;overflow:hidden;
+  display:flex;flex-direction:column}
+.tee-sec--auto{min-height:0}
+.tee-sec--mid {min-height:62svh}
+.tee-sec--tall{min-height:82svh}
+.tee-sec--full{min-height:100svh}
+.tee-sec--vcenter{justify-content:center}
+.tee-sec--vtop{justify-content:flex-start}
+.tee-sec--vbottom{justify-content:flex-end}
+.tee-sec .glyph{position:absolute;right:-3%;top:50%;transform:translateY(-50%);width:min(42vw,560px);opacity:.05;z-index:1}
+.tee-sec .wrap{position:relative;z-index:2;width:100%}
 .ulink{position:relative;display:inline-block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;padding-bottom:4px}
 .ulink::after{content:"";position:absolute;left:0;bottom:0;height:1px;width:100%;background:currentColor;
   transform-origin:right;transition:transform .5s var(--e)}
