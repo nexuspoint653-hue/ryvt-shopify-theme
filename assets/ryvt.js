@@ -136,7 +136,7 @@ function initBands(root){
   }
   window.__ryvtPar=window.__ryvtPar.concat(bands);
 }
-function boot(root){ initRows(root); initTap(root); initNavFx(root); initCards(root); initPin(root); initAcc(root); initProduct(root); initFav(root); initBands(root); observe(root); }
+function boot(root){ initRows(root); initTap(root); initNavFx(root); initCards(root); initCount(root); initPin(root); initAcc(root); initProduct(root); initFav(root); initBands(root); observe(root); }
 document.addEventListener("DOMContentLoaded",function(){ initHeader(); initPanels(); boot(document); });
 document.addEventListener("shopify:section:load",function(e){ initHeader(); initPanels(); boot(e.target); });
 
@@ -282,6 +282,61 @@ function initCards(root){
     card.querySelectorAll(".pc-size:not(.out), .pc-add1").forEach(function(btn){
       btn.addEventListener("click", function(e){ e.preventDefault(); e.stopPropagation(); addToBag(btn); });
     });
+  });
+}
+
+/* count numbers up from zero when they scroll into view */
+function initCount(root){
+  var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  (root||document).querySelectorAll("[data-count]").forEach(function(el, idx){
+    if(el.dataset.countReady) return; el.dataset.countReady="1";
+    var raw = (el.textContent||"").trim();
+    var m = raw.match(/^([^0-9]*)([0-9][0-9.,]*)([^0-9]*)$/);
+    if(!m) return;
+    var pre = m[1], numStr = m[2], suf = m[3];
+    var hasComma = numStr.indexOf(",") > -1;
+    var decimals = (numStr.split(".")[1] || "").length;
+    var target = parseFloat(numStr.replace(/,/g, ""));
+    if(isNaN(target)) return;
+    function fmt(v){
+      var out = decimals ? v.toFixed(decimals) : String(Math.round(v));
+      if(hasComma) out = out.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      return pre + out + suf;
+    }
+    el.setAttribute("aria-label", raw);
+    if(reduce){ el.textContent = fmt(target); return; }
+    el.textContent = fmt(0);
+    var delay = (parseInt(el.dataset.countDelay, 10) || 0);
+    if(!delay){
+      var sibs = el.closest("[data-count-group]") || el.parentElement && el.parentElement.parentElement;
+      if(sibs){
+        var all = [].slice.call(sibs.querySelectorAll("[data-count]"));
+        delay = Math.max(0, all.indexOf(el)) * 90;
+      }
+    }
+    var dur = parseInt(el.dataset.countDur, 10) || 1100;
+    var started = false;
+    function run(){
+      if(started) return; started = true;
+      setTimeout(function(){
+        var t0 = null;
+        function step(ts){
+          if(t0 === null) t0 = ts;
+          var p = Math.min(1, (ts - t0) / dur);
+          var e = 1 - Math.pow(1 - p, 4);
+          el.textContent = fmt(target * e);
+          if(p < 1) requestAnimationFrame(step);
+          else el.textContent = fmt(target);
+        }
+        requestAnimationFrame(step);
+      }, delay);
+    }
+    if("IntersectionObserver" in window){
+      var io = new IntersectionObserver(function(ents){
+        ents.forEach(function(en){ if(en.isIntersecting){ run(); io.disconnect(); } });
+      }, { threshold: 0.35 });
+      io.observe(el);
+    } else run();
   });
 }
 
