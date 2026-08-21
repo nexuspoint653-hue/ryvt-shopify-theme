@@ -2,7 +2,7 @@
 <section class="duo" data-duo>
   {%- if section.settings.eyebrow != blank or section.blocks.size > 2 -%}
     <div class="duo-bar">
-      <div class="mini">{{ section.settings.eyebrow }}</div>
+      <div class="tag">{{ section.settings.eyebrow }}</div>
       {%- if section.blocks.size > 2 -%}
         <div class="duo-nav">
           <button type="button" class="duo-b" data-duo-prev aria-label="Previous">&#8592;</button>
@@ -28,6 +28,7 @@
         {%- endif -%}
         <div class="duo-scrim"></div>
         <div class="duo-txt">
+          <div class="num duo-n">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
           {%- if block.settings.title != blank -%}<h3 class="duo-t">{{ block.settings.title }}</h3>{%- endif -%}
           {%- if block.settings.caption != blank -%}<p class="duo-cap">{{ block.settings.caption }}</p>{%- endif -%}
         </div>
@@ -62,11 +63,11 @@
   "tag": "section",
   "settings": [
     { "type": "paragraph", "content": "Two full-bleed tiles side by side. Add more than two blocks and arrows appear to slide through them." },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "On Brand" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Work" },
     { "type": "header", "content": "Appearance" },
-    { "type": "select", "id": "scheme", "label": "Background", "default": "light",
+    { "type": "select", "id": "scheme", "label": "Background", "default": "bone",
       "options": [{"value":"light","label":"White"},{"value":"alt","label":"Off-white"},
-                  {"value":"sand","label":"Sand"},{"value":"dark","label":"Dark"},{"value":"custom","label":"Custom"}] },
+                  {"value":"bone","label":"Bone"},{"value":"concrete","label":"Concrete"},{"value":"sand","label":"Sand"},{"value":"copper","label":"Copper"},{"value":"dark","label":"Dark"},{"value":"custom","label":"Custom"}] },
     { "type": "color", "id": "bg_custom", "label": "Custom background", "default": "#FFFFFF" },
     { "type": "color", "id": "text_custom", "label": "Custom text", "default": "#111111" }
   ],

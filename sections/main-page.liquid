@@ -1,9 +1,12 @@
 {% render 'section-style', s: section %}
-<section class="pagex">
+<section class="pagex grain">
   <div class="pagex-in">
-    <h1 class="ed-h ed-serif" data-rv>{{ page.title }}</h1>
+    <div class="pagex-h" data-rv>
+      <div class="tag" style="margin-bottom:16px">{{ shop.name }}</div>
+      <h1 class="dsp dsp-l">{{ page.title }}</h1>
+    </div>
     {%- if page.content != blank -%}
-      <div class="ed-rte rte" data-rv>{{ page.content }}</div>
+      <div class="pagex-rte rte" data-rv>{{ page.content }}</div>
     {%- endif -%}
   </div>
 </section>
@@ -29,10 +32,7 @@
           "value": "alt",
           "label": "Off-white"
         },
-        {
-          "value": "sand",
-          "label": "Sand"
-        },
+        {"value":"bone","label":"Bone"},{"value":"concrete","label":"Concrete"},{"value":"sand","label":"Sand"},{"value":"copper","label":"Copper"},
         {
           "value": "dark",
           "label": "Dark"

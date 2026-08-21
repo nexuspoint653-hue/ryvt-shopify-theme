@@ -1,33 +1,55 @@
 {% render 'section-style', s: section %}
-<section class="stmt stmt--{{ section.settings.size }}">
-  <div class="stmt-in">
-    {%- if section.settings.eyebrow != blank -%}
-      <div class="mini stmt-eb" data-rv>{{ section.settings.eyebrow }}</div>
-    {%- endif -%}
-    {%- if section.settings.heading != blank -%}
-      <h2 class="ed-h {% if section.settings.serif %}ed-serif{% endif %}" data-rv>{{ section.settings.heading }}</h2>
-    {%- endif -%}
-    {%- for block in section.blocks -%}
-      {%- if block.settings.body != blank -%}
-        <div class="ed-p rte" data-rv {{ block.shopify_attributes }}>{{ block.settings.body }}</div>
-      {%- endif -%}
-    {%- endfor -%}
-    {%- if section.settings.link_text != blank -%}
-      <div class="stmt-cta" data-rv>
-        <a class="ed-link" href="{{ section.settings.link }}">{{ section.settings.link_text }}</a>
+<section class="mf mf--{{ section.settings.size }}{% if section.settings.align == 'center' %} mf--center{% endif %}{% if section.settings.grain %} grain{% endif %}">
+  <div class="mf-in">
+    {%- if section.settings.marker != blank or section.settings.eyebrow != blank -%}
+      <div class="mf-mark" data-rv>
+        {%- if section.settings.marker != blank -%}<span class="num">{{ section.settings.marker }}</span>{%- endif -%}
+        {%- if section.settings.eyebrow != blank -%}<span class="tag">{{ section.settings.eyebrow }}</span>{%- endif -%}
       </div>
     {%- endif -%}
+    <div class="mf-grid">
+      <div class="mf-h" data-rv>
+        {%- if section.settings.heading != blank -%}
+          <h2 class="dsp dsp-{{ section.settings.scale }}">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.heading_accent != blank -%}
+          <h2 class="dsp dsp-{{ section.settings.scale }}"><em>{{ section.settings.heading_accent }}</em></h2>
+        {%- endif -%}
+      </div>
+      <div class="mf-body">
+        {%- for block in section.blocks -%}
+          {%- if block.settings.body != blank -%}
+            <div class="copy" data-rv {{ block.shopify_attributes }}>{{ block.settings.body }}</div>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if section.settings.link_text != blank -%}
+          <div class="mf-cta" data-rv>
+            <a class="ibtn{% if section.settings.cta_copper %} ibtn-cu{% endif %}" href="{{ section.settings.link }}">{{ section.settings.link_text }}</a>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
   </div>
 </section>
 {% schema %}
 {
-  "name": "Statement",
+  "name": "Manifesto",
   "tag": "section",
   "settings": [
-    { "type": "paragraph", "content": "A centred editorial block — the quiet copy that sits between full-bleed media bands." },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "About Us" },
-    { "type": "checkbox", "id": "serif", "label": "Serif heading", "default": true },
+    { "type": "paragraph", "content": "Heavy statement block — numbered marker, oversized display heading, copy alongside." },
+    { "type": "text", "id": "marker", "label": "Marker", "default": "01" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The City" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Rebirth" },
+    { "type": "text", "id": "heading_accent", "label": "Second line (copper)", "default": "Of Detroit" },
+    { "type": "select", "id": "scale", "label": "Heading size", "default": "l",
+      "options": [
+        { "value": "xl", "label": "Enormous" },
+        { "value": "l", "label": "Large" },
+        { "value": "m", "label": "Medium" },
+        { "value": "s", "label": "Small" }
+      ]},
+    { "type": "select", "id": "align", "label": "Alignment", "default": "left",
+      "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Centred" }]},
     { "type": "select", "id": "size", "label": "Breathing room", "default": "lg",
       "options": [
         { "value": "sm", "label": "Tight" },
@@ -35,23 +57,26 @@
         { "value": "lg", "label": "Generous" },
         { "value": "xl", "label": "Cinematic" }
       ]},
-    { "type": "text", "id": "link_text", "label": "Link" },
-    { "type": "url", "id": "link", "label": "Link URL" },
+    { "type": "checkbox", "id": "grain", "label": "Film grain overlay", "default": true },
+    { "type": "text", "id": "link_text", "label": "Button" },
+    { "type": "url", "id": "link", "label": "Button link" },
+    { "type": "checkbox", "id": "cta_copper", "label": "Copper button", "default": false },
     { "type": "header", "content": "Appearance" },
-    { "type": "select", "id": "scheme", "label": "Background", "default": "light",
+    { "type": "select", "id": "scheme", "label": "Background", "default": "bone",
       "options": [{"value":"light","label":"White"},{"value":"alt","label":"Off-white"},
-                  {"value":"sand","label":"Sand"},{"value":"dark","label":"Dark"},{"value":"custom","label":"Custom"}] },
-    { "type": "color", "id": "bg_custom", "label": "Custom background", "default": "#FFFFFF" },
-    { "type": "color", "id": "text_custom", "label": "Custom text", "default": "#111111" },
+                  {"value":"bone","label":"Bone"},{"value":"concrete","label":"Concrete"},{"value":"sand","label":"Sand"},{"value":"copper","label":"Copper"},
+                  {"value":"dark","label":"Dark"},{"value":"custom","label":"Custom"}] },
+    { "type": "color", "id": "bg_custom", "label": "Custom background", "default": "#E8E4DD" },
+    { "type": "color", "id": "text_custom", "label": "Custom text", "default": "#141414" },
     { "type": "range", "id": "pad_top", "label": "Extra top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 },
     { "type": "range", "id": "pad_bottom", "label": "Extra bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 }
   ],
   "blocks": [
     { "type": "para", "name": "Paragraph", "settings": [
       { "type": "richtext", "id": "body", "label": "Text",
-        "default": "<p>RYVT is built in Metro Detroit for people who train, move and live in the same clothes. Considered cuts, honest fabric, nothing loud.</p>" }
+        "default": "<p>RYVT was built in Metro Detroit for people who train hard and then keep the same clothes on for the rest of the day. No logos shouting. No seasonal noise.</p>" }
     ]}
   ],
-  "presets": [{ "name": "Statement", "blocks": [{ "type": "para" }, { "type": "para" }] }]
+  "presets": [{ "name": "Manifesto", "blocks": [{ "type": "para" }] }]
 }
 {% endschema %}
