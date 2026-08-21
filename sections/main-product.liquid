@@ -1,3 +1,4 @@
+{% render 'section-style', s: section %}
 {%- assign v = product.selected_or_first_available_variant -%}
 <div class="pdp" data-picker>
   <div class="pdp-l">
@@ -120,6 +121,15 @@
       <button type="button" class="btn" style="width:100%">{{ section.settings.wishlist_text }}</button>
     {%- endif -%}
 
+
+    {%- if section.settings.show_usp -%}
+      <div class="pdp-usp">
+        <div><svg viewBox="0 0 24 24"><path d="M2 8h11v8H2zM13 11h4l3 3v2h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><span>{{ section.settings.usp_1 }}</span></div>
+        <div><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 109-9"/><path d="M3 4v5h5"/></svg><span>{{ section.settings.usp_2 }}</span></div>
+        <div><svg viewBox="0 0 24 24"><path d="M3 8h18v8H3zM7 8v4M11 8v6M15 8v4"/></svg><span>{{ section.settings.usp_3 }}</span></div>
+      </div>
+    {%- endif -%}
+
     <div class="trust">
       {%- if section.settings.trust_1 != blank -%}
         <div><svg viewBox="0 0 24 24"><path d="M2 8h11v8H2zM13 11h4l3 3v2h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><span>{{ section.settings.trust_1 }}</span></div>
@@ -138,21 +148,200 @@
 {
   "name": "Product",
   "settings": [
-    { "type": "url", "id": "size_guide", "label": "Size guide link" },
-    { "type": "text", "id": "model_note", "label": "Model note", "default": "Model is 6'0\", 185 lbs · wearing size L" },
-    { "type": "text", "id": "offer_text", "label": "Offer badge" },
-    { "type": "text", "id": "offer_note", "label": "Offer note" },
-    { "type": "text", "id": "wishlist_text", "label": "Secondary button", "default": "Save to Wishlist" },
-    { "type": "text", "id": "trust_1", "label": "Trust line 1", "default": "Free shipping on orders over $100" },
-    { "type": "text", "id": "trust_2", "label": "Trust line 2", "default": "30-day returns & easy exchanges" },
-    { "type": "text", "id": "trust_3", "label": "Trust line 3", "default": "Secure checkout & Apple Pay" }
+    {
+      "type": "url",
+      "id": "size_guide",
+      "label": "Size guide link"
+    },
+    {
+      "type": "text",
+      "id": "model_note",
+      "label": "Model note",
+      "default": "Model is 6'0\", 185 lbs \u00b7 wearing size L"
+    },
+    {
+      "type": "text",
+      "id": "offer_text",
+      "label": "Offer badge"
+    },
+    {
+      "type": "text",
+      "id": "offer_note",
+      "label": "Offer note"
+    },
+    {
+      "type": "text",
+      "id": "wishlist_text",
+      "label": "Secondary button",
+      "default": "Save to Wishlist"
+    },
+    {
+      "type": "text",
+      "id": "trust_1",
+      "label": "Trust line 1",
+      "default": "Free shipping on orders over $100"
+    },
+    {
+      "type": "text",
+      "id": "trust_2",
+      "label": "Trust line 2",
+      "default": "30-day returns & easy exchanges"
+    },
+    {
+      "type": "text",
+      "id": "trust_3",
+      "label": "Trust line 3",
+      "default": "Secure checkout & Apple Pay"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "select",
+      "id": "scheme",
+      "label": "Background",
+      "default": "light",
+      "options": [
+        {
+          "value": "light",
+          "label": "White"
+        },
+        {
+          "value": "alt",
+          "label": "Off-white"
+        },
+        {
+          "value": "sand",
+          "label": "Sand"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_custom",
+      "label": "Custom background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_custom",
+      "label": "Custom text",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Extra top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Extra bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Extras"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_usp",
+      "label": "Show benefit row",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "usp_1",
+      "label": "Benefit 1",
+      "default": "Free shipping over $100"
+    },
+    {
+      "type": "text",
+      "id": "usp_2",
+      "label": "Benefit 2",
+      "default": "30-day returns"
+    },
+    {
+      "type": "text",
+      "id": "usp_3",
+      "label": "Benefit 3",
+      "default": "True to size \u2014 see the size guide"
+    },
+    {
+      "type": "checkbox",
+      "id": "sticky_bar",
+      "label": "Sticky add-to-bag on scroll",
+      "default": true
+    }
   ],
   "blocks": [
-    { "type": "accordion", "name": "Accordion", "settings": [
-      { "type": "text", "id": "title", "label": "Title", "default": "Material" },
-      { "type": "richtext", "id": "body", "label": "Body", "default": "<p>100% heavyweight cotton. Garment-dyed.</p>" }
-    ]}
+    {
+      "type": "accordion",
+      "name": "Accordion",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Material"
+        },
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Body",
+          "default": "<p>100% heavyweight cotton. Garment-dyed.</p>"
+        }
+      ]
+    }
   ],
-  "presets": [{ "name": "Product" }]
+  "presets": [
+    {
+      "name": "Product"
+    }
+  ]
 }
 {% endschema %}
+
+{%- if section.settings.sticky_bar -%}
+<div class="pdp-sticky" id="pdpSticky">
+  <div class="in">
+    {%- if product.featured_image -%}
+      <img src="{{ product.featured_image | image_url: width: 120 }}" alt="">
+    {%- endif -%}
+    <div>
+      <div class="t">{{ product.title }}</div>
+      <div class="p" data-price>{{ product.price | money }}</div>
+    </div>
+    <a class="btn btn-solid" href="#main">Choose options</a>
+  </div>
+</div>
+<script>
+(function(){
+  var bar=document.getElementById('pdpSticky');
+  var form=document.querySelector('.pdp-r [data-add]');
+  if(!bar||!form) return;
+  var io=new IntersectionObserver(function(e){
+    bar.classList.toggle('on', !e[0].isIntersecting);
+  },{rootMargin:'0px 0px -40px 0px'});
+  io.observe(form);
+})();
+</script>
+{%- endif -%}

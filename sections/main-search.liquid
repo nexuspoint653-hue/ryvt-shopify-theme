@@ -1,3 +1,4 @@
+{% render 'section-style', s: section %}
 <div class="wrap" style="padding-block:clamp(26px,3vw,42px)">
   <h1 class="h2">{% if search.performed %}{{ search.results_count }} results{% else %}Search{% endif %}</h1>
   <form action="{{ routes.search_url }}" method="get" class="nl" style="max-width:520px;margin-top:20px">
@@ -13,4 +14,74 @@
     {%- endfor -%}
   </div>
 {%- endif -%}
-{% schema %}{ "name": "Search" }{% endschema %}
+{% schema %}
+{
+  "name": "Search",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "select",
+      "id": "scheme",
+      "label": "Background",
+      "default": "light",
+      "options": [
+        {
+          "value": "light",
+          "label": "White"
+        },
+        {
+          "value": "alt",
+          "label": "Off-white"
+        },
+        {
+          "value": "sand",
+          "label": "Sand"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_custom",
+      "label": "Custom background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_custom",
+      "label": "Custom text",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Extra top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Extra bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

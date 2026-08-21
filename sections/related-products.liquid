@@ -1,3 +1,4 @@
+{% render 'section-style', s: section %}
 <section class="cat" style="padding-bottom:clamp(34px,5vw,64px)">
   <div class="cat-head">
     <span class="t">{{ section.settings.heading }}</span>
@@ -15,8 +16,89 @@
   </div>
 </section>
 {% schema %}
-{ "name": "Related products", "settings": [
-  { "type": "text", "id": "heading", "label": "Heading", "default": "Complete the Look" },
-  { "type": "collection", "id": "collection", "label": "Source collection" }
-], "presets": [{ "name": "Related products" }] }
+{
+  "name": "Related products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Complete the Look"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Source collection"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "select",
+      "id": "scheme",
+      "label": "Background",
+      "default": "light",
+      "options": [
+        {
+          "value": "light",
+          "label": "White"
+        },
+        {
+          "value": "alt",
+          "label": "Off-white"
+        },
+        {
+          "value": "sand",
+          "label": "Sand"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_custom",
+      "label": "Custom background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_custom",
+      "label": "Custom text",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Extra top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Extra bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Related products"
+    }
+  ]
+}
 {% endschema %}

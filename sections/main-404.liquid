@@ -1,7 +1,78 @@
+{% render 'section-style', s: section %}
 <div class="wrap" style="text-align:center;padding-block:clamp(70px,10vw,150px)">
   <div class="mini">Error 404</div>
   <h1 class="h2" style="margin:14px 0 16px">Page not found</h1>
   <p style="color:var(--muted)">The page you are looking for has moved or no longer exists.</p>
   <div style="margin-top:26px"><a class="btn" href="{{ routes.root_url }}">Back to shop</a></div>
 </div>
-{% schema %}{ "name": "404" }{% endschema %}
+{% schema %}
+{
+  "name": "404",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "select",
+      "id": "scheme",
+      "label": "Background",
+      "default": "light",
+      "options": [
+        {
+          "value": "light",
+          "label": "White"
+        },
+        {
+          "value": "alt",
+          "label": "Off-white"
+        },
+        {
+          "value": "sand",
+          "label": "Sand"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_custom",
+      "label": "Custom background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_custom",
+      "label": "Custom text",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Extra top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Extra bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

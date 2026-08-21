@@ -1,5 +1,76 @@
+{% render 'section-style', s: section %}
 <div class="wrap" style="padding-block:clamp(30px,4vw,56px)">
   <h1 class="h2">{{ page.title }}</h1>
   <div class="rte" style="max-width:76ch;margin-top:20px">{{ page.content }}</div>
 </div>
-{% schema %}{ "name": "Page" }{% endschema %}
+{% schema %}
+{
+  "name": "Page",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "select",
+      "id": "scheme",
+      "label": "Background",
+      "default": "light",
+      "options": [
+        {
+          "value": "light",
+          "label": "White"
+        },
+        {
+          "value": "alt",
+          "label": "Off-white"
+        },
+        {
+          "value": "sand",
+          "label": "Sand"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_custom",
+      "label": "Custom background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_custom",
+      "label": "Custom text",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Extra top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Extra bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    }
+  ]
+}
+{% endschema %}

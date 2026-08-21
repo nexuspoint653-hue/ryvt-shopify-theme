@@ -1,0 +1,36 @@
+{% render 'section-style', s: section %}
+<section class="sec-pad">
+  <div class="wrap">
+    <div class="stats" data-row data-max="{{ section.blocks.size | at_most: 4 }}">
+      {%- for block in section.blocks -%}
+        <div class="stat" {{ block.shopify_attributes }}>
+          <div class="stat-n">{{ block.settings.value }}</div>
+          <div class="stat-l">{{ block.settings.label }}</div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "Stat band",
+  "max_blocks": 4,
+  "settings": [
+    { "type": "header", "content": "Appearance" },
+    { "type": "select", "id": "scheme", "label": "Background", "default": "dark",
+      "options": [{"value":"light","label":"White"},{"value":"alt","label":"Off-white"},
+                  {"value":"sand","label":"Sand"},{"value":"dark","label":"Dark"},{"value":"custom","label":"Custom"}] },
+    { "type": "color", "id": "bg_custom", "label": "Custom background", "default": "#111111" },
+    { "type": "color", "id": "text_custom", "label": "Custom text", "default": "#FFFFFF" },
+    { "type": "range", "id": "pad_top", "label": "Extra top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 },
+    { "type": "range", "id": "pad_bottom", "label": "Extra bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 }
+  ],
+  "blocks": [
+    { "type": "stat", "name": "Stat", "settings": [
+      { "type": "text", "id": "value", "label": "Value", "default": "240gsm" },
+      { "type": "text", "id": "label", "label": "Label", "default": "Heavyweight cotton" }
+    ]}
+  ],
+  "presets": [{ "name": "Stat band", "blocks": [{"type":"stat"},{"type":"stat"},{"type":"stat"}] }]
+}
+{% endschema %}

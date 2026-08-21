@@ -1,8 +1,20 @@
+{% render 'section-style', s: section %}
 {%- comment -%}
   Collection page. Filters run inline above the grid rather than in a left
   sidebar, so the grid gets the full window width. Short result sets close the
   row with suggestions instead of leaving white space.
 {%- endcomment -%}
+
+{%- assign strip = linklists[section.settings.category_menu] -%}
+{%- if strip.links.size > 0 -%}
+  <nav class="cstrip" aria-label="Categories">
+    <a href="{{ routes.all_products_collection_url }}"{% unless collection.handle %} class="on"{% endunless %}>All</a>
+    {%- for l in strip.links -%}
+      <a href="{{ l.url }}"{% if l.active %} class="on"{% endif %}>{{ l.title }}</a>
+    {%- endfor -%}
+  </nav>
+{%- endif -%}
+
 <div class="tabs">
   <a class="tab{% unless collection.handle %} on{% endunless %}" href="{{ routes.all_products_collection_url }}">All</a>
   <a class="tab on" href="{{ collection.url }}">{{ collection.title }}</a>
@@ -98,9 +110,92 @@
 {
   "name": "Collection",
   "settings": [
-    { "type": "range", "id": "per_page", "label": "Products per page", "min": 8, "max": 48, "step": 4, "default": 24 },
-    { "type": "checkbox", "id": "fill_gaps", "label": "Fill short rows with suggestions", "default": true,
-      "info": "Stops a filtered collection from leaving empty cells." }
+    {
+      "type": "link_list",
+      "id": "category_menu",
+      "label": "Category strip menu",
+      "info": "Shown as pills above the grid so Shop All reads as categorised."
+    },
+    {
+      "type": "range",
+      "id": "per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24
+    },
+    {
+      "type": "checkbox",
+      "id": "fill_gaps",
+      "label": "Fill short rows with suggestions",
+      "default": true,
+      "info": "Stops a filtered collection from leaving empty cells."
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "select",
+      "id": "scheme",
+      "label": "Background",
+      "default": "light",
+      "options": [
+        {
+          "value": "light",
+          "label": "White"
+        },
+        {
+          "value": "alt",
+          "label": "Off-white"
+        },
+        {
+          "value": "sand",
+          "label": "Sand"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_custom",
+      "label": "Custom background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_custom",
+      "label": "Custom text",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Extra top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Extra bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    }
   ]
 }
 {% endschema %}
