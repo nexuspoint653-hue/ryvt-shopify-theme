@@ -5,21 +5,81 @@
     "split": {
       "type": "editorial-split",
       "blocks": {
-        "p1": { "type": "panel", "settings": { "title": "Discover RYVT", "body": "Premium athletic wear built in Metro Detroit — heavyweight cotton, garment-dyed, made to outlast the season." } },
-        "p2": { "type": "panel", "settings": { "title": "The Fabric", "body": "How we choose our cotton, why we garment-dye every piece, and what that means after fifty washes." } }
+        "p1": {
+          "type": "panel",
+          "settings": {
+            "title": "Discover RYVT",
+            "body": "Premium athletic wear built in Metro Detroit \u2014 heavyweight cotton, garment-dyed, made to outlast the season."
+          }
+        },
+        "p2": {
+          "type": "panel",
+          "settings": {
+            "title": "The Fabric",
+            "body": "How we choose our cotton, why we garment-dye every piece, and what that means after fifty washes."
+          }
+        }
       },
-      "block_order": ["p1", "p2"]
+      "block_order": [
+        "p1",
+        "p2"
+      ]
     },
     "footer": {
       "type": "footer",
       "blocks": {
-        "f1": { "type": "menu", "settings": { "title": "Shop", "menu": "footer" } },
-        "f2": { "type": "menu", "settings": { "title": "Company", "menu": "footer" } },
-        "f3": { "type": "menu", "settings": { "title": "Support", "menu": "footer" } }
+        "p1": {
+          "type": "panel",
+          "settings": {
+            "title": "RYVT \u00d7 The City",
+            "caption": "A limited run cut and finished in Metro Detroit.",
+            "link": "/pages/about"
+          }
+        },
+        "p2": {
+          "type": "panel",
+          "settings": {
+            "title": "Discover RYVT",
+            "caption": "Premium athletic wear built to outlast trends, made where we train.",
+            "link": "/pages/about"
+          }
+        },
+        "m1": {
+          "type": "menu",
+          "settings": {
+            "title": "Shop"
+          }
+        },
+        "m2": {
+          "type": "menu",
+          "settings": {
+            "title": "Company"
+          }
+        },
+        "m3": {
+          "type": "menu",
+          "settings": {
+            "title": "Support"
+          }
+        }
       },
-      "block_order": ["f1", "f2", "f3"],
-      "settings": { "nl_title": "Join the movement" }
+      "block_order": [
+        "p1",
+        "p2",
+        "m1",
+        "m2",
+        "m3"
+      ],
+      "settings": {
+        "nl_title": "Join the movement",
+        "nl_body": "First to know about new drops, exclusive offers, and stories from Detroit.",
+        "consent": "By signing up you agree to receive email marketing from RYVT. Unsubscribe anytime.",
+        "scheme": "dark"
+      }
     }
   },
-  "order": ["split", "footer"]
+  "order": [
+    "split",
+    "footer"
+  ]
 }
