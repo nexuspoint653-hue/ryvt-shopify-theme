@@ -1,26 +1,53 @@
 {
   "sections": {
-    "intro": { "type": "main-page", "settings": { "scheme": "light" } },
-    "split1": { "type": "content-split", "settings": {
-      "eyebrow": "Our Mission", "heading": "Engineered for movement",
-      "body": "<p>Athletic wear that carries from the gym to the office to the street without asking you to compromise on any of them. Every piece is cut for how bodies actually move.</p>",
-      "scheme": "alt", "flip": false } },
-    "stats": { "type": "stat-band",
+    "band_open": {
+      "type": "media-band",
+      "settings": { "band_height": "full", "parallax": true, "scheme": "light" }
+    },
+    "intro": {
+      "type": "statement",
       "blocks": {
-        "s1": { "type": "stat", "settings": { "value": "240gsm", "label": "Heavyweight cotton" } },
-        "s2": { "type": "stat", "settings": { "value": "4-needle", "label": "Stitched hems" } },
-        "s3": { "type": "stat", "settings": { "value": "Detroit", "label": "Where it started" } }
-      }, "block_order": ["s1", "s2", "s3"], "settings": { "scheme": "dark" } },
-    "split2": { "type": "content-split", "settings": {
-      "eyebrow": "Our Story", "heading": "Built for the long run",
-      "body": "<p>Garment-dyed so the colour settles into the fabric rather than sitting on top of it. Made to look right after fifty washes, not just the first one.</p>",
-      "scheme": "light", "flip": true } },
-    "feat": { "type": "feature-icons",
+        "p1": { "type": "para", "settings": { "body": "<p>RYVT is an athletic wear label out of Metro Detroit, built for people who train hard and then keep the same clothes on for the rest of the day.</p>" } },
+        "p2": { "type": "para", "settings": { "body": "<p>We are a small team — pattern cutters, athletes, a couple of stubborn perfectionists — making a short, deliberate range instead of a long, forgettable one. Every piece earns its place or it does not ship.</p>" } }
+      },
+      "block_order": ["p1", "p2"],
+      "settings": { "heading": "About Us", "serif": true, "size": "lg", "scheme": "light" }
+    },
+    "band_2": {
+      "type": "media-band",
+      "settings": { "band_height": "full", "parallax": true, "scheme": "light" }
+    },
+    "mission": {
+      "type": "statement",
       "blocks": {
-        "f1": { "type": "feature", "settings": { "icon": "stitch", "title": "Heavyweight construction", "body": "240gsm cotton, four-needle stitched, built to hold shape." } },
-        "f2": { "type": "feature", "settings": { "icon": "pin", "title": "Metro Detroit", "body": "Designed where the brand started." } },
-        "f3": { "type": "feature", "settings": { "icon": "return", "title": "30-day returns", "body": "Easy exchanges if the fit isn't right." } }
-      }, "block_order": ["f1", "f2", "f3"], "settings": { "scheme": "alt" } }
+        "p1": { "type": "para", "settings": { "body": "<p>Founded in Detroit, RYVT exists to prove that performance kit does not have to shout. Clean lines, fabric that behaves, fit that holds its shape after fifty washes.</p>" } },
+        "p2": { "type": "para", "settings": { "body": "<p>Our mission is simple: fewer, better pieces — cut properly, priced honestly, made to be worn until they wear out. We design in the city, test in the city, and we do not release anything we would not train in ourselves.</p>" } }
+      },
+      "block_order": ["p1", "p2"],
+      "settings": { "heading": "Mission & Vision", "serif": true, "size": "lg", "scheme": "light" }
+    },
+    "duo": {
+      "type": "media-duo",
+      "blocks": {
+        "t1": { "type": "tile", "settings": { "title": "Made in Detroit", "caption": "Cut and finished within twenty miles of where we train.", "link": "/pages/about" } },
+        "t2": { "type": "tile", "settings": { "title": "Built to Last", "caption": "Fabric chosen for the fiftieth wash, not the first.", "link": "/collections/all" } },
+        "t3": { "type": "tile", "settings": { "title": "The Collective", "caption": "Athletes and coaches who test every cut before it ships.", "link": "/collections/all" } }
+      },
+      "block_order": ["t1", "t2", "t3"],
+      "settings": { "eyebrow": "On Brand", "scheme": "light" }
+    },
+    "band_3": {
+      "type": "media-band",
+      "settings": { "band_height": "tall", "parallax": true, "overlay_title": "One tee. Four ways.", "overlay_sub": "The Renaissance Tee — our longest-running cut, still the one we wear most.", "overlay_pos": "center", "scrim": true, "link_text": "Shop the range", "link": "/collections/all", "scheme": "light" }
+    },
+    "close": {
+      "type": "statement",
+      "blocks": {
+        "p1": { "type": "para", "settings": { "body": "<p>Questions about fit, fabric or wholesale? We answer every message ourselves.</p>" } }
+      },
+      "block_order": ["p1"],
+      "settings": { "heading": "Say hello", "serif": true, "size": "md", "link_text": "Contact us", "link": "/pages/contact", "scheme": "alt" }
+    }
   },
-  "order": ["intro", "split1", "stats", "split2", "feat"]
+  "order": ["band_open", "intro", "band_2", "mission", "duo", "band_3", "close"]
 }
