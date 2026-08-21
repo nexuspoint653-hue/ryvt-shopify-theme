@@ -5,21 +5,81 @@
     "header": {
       "type": "header",
       "blocks": {
-        "card1": { "type": "menu_card", "settings": { "position": 1, "label": "Shop Men" } },
-        "t1": { "type": "search_tile", "settings": { "label": "T-Shirts" } },
-        "t2": { "type": "search_tile", "settings": { "label": "Tanks" } },
-        "t3": { "type": "search_tile", "settings": { "label": "Bottoms" } },
-        "t4": { "type": "search_tile", "settings": { "label": "Accessories" } }
+        "a1": {
+          "type": "announcement",
+          "settings": {
+            "text": "Free shipping over $100"
+          }
+        },
+        "a2": {
+          "type": "announcement",
+          "settings": {
+            "text": "30-day returns"
+          }
+        },
+        "a3": {
+          "type": "announcement",
+          "settings": {
+            "text": "Made in Metro Detroit"
+          }
+        },
+        "card1": {
+          "type": "menu_card",
+          "settings": {
+            "position": 1,
+            "label": "Shop Men"
+          }
+        },
+        "t1": {
+          "type": "search_tile",
+          "settings": {
+            "label": "T-Shirts"
+          }
+        },
+        "t2": {
+          "type": "search_tile",
+          "settings": {
+            "label": "Tanks"
+          }
+        },
+        "t3": {
+          "type": "search_tile",
+          "settings": {
+            "label": "Bottoms"
+          }
+        },
+        "t4": {
+          "type": "search_tile",
+          "settings": {
+            "label": "Accessories"
+          }
+        }
       },
-      "block_order": ["card1", "t1", "t2", "t3", "t4"],
+      "block_order": [
+        "a1",
+        "a2",
+        "a3",
+        "card1",
+        "t1",
+        "t2",
+        "t3",
+        "t4"
+      ],
       "settings": {
         "menu": "main-menu",
         "wordmark": "RYVT",
-        "soon_label": "Women",
+        "transparent": true,
+        "autohide": true,
+        "show_saved": true,
+        "rotate_secs": 5,
+        "abar_dismiss": false,
+        "search_placeholder": "Search for a tee, a fit, a fabric",
         "popular": "Heavyweight Tee, Tanks, Cargo Pants, Garment Dyed",
         "fabric_title": "Our Fabric"
       }
     }
   },
-  "order": ["header"]
+  "order": [
+    "header"
+  ]
 }
