@@ -655,3 +655,39 @@ function initPanels(){
   }
 }
 })();
+
+/* ---------- Laya card: hover film ramps up, fades out on leave ---------- */
+function wireCard(cardEl){
+  if(cardEl.dataset.wired) return; cardEl.dataset.wired="1";
+  if(!matchMedia("(hover:hover) and (pointer:fine)").matches) return;
+  if(matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+  var v=cardEl.querySelector("video"); if(!v) return;
+  var SLOW=0.22,FULL=1.0,UP=1500,DOWN=700,FADE=750;
+  v.muted=true; v.loop=true; v.playsInline=true; v.removeAttribute("controls");
+  var raf=null,leaveT=null,loaded=false;
+  function ramp(from,to,dur){
+    cancelAnimationFrame(raf); var t0=performance.now();
+    (function step(now){
+      var t=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-t,3);
+      try{ v.playbackRate=from+(to-from)*e; }catch(err){}
+      if(t<1) raf=requestAnimationFrame(step);
+    })(t0);
+  }
+  cardEl.addEventListener("pointerenter",function(){
+    clearTimeout(leaveT);
+    if(!loaded){ v.load(); loaded=true; }
+    try{ v.currentTime=0; v.playbackRate=SLOW; }catch(e){}
+    var p=v.play(); if(p&&p.catch) p.catch(function(){});
+    cardEl.classList.add("playing"); ramp(SLOW,FULL,UP);
+  });
+  cardEl.addEventListener("pointerleave",function(){
+    cardEl.classList.remove("playing");
+    ramp(v.playbackRate||FULL,0.3,DOWN);
+    leaveT=setTimeout(function(){
+      cancelAnimationFrame(raf);
+      try{ v.pause(); v.currentTime=0; v.playbackRate=SLOW; }catch(e){}
+    },FADE);
+  });
+}
+function wireAllCards(root){ (root||document).querySelectorAll(".card").forEach(wireCard); }
+document.addEventListener("DOMContentLoaded",function(){ wireAllCards(document); });

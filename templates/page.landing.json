@@ -1,0 +1,40 @@
+{
+  "sections": {
+    "landing": {
+      "type": "landing-film",
+      "blocks": {
+        "p1": { "type": "promo", "settings": { "text": "New drop is live - small run, built in Metro Detroit" } },
+        "p2": { "type": "promo", "settings": { "text": "Free shipping on every order over $125" } },
+        "p3": { "type": "promo", "settings": { "text": "Sign up and take 10% off your first order" } }
+      },
+      "block_order": ["p1", "p2", "p3"],
+      "settings": {
+        "video_asset": "ryvt-landing-film.mp4",
+        "overlay": 40,
+        "grain": true,
+        "promo_cta": "Shop the drop",
+        "promo_close": true,
+        "logo_asset": "ryvt-logo.png",
+        "wordmark": "RYVT",
+        "tm": true,
+        "show_orb": true,
+        "show_clock": true,
+        "city": "DETROIT",
+        "timezone": "America/Detroit",
+        "np_show": true,
+        "np_track": "Now playing",
+        "np_artist": "The RYVT mix",
+        "np_chip": "Preview",
+        "drop_show": true,
+        "drop_title": "New Drops",
+        "drop_sub": "Heavyweight release",
+        "drop_count": "8 styles",
+        "ship_show": true,
+        "ship_text": "Free shipping over",
+        "ship_amount": "$125",
+        "cursor": true
+      }
+    }
+  },
+  "order": ["landing"]
+}

@@ -96,32 +96,219 @@
   "name": "Product reviews",
   "tag": "section",
   "settings": [
-    { "type": "paragraph", "content": "Add a review per block. The average, star bars and count are worked out for you. Swap this section for your review app when one is installed." },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "What people say" },
-    { "type": "text", "id": "cta_text", "label": "Link text", "default": "Write a review" },
-    { "type": "url", "id": "cta_link", "label": "Link" },
-    { "type": "text", "id": "note", "label": "Note under the bars", "default": "Every review is from a verified order. We do not filter the low ones." },
-    { "type": "text", "id": "empty", "label": "Empty message", "default": "No reviews yet — yours would be the first." },
-    { "type": "header", "content": "Appearance" },
-    { "type": "select", "id": "scheme", "label": "Background", "default": "light",
-      "options": [{"value":"light","label":"White"},{"value":"alt","label":"Off-white"},
-                  {"value":"sand","label":"Sand"},{"value":"dark","label":"Dark"},{"value":"custom","label":"Custom"}] },
-    { "type": "color", "id": "bg_custom", "label": "Custom background", "default": "#FFFFFF" },
-    { "type": "color", "id": "text_custom", "label": "Custom text", "default": "#111111" },
-    { "type": "range", "id": "pad_top", "label": "Extra top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 },
-    { "type": "range", "id": "pad_bottom", "label": "Extra bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 }
+    {
+      "type": "paragraph",
+      "content": "Add a review per block. The average, star bars and count are worked out for you. Swap this section for your review app when one is installed."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "What people say"
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "Link text",
+      "default": "Write a review"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Link"
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "label": "Note under the bars",
+      "default": "Every review is from a verified order. We do not filter the low ones."
+    },
+    {
+      "type": "text",
+      "id": "empty",
+      "label": "Empty message",
+      "default": "No reviews yet — yours would be the first."
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "select",
+      "id": "scheme",
+      "label": "Background",
+      "default": "light",
+      "options": [
+        {
+          "value": "light",
+          "label": "White"
+        },
+        {
+          "value": "alt",
+          "label": "Off-white"
+        },
+        {
+          "value": "sand",
+          "label": "Sand"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_custom",
+      "label": "Custom background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_custom",
+      "label": "Custom text",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Extra top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Extra bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section style"
+    },
+    {
+      "type": "header",
+      "content": "Section type"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave these alone and the section follows the site's typography. Set them only when this one section needs to differ."
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font for this section",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 60,
+      "max": 160,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centred"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    }
   ],
   "blocks": [
-    { "type": "review", "name": "Review", "settings": [
-      { "type": "range", "id": "score", "label": "Stars", "min": 1, "max": 5, "step": 1, "default": 5 },
-      { "type": "text", "id": "title", "label": "Headline", "default": "Exactly what I wanted" },
-      { "type": "textarea", "id": "body", "label": "Review",
-        "default": "Heavy without being stiff. Washed it a dozen times and it still hangs the same." },
-      { "type": "text", "id": "name", "label": "Name", "default": "Marcus T." },
-      { "type": "text", "id": "meta", "label": "Detail", "default": "6ft1, wearing M" },
-      { "type": "checkbox", "id": "verified", "label": "Verified buyer", "default": true }
-    ]}
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        {
+          "type": "range",
+          "id": "score",
+          "label": "Stars",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Headline",
+          "default": "Exactly what I wanted"
+        },
+        {
+          "type": "textarea",
+          "id": "body",
+          "label": "Review",
+          "default": "Heavy without being stiff. Washed it a dozen times and it still hangs the same."
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name",
+          "default": "Marcus T."
+        },
+        {
+          "type": "text",
+          "id": "meta",
+          "label": "Detail",
+          "default": "6ft1, wearing M"
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Verified buyer",
+          "default": true
+        }
+      ]
+    }
   ],
-  "presets": [{ "name": "Product reviews", "blocks": [{"type":"review"},{"type":"review"},{"type":"review"}] }]
+  "presets": [
+    {
+      "name": "Product reviews",
+      "blocks": [
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        },
+        {
+          "type": "review"
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

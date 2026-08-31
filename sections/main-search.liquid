@@ -6,7 +6,7 @@
   </form>
 </div>
 {%- if search.performed -%}
-  <div class="grid stag in" data-row data-max="4">
+  <div class="grid stag in" data-row data-max="{{ settings.grid_columns }}"{% if settings.card_swatches_hover %} data-swatch-hover{% endif %}{% if settings.card_show_index %} data-indexed{% endif %}>
     {%- for item in search.results -%}
       {%- if item.object_type == 'product' -%}{% render 'product-card', product: item %}{%- endif -%}
     {%- else -%}
@@ -36,7 +36,10 @@
           "value": "alt",
           "label": "Off-white"
         },
-        {"value":"sand","label":"Sand"},
+        {
+          "value": "sand",
+          "label": "Sand"
+        },
         {
           "value": "dark",
           "label": "Dark"
@@ -78,6 +81,59 @@
       "step": 8,
       "unit": "px",
       "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section style"
+    },
+    {
+      "type": "header",
+      "content": "Section type"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave these alone and the section follows the site's typography. Set them only when this one section needs to differ."
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font for this section",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 60,
+      "max": 160,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centred"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
     }
   ]
 }

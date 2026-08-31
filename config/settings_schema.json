@@ -2,69 +2,303 @@
   {
     "name": "theme_info",
     "theme_name": "RYVT",
-    "theme_version": "1.0.0",
-    "theme_author": "Built for RYVT",
-    "theme_documentation_url": "https://shopify.dev",
-    "theme_support_url": "https://shopify.dev"
+    "theme_version": "1.1.0",
+    "theme_author": "RYVT",
+    "theme_documentation_url": "https://wearryvt.com",
+    "theme_support_url": "https://wearryvt.com/pages/contact"
   },
+
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Two typefaces carry the whole site. Headings are the loud one; body is everything you read. Change these and every page follows."
+      },
+      { "type": "header", "content": "Headings" },
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading font",
+        "default": "assistant_n4",
+        "info": "Used on page titles, section titles and product names."
+      },
+      {
+        "type": "select",
+        "id": "font_heading_weight",
+        "label": "Heading weight",
+        "options": [
+          { "value": "500", "label": "Medium" },
+          { "value": "600", "label": "Semibold" },
+          { "value": "700", "label": "Bold" },
+          { "value": "800", "label": "Extra bold" }
+        ],
+        "default": "800"
+      },
+      {
+        "type": "range",
+        "id": "font_heading_scale",
+        "label": "Heading size",
+        "min": 80, "max": 130, "step": 5, "unit": "%", "default": 100,
+        "info": "Scales every heading at once. 100% is the designed size."
+      },
+      {
+        "type": "range",
+        "id": "font_heading_tracking",
+        "label": "Heading letter spacing",
+        "min": -5, "max": 3, "step": 0.5, "unit": "%", "default": -3
+      },
+      {
+        "type": "select",
+        "id": "font_heading_case",
+        "label": "Heading capitalisation",
+        "options": [
+          { "value": "none", "label": "As typed" },
+          { "value": "uppercase", "label": "UPPERCASE" },
+          { "value": "lowercase", "label": "lowercase" }
+        ],
+        "default": "none"
+      },
+
+      { "type": "header", "content": "Body text" },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body font",
+        "default": "assistant_n4"
+      },
+      {
+        "type": "range",
+        "id": "font_body_size",
+        "label": "Body size",
+        "min": 12, "max": 18, "step": 0.5, "unit": "px", "default": 14
+      },
+      {
+        "type": "range",
+        "id": "font_body_line",
+        "label": "Line height",
+        "min": 1.3, "max": 2, "step": 0.05, "default": 1.6
+      },
+
+      { "type": "header", "content": "Small labels" },
+      {
+        "type": "paragraph",
+        "content": "The little spaced-out capitals: eyebrows, buttons, product categories, footer headings."
+      },
+      {
+        "type": "range",
+        "id": "font_label_size",
+        "label": "Label size",
+        "min": 8, "max": 14, "step": 0.5, "unit": "px", "default": 11
+      },
+      {
+        "type": "range",
+        "id": "font_label_tracking",
+        "label": "Label letter spacing",
+        "min": 0, "max": 30, "step": 1, "unit": "%", "default": 16
+      },
+      {
+        "type": "checkbox",
+        "id": "font_label_upper",
+        "label": "Uppercase labels",
+        "default": true
+      }
+    ]
+  },
+
   {
     "name": "Colours",
     "settings": [
       {
-        "type": "color",
-        "id": "color_bg",
-        "label": "Page background",
-        "default": "#FFFFFF"
+        "type": "paragraph",
+        "content": "The palette is black and white by design. Change one value at a time and check a product page before saving."
+      },
+      { "type": "header", "content": "Page" },
+      { "type": "color", "id": "color_bg", "label": "Page background", "default": "#FFFFFF" },
+      { "type": "color", "id": "color_bg_alt", "label": "Alternate band", "default": "#F7F7F6", "info": "Used behind sections that need to separate from the page." },
+      { "type": "color", "id": "color_text", "label": "Text", "default": "#111111" },
+      { "type": "color", "id": "color_muted", "label": "Secondary text", "default": "#6B6B6B" },
+      { "type": "color", "id": "color_line", "label": "Hairlines and borders", "default": "#E6E6E3" },
+
+      { "type": "header", "content": "Product tiles" },
+      { "type": "color", "id": "color_tile", "label": "Tile background", "default": "#F0F0F0", "info": "The ground every product photograph sits on. Keep it consistent so cut-outs and full-bleed shots read as one grid." },
+
+      { "type": "header", "content": "Accents" },
+      { "type": "color", "id": "color_accent", "label": "Accent", "default": "#111111", "info": "Hover states and emphasis." },
+      { "type": "color", "id": "color_stock", "label": "In stock", "default": "#0B7A4B" },
+      { "type": "color", "id": "color_low", "label": "Low stock", "default": "#973C00" },
+      { "type": "color", "id": "color_sale", "label": "Sale price", "default": "#973C00" },
+
+      { "type": "header", "content": "Buttons" },
+      { "type": "color", "id": "color_btn_bg", "label": "Button background", "default": "#111111" },
+      { "type": "color", "id": "color_btn_text", "label": "Button text", "default": "#FFFFFF" },
+      { "type": "color", "id": "color_btn_bg_hover", "label": "Button background on hover", "default": "#FFFFFF" },
+      { "type": "color", "id": "color_btn_text_hover", "label": "Button text on hover", "default": "#111111" },
+
+      { "type": "header", "content": "Header" },
+      { "type": "color", "id": "color_header_bg", "label": "Header background", "default": "#FFFFFF" },
+      { "type": "color", "id": "color_header_text", "label": "Header text", "default": "#111111" },
+
+      { "type": "header", "content": "Footer" },
+      { "type": "color", "id": "color_footer_bg", "label": "Footer background", "default": "#0B0B0C" },
+      { "type": "color", "id": "color_footer_text", "label": "Footer text", "default": "#FFFFFF" }
+    ]
+  },
+
+  {
+    "name": "Product cards",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "How every product looks in a grid — the shop page, the home page rails, search results. Set it once here."
+      },
+      { "type": "header", "content": "Image" },
+      {
+        "type": "select",
+        "id": "card_ratio",
+        "label": "Image shape",
+        "options": [
+          { "value": "0.75", "label": "Tall (3:4) — recommended" },
+          { "value": "0.8", "label": "Slightly tall (4:5)" },
+          { "value": "1", "label": "Square" },
+          { "value": "1.33", "label": "Wide (4:3)" }
+        ],
+        "default": "0.75"
       },
       {
-        "type": "color",
-        "id": "color_bg_alt",
-        "label": "Alternate surface",
-        "default": "#F7F7F6"
+        "type": "select",
+        "id": "card_fit",
+        "label": "Image fit",
+        "options": [
+          { "value": "cover", "label": "Fill the tile (crops edges)" },
+          { "value": "contain", "label": "Fit inside the tile (shows the whole garment)" }
+        ],
+        "default": "cover",
+        "info": "Use 'Fit inside' for cut-out product shots on a plain background."
+      },
+      { "type": "checkbox", "id": "card_hover_image", "label": "Show the second photo on hover", "default": true },
+      { "type": "range", "id": "card_radius", "label": "Corner rounding", "min": 0, "max": 24, "step": 2, "unit": "px", "default": 0 },
+
+      { "type": "header", "content": "What appears on the card" },
+      { "type": "checkbox", "id": "card_show_vendor", "label": "Category above the name", "default": false },
+      { "type": "checkbox", "id": "card_show_price", "label": "Price", "default": true },
+      { "type": "checkbox", "id": "card_show_swatches", "label": "Colour swatches", "default": true },
+      { "type": "checkbox", "id": "card_swatches_hover", "label": "Only show swatches on hover", "default": true, "info": "Keeps the grid quiet until someone looks at a card." },
+      { "type": "checkbox", "id": "card_show_quick", "label": "Quick view button on hover", "default": false },
+      { "type": "checkbox", "id": "card_show_badge", "label": "New and Sale badges", "default": true },
+      { "type": "checkbox", "id": "card_show_sold_out", "label": "Sold out label", "default": true },
+      { "type": "checkbox", "id": "card_show_index", "label": "Number each tile", "default": true, "info": "The 01, 02, 03 in the corner of the shop grid." },
+
+      { "type": "header", "content": "Card text" },
+      {
+        "type": "select",
+        "id": "card_align",
+        "label": "Alignment",
+        "options": [
+          { "value": "split", "label": "Name left, price right" },
+          { "value": "left", "label": "Stacked left" },
+          { "value": "center", "label": "Centred" }
+        ],
+        "default": "split"
+      },
+      { "type": "range", "id": "card_name_size", "label": "Product name size", "min": 9, "max": 18, "step": 0.5, "unit": "px", "default": 10.5 },
+      {
+        "type": "select",
+        "id": "card_name_case",
+        "label": "Product name capitalisation",
+        "options": [
+          { "value": "uppercase", "label": "UPPERCASE" },
+          { "value": "none", "label": "As typed" }
+        ],
+        "default": "uppercase"
+      },
+      { "type": "color", "id": "card_name_color", "label": "Product name colour", "default": "#111111" },
+      { "type": "color", "id": "card_price_color", "label": "Price colour", "default": "#111111" }
+    ]
+  },
+
+  {
+    "name": "Layout",
+    "settings": [
+      { "type": "range", "id": "page_width", "label": "Page width", "min": 1200, "max": 1900, "step": 20, "unit": "px", "default": 1720 },
+      { "type": "range", "id": "section_space", "label": "Space between sections", "min": 20, "max": 120, "step": 4, "unit": "px", "default": 64 },
+      { "type": "range", "id": "grid_gap", "label": "Space between product tiles", "min": 0, "max": 40, "step": 2, "unit": "px", "default": 10 },
+      {
+        "type": "select",
+        "id": "grid_columns",
+        "label": "Products per row",
+        "options": [
+          { "value": "2", "label": "2" },
+          { "value": "3", "label": "3 — recommended" },
+          { "value": "4", "label": "4" }
+        ],
+        "default": "3"
       },
       {
-        "type": "color",
-        "id": "color_text",
-        "label": "Text",
-        "default": "#111111"
-      },
-      {
-        "type": "color",
-        "id": "color_line",
-        "label": "Hairlines",
-        "default": "#E6E6E3"
-      },
-      {
-        "type": "color",
-        "id": "color_stock",
-        "label": "In-stock label",
-        "default": "#0B7A4B"
+        "type": "select",
+        "id": "grid_columns_mobile",
+        "label": "Products per row on phones",
+        "options": [
+          { "value": "1", "label": "1" },
+          { "value": "2", "label": "2 — recommended" }
+        ],
+        "default": "2"
       }
     ]
   },
+
+  {
+    "name": "Motion",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Movement is set to be felt rather than noticed. Turn it all off if you would rather the site sat still."
+      },
+      { "type": "checkbox", "id": "motion_reveal", "label": "Fade text and images in as they scroll into view", "default": true },
+      { "type": "checkbox", "id": "motion_counters", "label": "Count numbers up from zero", "default": true, "info": "Applies to every figure on the site — weights, dispatch times, prices in stat bands." },
+      { "type": "checkbox", "id": "motion_hover_zoom", "label": "Zoom product photos slightly on hover", "default": true },
+      { "type": "range", "id": "motion_speed", "label": "Animation speed", "min": 50, "max": 200, "step": 10, "unit": "%", "default": 100, "info": "Lower is slower." }
+    ]
+  },
+
   {
     "name": "Brand",
     "settings": [
+      { "type": "image_picker", "id": "logo", "label": "Logo" },
+      { "type": "range", "id": "logo_width", "label": "Logo width", "min": 80, "max": 300, "step": 5, "unit": "px", "default": 130 },
+      { "type": "image_picker", "id": "logo_light", "label": "Logo for dark backgrounds", "info": "Used in the footer and on the landing film." },
+      { "type": "image_picker", "id": "favicon", "label": "Favicon", "info": "The little icon in the browser tab. 64 x 64 or larger." },
+
+      { "type": "header", "content": "Social" },
+      { "type": "url", "id": "social_instagram", "label": "Instagram" },
+      { "type": "url", "id": "social_tiktok", "label": "TikTok" },
+      { "type": "url", "id": "social_facebook", "label": "Facebook" },
+      { "type": "url", "id": "social_youtube", "label": "YouTube" },
+
+      { "type": "header", "content": "Sharing image" },
+      { "type": "image_picker", "id": "share_image", "label": "Default image when a link is shared", "info": "1200 x 630 works everywhere." }
+    ]
+  },
+
+  {
+    "name": "Cart and shipping",
+    "settings": [
       {
-        "type": "image_picker",
-        "id": "favicon",
-        "label": "Favicon"
+        "type": "select",
+        "id": "cart_type",
+        "label": "What happens when someone adds to bag",
+        "options": [
+          { "value": "drawer", "label": "Open the bag from the side" },
+          { "value": "page", "label": "Go to the bag page" },
+          { "value": "toast", "label": "Stay on the page, show a confirmation" }
+        ],
+        "default": "drawer"
       },
-      {
-        "type": "url",
-        "id": "social_facebook",
-        "label": "Facebook URL"
-      },
-      {
-        "type": "url",
-        "id": "social_instagram",
-        "label": "Instagram URL"
-      },
-      {
-        "type": "url",
-        "id": "social_tiktok",
-        "label": "TikTok URL"
-      }
+      { "type": "checkbox", "id": "cart_notes", "label": "Let customers add a note to their order", "default": false },
+      { "type": "text", "id": "ship_threshold", "label": "Free shipping over", "default": "125", "info": "Just the number. Shown in the header bar and on product pages." },
+      { "type": "text", "id": "ship_time", "label": "Dispatch time", "default": "48 hours", "info": "Shown on product pages, e.g. 48 hours." },
+      { "type": "text", "id": "ship_from", "label": "Dispatched from", "default": "Metro Detroit" },
+      { "type": "text", "id": "returns_days", "label": "Returns window in days", "default": "30" }
     ]
   }
 ]

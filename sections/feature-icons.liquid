@@ -30,26 +30,196 @@
   "name": "Feature row",
   "max_blocks": 4,
   "settings": [
-    { "type": "text", "id": "heading", "label": "Heading" },
-    { "type": "header", "content": "Appearance" },
-    { "type": "select", "id": "scheme", "label": "Background", "default": "alt",
-      "options": [{"value":"light","label":"White"},{"value":"alt","label":"Off-white"},
-                  {"value":"sand","label":"Sand"},{"value":"dark","label":"Dark"},{"value":"custom","label":"Custom"}] },
-    { "type": "color", "id": "bg_custom", "label": "Custom background", "default": "#FFFFFF" },
-    { "type": "color", "id": "text_custom", "label": "Custom text", "default": "#111111" },
-    { "type": "range", "id": "pad_top", "label": "Extra top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 },
-    { "type": "range", "id": "pad_bottom", "label": "Extra bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 }
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "select",
+      "id": "scheme",
+      "label": "Background",
+      "default": "alt",
+      "options": [
+        {
+          "value": "light",
+          "label": "White"
+        },
+        {
+          "value": "alt",
+          "label": "Off-white"
+        },
+        {
+          "value": "sand",
+          "label": "Sand"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_custom",
+      "label": "Custom background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_custom",
+      "label": "Custom text",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Extra top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Extra bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section style"
+    },
+    {
+      "type": "header",
+      "content": "Section type"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave these alone and the section follows the site's typography. Set them only when this one section needs to differ."
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font for this section",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 60,
+      "max": 160,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centred"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    }
   ],
   "blocks": [
-    { "type": "feature", "name": "Feature", "settings": [
-      { "type": "select", "id": "icon", "label": "Icon", "default": "truck",
-        "options": [{"value":"truck","label":"Shipping"},{"value":"return","label":"Returns"},
-                    {"value":"shield","label":"Secure"},{"value":"ruler","label":"Sizing"},
-                    {"value":"stitch","label":"Craft"},{"value":"pin","label":"Local"}] },
-      { "type": "text", "id": "title", "label": "Title", "default": "Free shipping over $100" },
-      { "type": "text", "id": "body", "label": "Body", "default": "Standard shipping within the contiguous US." }
-    ]}
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "truck",
+          "options": [
+            {
+              "value": "truck",
+              "label": "Shipping"
+            },
+            {
+              "value": "return",
+              "label": "Returns"
+            },
+            {
+              "value": "shield",
+              "label": "Secure"
+            },
+            {
+              "value": "ruler",
+              "label": "Sizing"
+            },
+            {
+              "value": "stitch",
+              "label": "Craft"
+            },
+            {
+              "value": "pin",
+              "label": "Local"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Free shipping over $100"
+        },
+        {
+          "type": "text",
+          "id": "body",
+          "label": "Body",
+          "default": "Standard shipping within the contiguous US."
+        }
+      ]
+    }
   ],
-  "presets": [{ "name": "Feature row", "blocks": [{"type":"feature"},{"type":"feature"},{"type":"feature"}] }]
+  "presets": [
+    {
+      "name": "Feature row",
+      "blocks": [
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature"
+        },
+        {
+          "type": "feature"
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

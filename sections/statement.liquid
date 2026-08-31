@@ -36,47 +36,261 @@
   "name": "Manifesto",
   "tag": "section",
   "settings": [
-    { "type": "paragraph", "content": "Heavy statement block — numbered marker, oversized display heading, copy alongside." },
-    { "type": "text", "id": "marker", "label": "Marker", "info": "Optional \u2014 leave blank for no number" },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our Story" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Built where" },
-    { "type": "text", "id": "heading_accent", "label": "Second line", "default": "it's hard" },
-    { "type": "select", "id": "scale", "label": "Heading size", "default": "l",
+    {
+      "type": "paragraph",
+      "content": "Heavy statement block — numbered marker, oversized display heading, copy alongside."
+    },
+    {
+      "type": "text",
+      "id": "marker",
+      "label": "Marker",
+      "info": "Optional — leave blank for no number"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "Our Story"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Built where"
+    },
+    {
+      "type": "text",
+      "id": "heading_accent",
+      "label": "Second line",
+      "default": "it's hard"
+    },
+    {
+      "type": "select",
+      "id": "scale",
+      "label": "Heading size",
+      "default": "l",
       "options": [
-        { "value": "xl", "label": "Enormous" },
-        { "value": "l", "label": "Large" },
-        { "value": "m", "label": "Medium" },
-        { "value": "s", "label": "Small" }
-      ]},
-    { "type": "select", "id": "align", "label": "Alignment", "default": "left",
-      "options": [{ "value": "left", "label": "Left" }, { "value": "center", "label": "Centred" }]},
-    { "type": "select", "id": "size", "label": "Breathing room", "default": "lg",
+        {
+          "value": "xl",
+          "label": "Enormous"
+        },
+        {
+          "value": "l",
+          "label": "Large"
+        },
+        {
+          "value": "m",
+          "label": "Medium"
+        },
+        {
+          "value": "s",
+          "label": "Small"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "align",
+      "label": "Alignment",
+      "default": "left",
       "options": [
-        { "value": "sm", "label": "Tight" },
-        { "value": "md", "label": "Normal" },
-        { "value": "lg", "label": "Generous" },
-        { "value": "xl", "label": "Cinematic" }
-      ]},
-    { "type": "checkbox", "id": "grain", "label": "Subtle grain overlay", "default": false },
-    { "type": "text", "id": "link_text", "label": "Button" },
-    { "type": "url", "id": "link", "label": "Button link" },
-    { "type": "checkbox", "id": "cta_solid", "label": "Filled button", "default": false },
-    { "type": "header", "content": "Appearance" },
-    { "type": "select", "id": "scheme", "label": "Background", "default": "light",
-      "options": [{"value":"light","label":"White"},{"value":"alt","label":"Off-white"},
-                  {"value":"sand","label":"Sand"},
-                  {"value":"dark","label":"Dark"},{"value":"custom","label":"Custom"}] },
-    { "type": "color", "id": "bg_custom", "label": "Custom background", "default": "#FFFFFF" },
-    { "type": "color", "id": "text_custom", "label": "Custom text", "default": "#111111" },
-    { "type": "range", "id": "pad_top", "label": "Extra top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 },
-    { "type": "range", "id": "pad_bottom", "label": "Extra bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 }
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centred"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "Breathing room",
+      "default": "lg",
+      "options": [
+        {
+          "value": "sm",
+          "label": "Tight"
+        },
+        {
+          "value": "md",
+          "label": "Normal"
+        },
+        {
+          "value": "lg",
+          "label": "Generous"
+        },
+        {
+          "value": "xl",
+          "label": "Cinematic"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "grain",
+      "label": "Subtle grain overlay",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Button"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Button link"
+    },
+    {
+      "type": "checkbox",
+      "id": "cta_solid",
+      "label": "Filled button",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "select",
+      "id": "scheme",
+      "label": "Background",
+      "default": "light",
+      "options": [
+        {
+          "value": "light",
+          "label": "White"
+        },
+        {
+          "value": "alt",
+          "label": "Off-white"
+        },
+        {
+          "value": "sand",
+          "label": "Sand"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_custom",
+      "label": "Custom background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_custom",
+      "label": "Custom text",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Extra top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Extra bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section style"
+    },
+    {
+      "type": "header",
+      "content": "Section type"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave these alone and the section follows the site's typography. Set them only when this one section needs to differ."
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font for this section",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 60,
+      "max": 160,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centred"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    }
   ],
   "blocks": [
-    { "type": "para", "name": "Paragraph", "settings": [
-      { "type": "richtext", "id": "body", "label": "Text",
-        "default": "<p>RYVT was built in Metro Detroit for people who train hard and then keep the same clothes on for the rest of the day. No logos shouting. No seasonal noise.</p>" }
-    ]}
+    {
+      "type": "para",
+      "name": "Paragraph",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "body",
+          "label": "Text",
+          "default": "<p>RYVT was built in Metro Detroit for people who train hard and then keep the same clothes on for the rest of the day. No logos shouting. No seasonal noise.</p>"
+        }
+      ]
+    }
   ],
-  "presets": [{ "name": "Manifesto", "blocks": [{ "type": "para" }] }]
+  "presets": [
+    {
+      "name": "Manifesto",
+      "blocks": [
+        {
+          "type": "para"
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

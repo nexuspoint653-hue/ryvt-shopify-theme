@@ -62,24 +62,181 @@
   "name": "Media duo",
   "tag": "section",
   "settings": [
-    { "type": "paragraph", "content": "Two full-bleed tiles side by side. Add more than two blocks and arrows appear to slide through them." },
-    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Work" },
-    { "type": "header", "content": "Appearance" },
-    { "type": "select", "id": "scheme", "label": "Background", "default": "light",
-      "options": [{"value":"light","label":"White"},{"value":"alt","label":"Off-white"},
-                  {"value":"sand","label":"Sand"},{"value":"dark","label":"Dark"},{"value":"custom","label":"Custom"}] },
-    { "type": "color", "id": "bg_custom", "label": "Custom background", "default": "#FFFFFF" },
-    { "type": "color", "id": "text_custom", "label": "Custom text", "default": "#111111" }
+    {
+      "type": "paragraph",
+      "content": "Two full-bleed tiles side by side. Add more than two blocks and arrows appear to slide through them."
+    },
+    {
+      "type": "text",
+      "id": "eyebrow",
+      "label": "Eyebrow",
+      "default": "The Work"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "select",
+      "id": "scheme",
+      "label": "Background",
+      "default": "light",
+      "options": [
+        {
+          "value": "light",
+          "label": "White"
+        },
+        {
+          "value": "alt",
+          "label": "Off-white"
+        },
+        {
+          "value": "sand",
+          "label": "Sand"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_custom",
+      "label": "Custom background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "color",
+      "id": "text_custom",
+      "label": "Custom text",
+      "default": "#111111"
+    },
+    {
+      "type": "header",
+      "content": "Section style"
+    },
+    {
+      "type": "header",
+      "content": "Section type"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave these alone and the section follows the site's typography. Set them only when this one section needs to differ."
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font for this section",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 60,
+      "max": 160,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centred"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Space above",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Space below",
+      "min": 0,
+      "max": 160,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
   ],
   "blocks": [
-    { "type": "tile", "name": "Tile", "settings": [
-      { "type": "image_picker", "id": "image", "label": "Image" },
-      { "type": "url", "id": "video", "label": "Video file URL" },
-      { "type": "text", "id": "title", "label": "Title", "default": "RYVT × Detroit" },
-      { "type": "text", "id": "caption", "label": "Caption", "default": "Made and tested where we live." },
-      { "type": "url", "id": "link", "label": "Link" }
-    ]}
+    {
+      "type": "tile",
+      "name": "Tile",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "url",
+          "id": "video",
+          "label": "Video file URL"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "RYVT × Detroit"
+        },
+        {
+          "type": "text",
+          "id": "caption",
+          "label": "Caption",
+          "default": "Made and tested where we live."
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "Link"
+        }
+      ]
+    }
   ],
-  "presets": [{ "name": "Media duo", "blocks": [{ "type": "tile" }, { "type": "tile" }] }]
+  "presets": [
+    {
+      "name": "Media duo",
+      "blocks": [
+        {
+          "type": "tile"
+        },
+        {
+          "type": "tile"
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}

@@ -5,7 +5,8 @@
   --e:cubic-bezier(.16,1,.3,1); --hdr:66px;
 }
 *,*::before,*::after{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:14px;line-height:1.6;
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);
+  font-size:var(--fs-body,14px);line-height:var(--lh-body,1.6);
   -webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
@@ -17,13 +18,22 @@ input,select{font:inherit;color:inherit}
 ::-webkit-scrollbar-thumb{background:#CFCFCC}
 ::-webkit-scrollbar-thumb:hover{background:#A9A9A5}
 
-.lbl{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600}
-.mini{font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-weight:600}
-.h1{font-size:clamp(32px,5vw,60px);font-weight:800;letter-spacing:-.03em;line-height:1.03;margin:0}
-.h2{font-size:clamp(24px,3vw,40px);font-weight:800;letter-spacing:-.025em;line-height:1.08;margin:0}
-.h3{font-size:clamp(16px,1.6vw,20px);font-weight:700;letter-spacing:-.01em;margin:0}
-.wrap{max-width:1720px;margin:0 auto;padding-inline:clamp(14px,2.6vw,34px)}
-.btn{display:inline-block;padding:15px 34px;border:1px solid var(--ink);font-size:11px;letter-spacing:.18em;
+.lbl{font-size:var(--fs-label,11px);letter-spacing:var(--tr-label,.16em);
+  text-transform:var(--case-label,uppercase);font-weight:600}
+.mini{font-size:calc(var(--fs-label,11px) - .5px);letter-spacing:var(--tr-label,.18em);
+  text-transform:var(--case-label,uppercase);color:var(--muted);font-weight:600}
+.h1{font-size:calc(clamp(32px,5vw,60px) * var(--fs-scale,1));font-family:var(--display,var(--sans));
+  font-weight:var(--fw-head,800);letter-spacing:var(--tr-head,-.03em);
+  text-transform:var(--case-head,none);line-height:1.03;margin:0}
+.h2{font-size:calc(clamp(24px,3vw,40px) * var(--fs-scale,1));font-family:var(--display,var(--sans));
+  font-weight:var(--fw-head,800);letter-spacing:var(--tr-head,-.025em);
+  text-transform:var(--case-head,none);line-height:1.08;margin:0}
+.h3{font-size:calc(clamp(16px,1.6vw,20px) * var(--fs-scale,1));font-family:var(--display,var(--sans));
+  font-weight:var(--fw-head,700);letter-spacing:var(--tr-head,-.01em);
+  text-transform:var(--case-head,none);margin:0}
+.wrap{max-width:var(--page,1720px);margin:0 auto;padding-inline:clamp(14px,2.6vw,34px)}
+.btn{display:inline-block;padding:15px 34px;border:1px solid var(--btn-bg,var(--ink));
+  font-size:var(--fs-label,11px);letter-spacing:var(--tr-label,.18em);
   text-transform:uppercase;font-weight:700;transition:.35s var(--e);text-align:center}
 .btn:hover{background:var(--ink);color:#fff}
 .btn-solid{background:var(--ink);color:#fff}
@@ -423,11 +433,12 @@ body.no-scroll{overflow:hidden}
   font-weight:700;background:#fff}
 .clearf{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--muted);text-decoration:underline;text-underline-offset:3px}
 .clearf:hover{color:var(--ink)}
-.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(8px,.9vw,14px);background:none;
+.grid{display:grid;grid-template-columns:repeat(var(--cols,3),minmax(0,1fr));
+  gap:calc(var(--gap,10px) * 3.4) var(--gap,10px);background:none;
   max-width:1720px;margin:0 auto;padding:0 clamp(14px,2.6vw,34px) clamp(40px,5vw,72px)}
 .grid>*{background:transparent;min-width:0}
 .grid .pc-i{padding-inline:0}
-@media(max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){.grid{grid-template-columns:repeat(var(--cols-m,2),minmax(0,1fr))}}
 /* collection header */
 .chead{max-width:1720px;margin:0 auto;padding:clamp(26px,3.4vw,48px) clamp(14px,2.6vw,34px) clamp(18px,2.2vw,28px)}
 .chead h1{margin:10px 0 0}
@@ -1130,3 +1141,107 @@ body.no-scroll{overflow:hidden}
 @media(prefers-reduced-motion:reduce){
   .btn,.ibtn,.sub,.cf-send,.ssubmit,.pc-add1,.ck-ok,.add{transition:none}
 }
+
+/* ---------- product card (ported from Laya) ---------- */
+.card{position:relative;display:block}
+/* shape, fit, rounding and ground all come from Theme settings > Product cards */
+.card-media{position:relative;aspect-ratio:var(--card-ratio,.75);background:var(--tile);
+  overflow:hidden;border-radius:var(--card-radius,0)}
+.card-media img.still{width:100%;height:100%;object-fit:var(--card-fit,cover);transition:opacity .7s var(--e),transform 1.6s var(--e)}
+.card-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.015);transition:opacity .75s var(--e),transform 1.2s var(--e);pointer-events:none}
+.card.playing .card-media video{opacity:1;transform:scale(1)}
+.card.playing .card-media img.still{opacity:0;transform:scale(1.03)}
+.card-fav{position:absolute;top:12px;right:12px;z-index:3;width:26px;height:26px;display:grid;place-items:center;opacity:.65;transition:opacity .35s,transform .45s var(--e)}
+.card-fav:hover{opacity:1;transform:scale(1.12)}
+.card-fav svg{width:16px;height:16px;fill:none;stroke:var(--ink);stroke-width:1.1}
+.card-fav.on svg{fill:var(--ink);stroke:var(--ink)}
+.card-badge{position:absolute;left:0;bottom:0;z-index:3;background:rgba(255,255,255,.94);font-size:9px;letter-spacing:.18em;text-transform:uppercase;padding:6px 10px;color:var(--dim)}
+.card-quick{position:absolute;left:10px;right:10px;bottom:10px;z-index:3;background:rgba(255,255,255,.95);text-align:center;padding:11px;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;opacity:0;transform:translateY(10px);transition:opacity .5s var(--e),transform .5s var(--e)}
+.card:hover .card-quick{opacity:1;transform:none}
+.card-quick:hover{background:var(--ink);color:#fff}
+/* alignment is a setting: split puts the price on the right of the name */
+.card-info{padding-top:12px;display:flex;align-items:baseline;justify-content:space-between;gap:14px}
+.card-info[data-align="left"]{flex-direction:column;align-items:flex-start;gap:4px}
+.card-info[data-align="center"]{flex-direction:column;align-items:center;text-align:center;gap:4px}
+.card-name{font-size:var(--card-name-size,10.5px);letter-spacing:.13em;font-weight:500;
+  text-transform:var(--card-name-case,uppercase);color:var(--card-name-color,var(--ink));line-height:1.45}
+.card-price{font-size:var(--card-name-size,10.5px);color:var(--card-price-color,var(--ink));
+  letter-spacing:.1em;flex:0 0 auto}
+.card-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-top:2px}
+.sw{display:flex;gap:6px;align-items:center}
+.sw i{width:11px;height:11px;border-radius:50%;box-shadow:0 0 0 1px rgba(0,0,0,.14) inset;display:block;cursor:pointer;transition:transform .3s var(--e)}
+.sw i:hover{transform:scale(1.25)}
+.sw b{font-size:10px;color:var(--dim);font-weight:400;letter-spacing:.04em}
+.card-colour{font-size:11.5px;color:var(--dim)}
+.card-media .shopify-video,.card-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.015);transition:opacity .75s var(--e),transform 1.2s var(--e);pointer-events:none}
+.card.playing .card-media video,.card.playing .card-media .shopify-video{opacity:1;transform:scale(1)}
+.card-media img.hover-img{position:absolute;inset:0;width:100%;height:100%;object-fit:var(--card-fit,cover);opacity:0;transition:opacity .8s var(--e),transform 1.6s var(--e);transform:scale(1.04)}
+.card:hover .card-media img.hover-img{opacity:1;transform:scale(1)}
+.card:hover .card-media img.still{opacity:0}
+.card-media[data-ratio="1-1"]{aspect-ratio:1/1}
+.card-media[data-ratio="4-5"]{aspect-ratio:4/5}
+.card-media[data-ratio="3-4"]{aspect-ratio:3/4}
+.card-media[data-ratio="2-3"]{aspect-ratio:2/3}
+.card-media[data-ratio="16-9"]{aspect-ratio:16/9}
+.card--center .card-info{align-items:center;text-align:center}
+.card--center .card-foot{justify-content:center}
+.card-vendor{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim)}
+.card--zoom .still{transition:transform 1.4s var(--e)}
+.card--zoom:hover .still{transform:scale(1.06)}
+.card-media .placeholder-svg,
+.card-media .media-tile,
+.card-media picture,
+.card-media picture img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.card-media .placeholder-svg{background:var(--tile);fill:rgba(27,26,24,.12)}
+.card-name{color:var(--ink)}
+.card-price,.card-vendor{color:var(--sec-muted,var(--dim))}
+.card-colour{color:var(--sec-muted,var(--dim))}
+.card-fav svg{stroke:var(--ink)}
+.card-badge{background:rgba(255,255,255,.94);color:var(--sec-muted,var(--dim))}
+.card-quick{background:rgba(255,255,255,.95);color:var(--ink)}
+.card-quick:hover{background:var(--ink);color:var(--sec-bg,#fff)}
+.card-slot{display:block;min-width:0}
+.card-slot>.card{height:100%}
+.card-badge{transition:opacity .38s var(--e),transform .38s var(--e)}
+.card:hover .card-badge,
+.card:focus-within .card-badge,
+.card.playing .card-badge{opacity:0;transform:translateY(4px);pointer-events:none}
+/* the tile that stands in for a missing photograph - flat, no garment drawing */
+.card-media .media-tile{position:absolute;inset:0;display:block;background:var(--tile)}
+.card-media .placeholder-svg{display:none}
+
+
+
+/* ---------- swatches on hover, when that setting is on ---------- */
+.grid[data-swatch-hover] .card-foot{opacity:0;transform:translateY(-3px);
+  transition:opacity .4s var(--e),transform .4s var(--e)}
+.grid[data-swatch-hover] .card:hover .card-foot,
+.grid[data-swatch-hover] .card:focus-within .card-foot{opacity:1;transform:none}
+
+/* ---------- the numbered tiles, when that setting is on ---------- */
+.grid[data-indexed] .card{position:relative}
+.grid[data-indexed] .card::before{content:attr(data-i);position:absolute;top:10px;right:10px;z-index:3;
+  font-size:10.5px;letter-spacing:.1em;color:var(--ink);opacity:.45;font-variant-numeric:tabular-nums}
+
+/* ---------- buttons follow the colour settings ---------- */
+.btn{color:var(--ink)}
+.btn:hover{background:var(--btn-bg,var(--ink));color:var(--btn-tx,#fff)}
+.btn-solid{background:var(--btn-bg,var(--ink));color:var(--btn-tx,#fff);border-color:var(--btn-bg,var(--ink))}
+.btn-solid:hover{background:var(--btn-bg-h,#fff);color:var(--btn-tx-h,var(--ink))}
+
+/* ---------- header and footer colours ---------- */
+.hdr{background:var(--hdr-bg,var(--bg));color:var(--hdr-tx,var(--ink))}
+.ft{background:var(--ft-bg,#0B0B0C);color:var(--ft-tx,#fff)}
+
+/* ---------- prices and stock ---------- */
+.price-sale,.card-price.on-sale{color:var(--sale)}
+.stock-in{color:var(--ok)}
+.stock-low{color:var(--low)}
+
+/* ---------- per-section overrides, set in the theme editor ---------- */
+.section[data-bg]{background:var(--sec-bg)}
+.section[data-tx]{color:var(--sec-tx)}
+.section[data-heading-color] .h1,
+.section[data-heading-color] .h2,
+.section[data-heading-color] .h3{color:var(--sec-head)}
+.section{padding-block:var(--sec-pad,var(--sec,64px))}

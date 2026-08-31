@@ -18,6 +18,17 @@
     {%- assign fg = s.settings.text_custom | default: '#111111' -%}
     {%- assign mut = fg -%}{%- assign ln = fg -%}{%- assign glw = 'rgba(17,17,17,.35)' -%}
 {%- endcase -%}
+{%- comment -%}
+  Optional per-section type overrides. Left empty they inherit the theme's
+  typography, so a merchant only touches these when one section needs to differ.
+{%- endcomment -%}
+{%- liquid
+  assign sec_font = s.settings.heading_font
+  assign sec_size = s.settings.heading_size | default: 100
+  assign sec_head_color = s.settings.heading_color
+  assign sec_align = s.settings.text_align
+-%}
+{%- if sec_font -%}{{ sec_font | font_face: font_display: 'swap' }}{%- endif -%}
 <style>
   #shopify-section-{{ s.id }}{
     --sec-bg:{{ bg }}; --sec-fg:{{ fg }}; --sec-muted:{{ mut }}; --sec-line:{{ ln }};
@@ -35,5 +46,27 @@
   #shopify-section-{{ s.id }} .btn-solid:hover{ background:transparent; color:var(--sec-fg) }
   {%- if scheme == 'custom' -%}
   #shopify-section-{{ s.id }} .mini,#shopify-section-{{ s.id }} .crumb{ opacity:.7 }
+  {%- endif -%}
+
+  {%- if sec_font -%}
+  #shopify-section-{{ s.id }} .h1,
+  #shopify-section-{{ s.id }} .h2,
+  #shopify-section-{{ s.id }} .h3{ font-family:{{ sec_font.family }}, {{ sec_font.fallback_families }} }
+  {%- endif -%}
+  {%- if sec_size != 100 -%}
+  #shopify-section-{{ s.id }} .h1,
+  #shopify-section-{{ s.id }} .h2,
+  #shopify-section-{{ s.id }} .h3{ font-size:calc(1em * {{ sec_size | divided_by: 100.0 }}) }
+  #shopify-section-{{ s.id }} .h1{ font-size:calc(clamp(32px,5vw,60px) * {{ sec_size | divided_by: 100.0 }}) }
+  #shopify-section-{{ s.id }} .h2{ font-size:calc(clamp(24px,3vw,40px) * {{ sec_size | divided_by: 100.0 }}) }
+  #shopify-section-{{ s.id }} .h3{ font-size:calc(clamp(16px,1.6vw,20px) * {{ sec_size | divided_by: 100.0 }}) }
+  {%- endif -%}
+  {%- if sec_head_color != blank -%}
+  #shopify-section-{{ s.id }} .h1,
+  #shopify-section-{{ s.id }} .h2,
+  #shopify-section-{{ s.id }} .h3{ color:{{ sec_head_color }} }
+  {%- endif -%}
+  {%- if sec_align != blank and sec_align != 'left' -%}
+  #shopify-section-{{ s.id }}{ text-align:{{ sec_align }} }
   {%- endif -%}
 </style>

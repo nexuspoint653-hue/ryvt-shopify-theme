@@ -163,7 +163,7 @@
       "type": "text",
       "id": "model_note",
       "label": "Model note",
-      "default": "Model is 6'0\", 185 lbs \u00b7 wearing size L"
+      "default": "Model is 6'0\", 185 lbs · wearing size L"
     },
     {
       "type": "text",
@@ -217,7 +217,10 @@
           "value": "alt",
           "label": "Off-white"
         },
-        {"value":"sand","label":"Sand"},
+        {
+          "value": "sand",
+          "label": "Sand"
+        },
         {
           "value": "dark",
           "label": "Dark"
@@ -286,13 +289,66 @@
       "type": "text",
       "id": "usp_3",
       "label": "Benefit 3",
-      "default": "True to size \u2014 see the size guide"
+      "default": "True to size — see the size guide"
     },
     {
       "type": "checkbox",
       "id": "sticky_bar",
       "label": "Sticky add-to-bag on scroll",
       "default": true
+    },
+    {
+      "type": "header",
+      "content": "Section style"
+    },
+    {
+      "type": "header",
+      "content": "Section type"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave these alone and the section follows the site's typography. Set them only when this one section needs to differ."
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font for this section",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 60,
+      "max": 160,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centred"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
     }
   ],
   "blocks": [

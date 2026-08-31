@@ -37,27 +37,193 @@
   "name": "Complete the look",
   "tag": "section",
   "settings": [
-    { "type": "paragraph", "content": "Hand-pick the pieces that go with this one. Leave the blocks empty and it falls back to the collection below." },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Complete the look" },
-    { "type": "text", "id": "intro", "label": "Intro", "default": "What we would wear it with." },
-    { "type": "text", "id": "link_text", "label": "Link text", "default": "Shop all" },
-    { "type": "url", "id": "link", "label": "Link" },
-    { "type": "collection", "id": "collection", "label": "Fallback collection" },
-    { "type": "header", "content": "Appearance" },
-    { "type": "select", "id": "scheme", "label": "Background", "default": "alt",
-      "options": [{"value":"light","label":"White"},{"value":"alt","label":"Off-white"},
-                  {"value":"sand","label":"Sand"},{"value":"dark","label":"Dark"},{"value":"custom","label":"Custom"}] },
-    { "type": "color", "id": "bg_custom", "label": "Custom background", "default": "#F7F7F6" },
-    { "type": "color", "id": "text_custom", "label": "Custom text", "default": "#111111" },
-    { "type": "range", "id": "pad_top", "label": "Extra top padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 },
-    { "type": "range", "id": "pad_bottom", "label": "Extra bottom padding", "min": 0, "max": 120, "step": 8, "unit": "px", "default": 0 }
+    {
+      "type": "paragraph",
+      "content": "Hand-pick the pieces that go with this one. Leave the blocks empty and it falls back to the collection below."
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Complete the look"
+    },
+    {
+      "type": "text",
+      "id": "intro",
+      "label": "Intro",
+      "default": "What we would wear it with."
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link text",
+      "default": "Shop all"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "Link"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Fallback collection"
+    },
+    {
+      "type": "header",
+      "content": "Appearance"
+    },
+    {
+      "type": "select",
+      "id": "scheme",
+      "label": "Background",
+      "default": "alt",
+      "options": [
+        {
+          "value": "light",
+          "label": "White"
+        },
+        {
+          "value": "alt",
+          "label": "Off-white"
+        },
+        {
+          "value": "sand",
+          "label": "Sand"
+        },
+        {
+          "value": "dark",
+          "label": "Dark"
+        },
+        {
+          "value": "custom",
+          "label": "Custom"
+        }
+      ]
+    },
+    {
+      "type": "color",
+      "id": "bg_custom",
+      "label": "Custom background",
+      "default": "#F7F7F6"
+    },
+    {
+      "type": "color",
+      "id": "text_custom",
+      "label": "Custom text",
+      "default": "#111111"
+    },
+    {
+      "type": "range",
+      "id": "pad_top",
+      "label": "Extra top padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "pad_bottom",
+      "label": "Extra bottom padding",
+      "min": 0,
+      "max": 120,
+      "step": 8,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Section style"
+    },
+    {
+      "type": "header",
+      "content": "Section type"
+    },
+    {
+      "type": "paragraph",
+      "content": "Leave these alone and the section follows the site's typography. Set them only when this one section needs to differ."
+    },
+    {
+      "type": "font_picker",
+      "id": "heading_font",
+      "label": "Heading font for this section",
+      "default": "assistant_n4"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Heading size",
+      "min": 60,
+      "max": 160,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "heading_color",
+      "label": "Heading colour"
+    },
+    {
+      "type": "select",
+      "id": "text_align",
+      "label": "Alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Centred"
+        }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    }
   ],
   "blocks": [
-    { "type": "pick", "name": "Product", "settings": [
-      { "type": "product", "id": "product", "label": "Product" },
-      { "type": "text", "id": "badge", "label": "Badge", "info": "Overrides the automatic New In / Sale tag." }
-    ]}
+    {
+      "type": "pick",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "text",
+          "id": "badge",
+          "label": "Badge",
+          "info": "Overrides the automatic New In / Sale tag."
+        }
+      ]
+    }
   ],
-  "presets": [{ "name": "Complete the look", "blocks": [{"type":"pick"},{"type":"pick"},{"type":"pick"},{"type":"pick"}] }]
+  "presets": [
+    {
+      "name": "Complete the look",
+      "blocks": [
+        {
+          "type": "pick"
+        },
+        {
+          "type": "pick"
+        },
+        {
+          "type": "pick"
+        },
+        {
+          "type": "pick"
+        }
+      ]
+    }
+  ]
 }
 {% endschema %}
