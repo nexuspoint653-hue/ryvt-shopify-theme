@@ -1,406 +1,170 @@
-{% render 'section-style', s: section %}
-{%- assign v = product.selected_or_first_available_variant -%}
-<div class="pdp" data-picker>
-  <div class="pdp-l">
-    <nav class="pdp-jump" aria-label="Jump to">
-      <a href="#details">Details</a>
-      <a href="#reviews">Reviews</a>
-      <a href="#look">Complete the look</a>
-    </nav>
-    <div class="crumb" style="margin-bottom:10px">{{ product.type | default: 'Shop' }}</div>
-    <h1 class="h2">{{ product.title }}</h1>
-    <div style="margin-top:12px">{% render 'rating', product: product %}</div>
-    {%- if product.metafields.custom.short_description != blank -%}
-      <p class="pdp-desc">{{ product.metafields.custom.short_description }}</p>
-    {%- endif -%}
+{%- comment -%}
+  Product — the site's PDP: gallery left, everything you decide with on the
+  right. Colour and size are real Shopify variants; the accordions read from
+  the product's own description and metafields.
+{%- endcomment -%}
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign ship_over = settings.ship_threshold | default: '125'
+  assign ship_time = settings.ship_time | default: '48 hours'
+  assign ship_from = settings.ship_from | default: 'Metro Detroit'
+  assign ret_days = settings.returns_days | default: '30'
+-%}
 
-    {%- if product.description != blank -%}
-      <div class="acc" id="details"><button type="button" class="acc-h" aria-expanded="false">Details <span>+</span></button>
-        <div class="acc-b"><div class="rte">{{ product.description }}</div></div></div>
-    {%- endif -%}
-    {%- for block in section.blocks -%}
-      <div class="acc" {{ block.shopify_attributes }}>
-        <button type="button" class="acc-h" aria-expanded="false">{{ block.settings.title }} <span>+</span></button>
-        <div class="acc-b"><div class="rte">{{ block.settings.body }}</div></div>
-      </div>
-    {%- endfor -%}
+<div class="wrap">
+  <div class="crumbs">
+    <a href="{{ routes.root_url }}">Home</a> /
+    <a href="{{ routes.all_products_collection_url }}">Shop All</a> /
+    <span>{{ product.title }}</span>
   </div>
 
-  <div class="gal-wrap">
-    <div class="gal">
-      <div class="gal-main">
-        {%- if product.featured_image -%}
-          <img data-main-image src="{{ product.featured_image | image_url: width: 1400 }}"
-               alt="{{ product.featured_image.alt | escape }}" width="1200" height="1500">
+  <div class="pdp">
+    <div>
+      <div class="pdp-stage" data-pdp-stage>
+        {%- if product.featured_media -%}
+          {{ product.featured_media | image_url: width: 1400 | image_tag:
+             class: 'pdp-main', widths: '600,900,1400', sizes: '(max-width:900px) 100vw, 55vw',
+             alt: product.title, fetchpriority: 'high' }}
         {%- else -%}
-          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          <span class="ph"></span>
         {%- endif -%}
-      </div>
-      <span class="enlarge">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21M11 8v6M8 11h6"/></svg>
-        Click to enlarge
-      </span>
-    </div>
-    {%- if product.images.size > 1 -%}
-      <div class="gal-grid">
-        {%- for img in product.images limit: 9 -%}
-          <button type="button" class="gcard{% if forloop.first %} on{% endif %}"
-                  data-thumb="{{ img | image_url: width: 1400 }}"
-                  aria-label="View image {{ forloop.index }}">
-            <img src="{{ img | image_url: width: 700 }}" alt="" loading="lazy">
-          </button>
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
-  </div>
-
-  <div class="pdp-r">
-    <div class="price-row">
-      <span class="price" data-price>{{ product.price | money }}</span>
-      {%- if v.available -%}<span class="instock">In Stock</span>{%- endif -%}
-    </div>
-
-    {%- if section.settings.offer_text != blank -%}
-      <div>
-        <div class="offer"><span style="color:var(--muted)">Offer</span> <b>{{ section.settings.offer_text }}</b></div>
-        {%- if section.settings.offer_note != blank -%}
-          <p class="offer-sub" style="margin-top:10px">{{ section.settings.offer_note }}</p>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
-
-    {% form 'product', product %}
-      <script type="application/json" data-variants>
-        [{%- for variant in product.variants -%}
-          {"id":{{ variant.id }},"options":{{ variant.options | json }},"available":{{ variant.available }},
-           "price":{{ variant.price | money | json }}{% if variant.image %},"image":{{ variant.image | image_url: width: 1400 | json }}{% endif %}}
-          {%- unless forloop.last -%},{%- endunless -%}
-        {%- endfor -%}]
-      </script>
-
-      {%- for opt in product.options_with_values -%}
-        {%- assign oname = opt.name | downcase -%}
-        <div style="margin-bottom:18px">
-          <div class="opt-h">
-            <span class="k">{{ opt.name }}</span>
-            {%- if oname contains 'col' -%}
-              <span class="v" data-colour-label>{{ opt.selected_value }}</span>
-            {%- elsif oname contains 'size' and section.settings.size_guide != blank -%}
-              <a class="findsize" href="{{ section.settings.size_guide }}">
-                <svg viewBox="0 0 24 24"><path d="M3 8h18v8H3zM7 8v4M11 8v6M15 8v4M19 8v6"/></svg> Find my size</a>
-            {%- endif -%}
-          </div>
-          <div class="opt-row" data-opt>
-            {%- for value in opt.values -%}
-              {%- if oname contains 'col' and value.swatch.color -%}
-                <button type="button" class="sw-btn{% if value == opt.selected_value %} on{% endif %}"
-                        data-value="{{ value | escape }}" title="{{ value | escape }}" aria-label="{{ value | escape }}"
-                        style="width:34px;height:34px;background:{{ value.swatch.color }}"></button>
-              {%- else -%}
-                <button type="button" class="sz{% if value == opt.selected_value %} on{% endif %}"
-                        data-value="{{ value | escape }}" style="min-width:52px;padding:12px 14px">{{ value }}</button>
-              {%- endif -%}
+        {%- if product.media.size > 1 -%}
+          <div class="pdp-thumbs">
+            {%- for m in product.media limit: 6 -%}
+              <button type="button" class="pdp-thumb{% if forloop.first %} on{% endif %}"
+                      data-media="{{ m.id }}" aria-label="View image {{ forloop.index }}">
+                <img src="{{ m | image_url: width: 200 }}" alt="" width="200" height="250" loading="lazy">
+              </button>
             {%- endfor -%}
           </div>
-          {%- if oname contains 'col' and section.settings.model_note != blank -%}
-            <p class="model-note" style="margin:12px 0 0">{{ section.settings.model_note }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- assign film = product.media | where: 'media_type', 'video' | first -%}
+      {%- if film -%}
+        <div class="motion">
+          {{ film | video_tag: image_size: '900x', autoplay: true, loop: true, muted: true,
+             controls: false, playsinline: true }}
+          <div class="cap">{{ section.settings.motion_caption }}</div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="side">
+      {%- if product.type != blank -%}<div class="lab">{{ product.type }}</div>{%- endif -%}
+      <h1 style="margin-top:8px">{{ product.title }}</h1>
+      <div class="price">
+        {%- if v.compare_at_price > v.price -%}
+          <s style="opacity:.55">{{ v.compare_at_price | money_without_trailing_zeros }}</s>
+        {%- endif -%}
+        {{ v.price | money_without_trailing_zeros }}
+      </div>
+      {%- if product.description != blank -%}
+        <p class="blurb">{{ product.description | strip_html | truncatewords: 44 }}</p>
+      {%- endif -%}
+
+      {%- form 'product', product, id: 'pdp-form', novalidate: 'novalidate' -%}
+        <input type="hidden" name="id" value="{{ v.id }}" data-variant-id>
+
+        {%- unless product.has_only_default_variant -%}
+          {%- for opt in product.options_with_values -%}
+            {%- assign oname = opt.name | downcase -%}
+            {%- if oname contains 'color' or oname contains 'colour' -%}
+              <div class="opt" data-color-block>
+                <div class="lab"><span>{{ opt.name }} &mdash;
+                  <b data-color-name style="font-weight:600">{{ opt.selected_value }}</b></span></div>
+                <div class="colors" data-colors>
+                  {%- for val in opt.values -%}
+                    <button type="button" class="sw-btn{% if val == opt.selected_value %} on{% endif %}"
+                            data-opt="{{ opt.position }}" data-val="{{ val | escape }}"
+                            title="{{ val | escape }}" aria-label="{{ val | escape }}">
+                      <i style="background:{% if val.swatch.color %}{{ val.swatch.color }}{% else %}{% render 'swatch-color', name: val %}{% endif %}"></i>
+                    </button>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- else -%}
+              <div class="opt">
+                <div class="lab"><span>{{ opt.name }}</span>
+                  {%- if section.settings.size_guide != blank -%}
+                    <a href="{{ section.settings.size_guide }}">Size guide</a>
+                  {%- endif -%}
+                </div>
+                <div class="sizes" data-sizes>
+                  {%- for val in opt.values -%}
+                    <button type="button" class="{% if val == opt.selected_value %}on{% endif %}"
+                            data-opt="{{ opt.position }}" data-val="{{ val | escape }}">{{ val }}</button>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endunless -%}
+
+        <button class="add" type="submit" name="add" data-add {% unless v.available %}disabled{% endunless %}>
+          {%- if v.available -%}Add to bag &mdash; {{ v.price | money_without_trailing_zeros }}{%- else -%}Sold out{%- endif -%}
+        </button>
+      {%- endform -%}
+
+      <div class="pdp-ship" data-ship tabindex="0">Ships in <b>{{ ship_time }}</b> from {{ ship_from }}
+        &middot; Free over <b>{{ ship_over | prepend: '$' }}</b></div>
+
+      <ul class="pdp-trust">
+        <li><b>{{ ship_time }}</b>dispatch</li>
+        <li><b>{{ ret_days }} days</b>to return</li>
+        <li><b>1 year</b>against faults</li>
+      </ul>
+
+      <div class="acc">
+        {%- if product.description != blank -%}
+          <details open>
+            <summary>Details</summary>
+            <div class="body">{{ product.description }}</div>
+          </details>
+        {%- endif -%}
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'panel' -%}
+            <details {{ block.shopify_attributes }}>
+              <summary>{{ block.settings.title }}</summary>
+              <div class="body">{{ block.settings.body }}</div>
+            </details>
           {%- endif -%}
-        </div>
-      {%- endfor -%}
-
-      <div style="margin-bottom:18px">
-        <div class="opt-h"><span class="k">Quantity</span></div>
-        <div class="qty" data-qty>
-          <button type="button" data-minus aria-label="Decrease quantity">–</button>
-          <input type="number" name="quantity" value="1" min="1" aria-label="Quantity">
-          <button type="button" data-plus aria-label="Increase quantity">+</button>
-        </div>
+        {%- endfor -%}
       </div>
-
-      <input type="hidden" name="id" value="{{ v.id }}">
-      <button type="submit" class="btn btn-solid" data-add style="width:100%"{% unless v.available %} disabled{% endunless %}>
-        {%- if v.available -%}Add to Bag{%- else -%}Sold Out{%- endif -%}
-      </button>
-    {% endform %}
-
-    {%- if section.settings.wishlist_text != blank -%}
-      <button type="button" class="btn" style="width:100%">{{ section.settings.wishlist_text }}</button>
-    {%- endif -%}
-
-
-    {%- if section.settings.show_usp -%}
-      <div class="pdp-usp">
-        <div><svg viewBox="0 0 24 24"><path d="M2 8h11v8H2zM13 11h4l3 3v2h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><span>{{ section.settings.usp_1 }}</span></div>
-        <div><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 109-9"/><path d="M3 4v5h5"/></svg><span>{{ section.settings.usp_2 }}</span></div>
-        <div><svg viewBox="0 0 24 24"><path d="M3 8h18v8H3zM7 8v4M11 8v6M15 8v4"/></svg><span>{{ section.settings.usp_3 }}</span></div>
-      </div>
-    {%- endif -%}
-
-    <div class="trust">
-      {%- if section.settings.trust_1 != blank -%}
-        <div><svg viewBox="0 0 24 24"><path d="M2 8h11v8H2zM13 11h4l3 3v2h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><span>{{ section.settings.trust_1 }}</span></div>
-      {%- endif -%}
-      {%- if section.settings.trust_2 != blank -%}
-        <div><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 109-9"/><path d="M3 4v5h5"/></svg><span>{{ section.settings.trust_2 }}</span></div>
-      {%- endif -%}
-      {%- if section.settings.trust_3 != blank -%}
-        <div><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg><span>{{ section.settings.trust_3 }}</span></div>
-      {%- endif -%}
     </div>
   </div>
 </div>
+
+<script>
+  window.__ryvtVariants = [
+    {%- for var in product.variants -%}
+      {
+        "id": {{ var.id }},
+        "options": {{ var.options | json }},
+        "available": {{ var.available | json }},
+        "price_formatted": {{ var.price | money_without_trailing_zeros | json }}
+      }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ];
+</script>
 
 {% schema %}
 {
   "name": "Product",
   "settings": [
-    {
-      "type": "url",
-      "id": "size_guide",
-      "label": "Size guide link"
-    },
-    {
-      "type": "text",
-      "id": "model_note",
-      "label": "Model note",
-      "default": "Model is 6'0\", 185 lbs · wearing size L"
-    },
-    {
-      "type": "text",
-      "id": "offer_text",
-      "label": "Offer badge"
-    },
-    {
-      "type": "text",
-      "id": "offer_note",
-      "label": "Offer note"
-    },
-    {
-      "type": "text",
-      "id": "wishlist_text",
-      "label": "Secondary button",
-      "default": "Save to Wishlist"
-    },
-    {
-      "type": "text",
-      "id": "trust_1",
-      "label": "Trust line 1",
-      "default": "Free shipping on orders over $100"
-    },
-    {
-      "type": "text",
-      "id": "trust_2",
-      "label": "Trust line 2",
-      "default": "30-day returns & easy exchanges"
-    },
-    {
-      "type": "text",
-      "id": "trust_3",
-      "label": "Trust line 3",
-      "default": "Secure checkout & Apple Pay"
-    },
-    {
-      "type": "header",
-      "content": "Appearance"
-    },
-    {
-      "type": "select",
-      "id": "scheme",
-      "label": "Background",
-      "default": "light",
-      "options": [
-        {
-          "value": "light",
-          "label": "White"
-        },
-        {
-          "value": "alt",
-          "label": "Off-white"
-        },
-        {
-          "value": "sand",
-          "label": "Sand"
-        },
-        {
-          "value": "dark",
-          "label": "Dark"
-        },
-        {
-          "value": "custom",
-          "label": "Custom"
-        }
-      ]
-    },
-    {
-      "type": "color",
-      "id": "bg_custom",
-      "label": "Custom background",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "id": "text_custom",
-      "label": "Custom text",
-      "default": "#111111"
-    },
-    {
-      "type": "range",
-      "id": "pad_top",
-      "label": "Extra top padding",
-      "min": 0,
-      "max": 120,
-      "step": 8,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "pad_bottom",
-      "label": "Extra bottom padding",
-      "min": 0,
-      "max": 120,
-      "step": 8,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "header",
-      "content": "Extras"
-    },
-    {
-      "type": "checkbox",
-      "id": "show_usp",
-      "label": "Show benefit row",
-      "default": true
-    },
-    {
-      "type": "text",
-      "id": "usp_1",
-      "label": "Benefit 1",
-      "default": "Free shipping over $100"
-    },
-    {
-      "type": "text",
-      "id": "usp_2",
-      "label": "Benefit 2",
-      "default": "30-day returns"
-    },
-    {
-      "type": "text",
-      "id": "usp_3",
-      "label": "Benefit 3",
-      "default": "True to size — see the size guide"
-    },
-    {
-      "type": "checkbox",
-      "id": "sticky_bar",
-      "label": "Sticky add-to-bag on scroll",
-      "default": true
-    },
-    {
-      "type": "header",
-      "content": "Section style"
-    },
-    {
-      "type": "header",
-      "content": "Section type"
-    },
-    {
-      "type": "paragraph",
-      "content": "Leave these alone and the section follows the site's typography. Set them only when this one section needs to differ."
-    },
-    {
-      "type": "font_picker",
-      "id": "heading_font",
-      "label": "Heading font for this section",
-      "default": "assistant_n4"
-    },
-    {
-      "type": "range",
-      "id": "heading_size",
-      "label": "Heading size",
-      "min": 60,
-      "max": 160,
-      "step": 5,
-      "unit": "%",
-      "default": 100
-    },
-    {
-      "type": "color",
-      "id": "heading_color",
-      "label": "Heading colour"
-    },
-    {
-      "type": "select",
-      "id": "text_align",
-      "label": "Alignment",
-      "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Centred"
-        }
-      ],
-      "default": "left"
-    },
-    {
-      "type": "header",
-      "content": "Spacing"
-    }
+    { "type": "url", "id": "size_guide", "label": "Size guide page" },
+    { "type": "text", "id": "motion_caption", "label": "Video caption", "default": "Worn, not styled" }
   ],
   "blocks": [
     {
-      "type": "accordion",
-      "name": "Accordion",
+      "type": "panel",
+      "name": "Accordion panel",
       "settings": [
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Title",
-          "default": "Material"
-        },
-        {
-          "type": "richtext",
-          "id": "body",
-          "label": "Body",
-          "default": "<p>100% heavyweight cotton. Garment-dyed.</p>"
-        }
+        { "type": "text", "id": "title", "label": "Title", "default": "Fit & sizing" },
+        { "type": "richtext", "id": "body", "label": "Body",
+          "default": "<p>Boxy through the body with a set shoulder. True to size for a relaxed fit; size down for a closer one.</p>" }
       ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Product"
     }
   ]
 }
 {% endschema %}
-
-{%- if section.settings.sticky_bar -%}
-<div class="pdp-sticky" id="pdpSticky">
-  <div class="in">
-    {%- if product.featured_image -%}
-      <img src="{{ product.featured_image | image_url: width: 120 }}" alt="">
-    {%- endif -%}
-    <div>
-      <div class="t">{{ product.title }}</div>
-      <div class="p" data-price>{{ product.price | money }}</div>
-    </div>
-    <a class="btn btn-solid" href="#main">Choose options</a>
-  </div>
-</div>
-<script>
-(function(){
-  var bar=document.getElementById('pdpSticky');
-  var form=document.querySelector('.pdp-r [data-add]');
-  if(!bar||!form) return;
-  var io=new IntersectionObserver(function(e){
-    bar.classList.toggle('on', !e[0].isIntersecting);
-  },{rootMargin:'0px 0px -40px 0px'});
-  io.observe(form);
-})();
-</script>
-{%- endif -%}

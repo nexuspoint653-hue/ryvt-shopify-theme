@@ -991,3 +991,77 @@ document.addEventListener("DOMContentLoaded",function(){ wireAllCards(document);
     document.addEventListener('shopify:section:load', function(e){ arm(e.target); });
   })();
 })();
+
+/* ==========================================================================
+   Product page: variant selection against the real Shopify variant list.
+   ========================================================================== */
+(function ryvtProduct(){
+  "use strict";
+  var form = document.getElementById('pdp-form');
+  if(!form) return;
+  var data = window.__ryvtVariants;
+  if(!data) return;
+  var idField = form.querySelector('[data-variant-id]');
+  var addBtn  = form.querySelector('[data-add]');
+  var priceEl = document.querySelector('.pdp .price');
+  var nameEl  = document.querySelector('[data-color-name]');
+
+  function chosen(){
+    var out = [];
+    Array.prototype.forEach.call(document.querySelectorAll('[data-opt]'), function(b){
+      if(!b.classList.contains('on')) return;
+      out[parseInt(b.getAttribute('data-opt'), 10) - 1] = b.getAttribute('data-val');
+    });
+    return out;
+  }
+  function match(){
+    var want = chosen();
+    for(var i = 0; i < data.length; i++){
+      var v = data[i], ok = true;
+      for(var k = 0; k < want.length; k++){
+        if(want[k] && v.options[k] !== want[k]){ ok = false; break; }
+      }
+      if(ok) return v;
+    }
+    return null;
+  }
+  function sync(){
+    var v = match();
+    if(!v){
+      if(addBtn){ addBtn.disabled = true; addBtn.textContent = 'Unavailable'; }
+      return;
+    }
+    if(idField) idField.value = v.id;
+    if(priceEl) priceEl.textContent = v.price_formatted;
+    if(nameEl && v.options[0]) nameEl.textContent = v.options[0];
+    if(addBtn){
+      addBtn.disabled = !v.available;
+      addBtn.textContent = v.available ? ('Add to bag — ' + v.price_formatted) : 'Sold out';
+    }
+    if(history.replaceState){
+      var u = new URL(location.href); u.searchParams.set('variant', v.id);
+      history.replaceState({}, '', u);
+    }
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('[data-opt]'), function(btn){
+    btn.addEventListener('click', function(){
+      var group = btn.getAttribute('data-opt');
+      Array.prototype.forEach.call(document.querySelectorAll('[data-opt="' + group + '"]'), function(b){
+        b.classList.remove('on');
+      });
+      btn.classList.add('on');
+      sync();
+    });
+  });
+
+  /* gallery thumbnails swap the main image */
+  var main = document.querySelector('.pdp-main');
+  Array.prototype.forEach.call(document.querySelectorAll('.pdp-thumb'), function(t){
+    t.addEventListener('click', function(){
+      var img = t.querySelector('img');
+      if(main && img){ main.src = img.src.replace(/width=\d+/, 'width=1400'); }
+      Array.prototype.forEach.call(document.querySelectorAll('.pdp-thumb'), function(x){ x.classList.remove('on'); });
+      t.classList.add('on');
+    });
+  });
+})();

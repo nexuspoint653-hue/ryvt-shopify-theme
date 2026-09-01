@@ -1,255 +1,105 @@
-{% render 'section-style', s: section %}
 {%- comment -%}
-  Collection page. Filters run inline above the grid rather than in a left
-  sidebar, so the grid gets the full window width. Short result sets close the
-  row with suggestions instead of leaving white space.
+  Shop — the site's layout: title left, standing description right, a tuck-away
+  filter, then the three-up grid. Filtering and sorting use Shopify's own
+  facets so they work with any catalogue.
 {%- endcomment -%}
+{%- liquid
+  assign shown = collection.products_count
+  assign active = 0
+  for f in collection.filters
+    assign active = active | plus: f.active_values.size
+  endfor
+-%}
 
-{%- assign strip = linklists[section.settings.category_menu] -%}
-{%- if strip.links.size > 0 -%}
-  <nav class="cstrip" aria-label="Categories">
-    <a href="{{ routes.all_products_collection_url }}"{% unless collection.handle %} class="on"{% endunless %}>All</a>
-    {%- for l in strip.links -%}
-      <a href="{{ l.url }}"{% if l.active %} class="on"{% endif %}>{{ l.title }}</a>
-    {%- endfor -%}
-  </nav>
-{%- endif -%}
-
-<div class="chead">
-  <p class="crumb">{% if collection.handle %}Shop / {{ collection.title }}{% else %}Shop{% endif %}</p>
-  <h1 class="h2">{{ collection.title | default: 'All products' }}</h1>
+<div class="wrap shop-hd">
+  <h1>{{ collection.title | default: 'Shop' }}</h1>
   {%- if collection.description != blank -%}
-    <div class="chead-d rte">{{ collection.description }}</div>
+    <p>{{ collection.description | strip_html | truncatewords: 46 }}</p>
+  {%- elsif section.settings.body != blank -%}
+    <p>{{ section.settings.body }}</p>
   {%- endif -%}
 </div>
-<div class="tabs">
-  <a class="tab{% unless collection.handle %} on{% endunless %}" href="{{ routes.all_products_collection_url }}">All</a>
-  <a class="tab on" href="{{ collection.url }}">{{ collection.title }}</a>
+
+<div class="wrap shop-bar">
+  <span class="shop-tally" data-count>{{ shown }} {% if shown == 1 %}style{% else %}styles{% endif %}</span>
+  {%- if collection.filters.size > 0 or section.settings.show_sort -%}
+    <button class="filt-btn" type="button" data-filt-toggle aria-expanded="false" aria-controls="filt-panel">
+      <span class="filt-btn-t">Filter</span>
+      <span class="filt-chip" data-filt-chip {% if active == 0 %}hidden{% endif %}>{{ active }}</span>
+      <span class="filt-ic" aria-hidden="true"><i></i><i></i><i></i></span>
+    </button>
+  {%- endif -%}
 </div>
 
-{%- paginate collection.products by section.settings.per_page -%}
-<div class="fbar">
-  {%- for filter in collection.filters -%}
-    {%- if filter.type == 'list' and filter.values.size > 0 -%}
-      {%- assign fname = filter.label | downcase -%}
-      <div class="fgrp">
-        <span>{{ filter.label }}</span>
-        <div style="display:flex;gap:{% if fname contains 'col' %}7{% else %}6{% endif %}px;flex-wrap:wrap">
-          {%- for v in filter.values limit: 8 -%}
-            {%- if fname contains 'col' and v.swatch.color -%}
-              <a class="sw-btn{% if v.active %} on{% endif %}" title="{{ v.label }}" aria-label="{{ v.label }}"
-                 style="background:{{ v.swatch.color }}" href="{{ v.url_to_add | default: v.url_to_remove }}"></a>
-            {%- else -%}
-              <a class="sz{% if v.active %} on{% endif %}" href="{{ v.url_to_add | default: v.url_to_remove }}">{{ v.label }}</a>
-            {%- endif -%}
-          {%- endfor -%}
+{%- if collection.filters.size > 0 or section.settings.show_sort -%}
+<div class="filt-panel" id="filt-panel" data-filt-panel {% if active == 0 %}hidden{% endif %}>
+  <form class="wrap filt-in" id="facets">
+    {%- for f in collection.filters -%}
+      {%- if f.type == 'list' -%}
+        <div class="filt-grp">
+          <span class="filt-lab">{{ f.label }}</span>
+          <div class="filters">
+            {%- for v in f.values -%}
+              <label class="filt-opt">
+                <input type="checkbox" name="{{ v.param_name }}" value="{{ v.value }}"
+                       {% if v.active %}checked{% endif %} {% if v.count == 0 and v.active == false %}disabled{% endif %}
+                       onchange="this.form.submit()">
+                <span>{{ v.label }}</span>
+              </label>
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- if section.settings.show_sort -%}
+      <div class="filt-grp">
+        <span class="filt-lab">Sort</span>
+        <div class="filters">
+          {%- assign cur = collection.sort_by | default: collection.default_sort_by -%}
+          <select name="sort_by" class="filt-sort" onchange="this.form.submit()" aria-label="Sort by">
+            {%- for opt in collection.sort_options -%}
+              <option value="{{ opt.value }}" {% if opt.value == cur %}selected{% endif %}>{{ opt.name }}</option>
+            {%- endfor -%}
+          </select>
         </div>
       </div>
     {%- endif -%}
-  {%- endfor -%}
 
-  {%- if collection.filters.size == 0 -%}
-    <div class="fgrp"><span>Browse</span>
-      <div style="display:flex;gap:6px">
-        {%- for tag in collection.all_tags limit: 6 -%}
-          <a class="sz{% if current_tags contains tag %} on{% endif %}" href="{{ collection.url }}/{{ tag | handleize }}">{{ tag }}</a>
-        {%- endfor -%}
-      </div>
-    </div>
-  {%- endif -%}
-
-  {%- if current_tags or collection.current_type or collection.current_vendor -%}
-    <a class="clearf" href="{{ collection.url }}">Clear</a>
-  {%- endif -%}
-
-  <div class="right">
-    <span class="count">{{ collection.products_count }} {% if collection.products_count == 1 %}item{% else %}items{% endif %}</span>
-    <form method="get" action="{{ collection.url }}">
-      <select class="sortsel" name="sort_by" onchange="this.form.submit()" aria-label="Sort products">
-        {%- for o in collection.sort_options -%}
-          <option value="{{ o.value }}"{% if o.value == collection.sort_by %} selected{% endif %}>{{ o.name }}</option>
-        {%- endfor -%}
-      </select>
-    </form>
-  </div>
+    {%- if active > 0 -%}
+      <a class="filt-clear" href="{{ collection.url }}">Clear all</a>
+    {%- endif -%}
+  </form>
 </div>
-
-
-{%- assign shown = collection.products.size -%}
-<div class="grid stag in" data-row data-max="{{ settings.grid_columns }}"{% if settings.card_swatches_hover %} data-swatch-hover{% endif %}{% if settings.card_show_index %} data-indexed{% endif %}>
-  {%- for product in collection.products -%}
-    {% render 'product-card', product: product, index: forloop.index %}
-  {%- else -%}
-    <div class="empty">
-      <h3 class="h3">Nothing matches those filters</h3>
-      <p style="color:var(--muted);margin:10px 0 22px">Try clearing a filter to see more.</p>
-      <a class="btn" href="{{ collection.url }}">Clear filters</a>
-    </div>
-  {%- endfor -%}
-
-  {%- comment -%} keep the row full when the result set is thin {%- endcomment -%}
-  {%- if section.settings.fill_gaps and shown > 0 and shown < 4 -%}
-    {%- assign need = 4 | minus: shown -%}
-    {%- assign added = 0 -%}
-    {%- for p in collections.all.products -%}
-      {%- unless collection.products contains p -%}
-        {%- if added < need -%}
-          {% render 'product-card', product: p, badge: 'You might also like', ghost: true %}
-          {%- assign added = added | plus: 1 -%}
-        {%- endif -%}
-      {%- endunless -%}
-    {%- endfor -%}
-  {%- endif -%}
-</div>
-
-{%- if paginate.pages > 1 -%}
-  <div class="pagination">{{ paginate | default_pagination }}</div>
 {%- endif -%}
-{%- endpaginate -%}
+
+<section class="sec wrap" style="padding-top:26px">
+  {%- paginate collection.products by section.settings.per_page -%}
+    <div class="grid indexed"{% if settings.card_swatches_hover %} data-swatch-hover{% endif %}{% if settings.card_show_index %} data-indexed{% endif %}>
+      {%- for product in collection.products -%}
+        {% render 'product-card', product: product, index: forloop.index %}
+      {%- else -%}
+        <div class="empty">
+          <h3 class="h3">Nothing matches those filters</h3>
+          <p>Try clearing one, or <a href="{{ routes.all_products_collection_url }}">see everything</a>.</p>
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- if paginate.pages > 1 -%}
+      <nav class="pager">{{ paginate | default_pagination }}</nav>
+    {%- endif -%}
+  {%- endpaginate -%}
+</section>
 
 {% schema %}
 {
   "name": "Collection",
   "settings": [
-    {
-      "type": "link_list",
-      "id": "category_menu",
-      "label": "Category strip menu",
-      "info": "Shown as pills above the grid so Shop All reads as categorised."
-    },
-    {
-      "type": "range",
-      "id": "per_page",
-      "label": "Products per page",
-      "min": 8,
-      "max": 48,
-      "step": 4,
-      "default": 24
-    },
-    {
-      "type": "checkbox",
-      "id": "fill_gaps",
-      "label": "Fill short rows with suggestions",
-      "default": true,
-      "info": "Stops a filtered collection from leaving empty cells."
-    },
-    {
-      "type": "header",
-      "content": "Appearance"
-    },
-    {
-      "type": "select",
-      "id": "scheme",
-      "label": "Background",
-      "default": "light",
-      "options": [
-        {
-          "value": "light",
-          "label": "White"
-        },
-        {
-          "value": "alt",
-          "label": "Off-white"
-        },
-        {
-          "value": "sand",
-          "label": "Sand"
-        },
-        {
-          "value": "dark",
-          "label": "Dark"
-        },
-        {
-          "value": "custom",
-          "label": "Custom"
-        }
-      ]
-    },
-    {
-      "type": "color",
-      "id": "bg_custom",
-      "label": "Custom background",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "id": "text_custom",
-      "label": "Custom text",
-      "default": "#111111"
-    },
-    {
-      "type": "range",
-      "id": "pad_top",
-      "label": "Extra top padding",
-      "min": 0,
-      "max": 120,
-      "step": 8,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "pad_bottom",
-      "label": "Extra bottom padding",
-      "min": 0,
-      "max": 120,
-      "step": 8,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "header",
-      "content": "Section style"
-    },
-    {
-      "type": "header",
-      "content": "Section type"
-    },
-    {
-      "type": "paragraph",
-      "content": "Leave these alone and the section follows the site's typography. Set them only when this one section needs to differ."
-    },
-    {
-      "type": "font_picker",
-      "id": "heading_font",
-      "label": "Heading font for this section",
-      "default": "assistant_n4"
-    },
-    {
-      "type": "range",
-      "id": "heading_size",
-      "label": "Heading size",
-      "min": 60,
-      "max": 160,
-      "step": 5,
-      "unit": "%",
-      "default": 100
-    },
-    {
-      "type": "color",
-      "id": "heading_color",
-      "label": "Heading colour"
-    },
-    {
-      "type": "select",
-      "id": "text_align",
-      "label": "Alignment",
-      "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Centred"
-        }
-      ],
-      "default": "left"
-    },
-    {
-      "type": "header",
-      "content": "Spacing"
-    }
+    { "type": "textarea", "id": "body", "label": "Standing description",
+      "default": "Every RYVT style in one place. The same fit standard, the same 8.2 oz cotton, the same size run from XS to XXL, cut and finished in Metro Detroit.",
+      "info": "Shown when the collection has no description of its own." },
+    { "type": "range", "id": "per_page", "label": "Products per page", "min": 6, "max": 48, "step": 3, "default": 24 },
+    { "type": "checkbox", "id": "show_sort", "label": "Show sorting", "default": true }
   ]
 }
 {% endschema %}

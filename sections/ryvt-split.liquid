@@ -1,0 +1,37 @@
+{%- comment -%} Editorial split: a photograph beside a dark panel of copy. {%- endcomment -%}
+<section class="split">
+  {%- if section.settings.image != blank -%}
+    <img src="{{ section.settings.image | image_url: width: 1600 }}"
+         alt="{{ section.settings.image.alt | escape }}" width="1600" height="1600" loading="lazy">
+  {%- else -%}
+    <span class="ph dark"><em>{{ section.settings.placeholder }}</em></span>
+  {%- endif -%}
+  <div class="txt">
+    {%- if section.settings.eyebrow != blank -%}
+      <div class="lab" style="color:rgba(255,255,255,.72)">{{ section.settings.eyebrow }}</div>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h3 style="margin-top:12px">{{ section.settings.heading }}</h3>
+    {%- endif -%}
+    {%- if section.settings.body != blank -%}<p>{{ section.settings.body }}</p>{%- endif -%}
+    {%- if section.settings.cta_text != blank -%}
+      <div class="cta-row"><a class="btn btn-solid" href="{{ section.settings.cta_link }}">{{ section.settings.cta_text }}</a></div>
+    {%- endif -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "RYVT split",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Photograph" },
+    { "type": "text", "id": "placeholder", "label": "Placeholder caption", "default": "Foundry wash — process" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Foundry Wash" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Washed twice, so it never shrinks on you." },
+    { "type": "textarea", "id": "body", "label": "Body",
+      "default": "Garment-dyed then washed again before it is cut. What you pull out of the dryer in month six is the same tee you opened in week one." },
+    { "type": "text", "id": "cta_text", "label": "Button", "default": "Shop the wash" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "RYVT split" }]
+}
+{% endschema %}

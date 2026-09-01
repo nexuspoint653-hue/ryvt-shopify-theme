@@ -3,134 +3,14 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "b1": {
-          "type": "accordion",
-          "settings": {
-            "title": "Material",
-            "body": "<p>100% heavyweight cotton. Garment-dyed.</p>"
-          }
-        },
-        "b2": {
-          "type": "accordion",
-          "settings": {
-            "title": "Care",
-            "body": "<p>Machine wash cold with like colours. Tumble dry low.</p>"
-          }
-        },
-        "b3": {
-          "type": "accordion",
-          "settings": {
-            "title": "Shipping &amp; Returns",
-            "body": "<p>Free shipping on orders over $100. 30-day returns.</p>"
-          }
-        }
+        "fit": { "type": "panel", "settings": { "title": "Fit & sizing", "body": "<p>Boxy through the body with a set shoulder. True to size for a relaxed fit; size down for a closer one.</p>" } },
+        "care": { "type": "panel", "settings": { "title": "Fabric & care", "body": "<p>Cold wash, inside out, like colours. Tumble low or hang. No softener, which coats heavyweight cotton and stops it breathing.</p>" } },
+        "ship": { "type": "panel", "settings": { "title": "Shipping & returns", "body": "<p>Picked the same day and dispatched within 48 hours. Free shipping over $125. Thirty days to change your mind, unworn with tags on.</p>" } }
       },
-      "block_order": [
-        "b1",
-        "b2",
-        "b3"
-      ]
+      "block_order": ["fit", "care", "ship"],
+      "settings": { "motion_caption": "Worn, not styled" }
     },
-    "related": {
-      "type": "related-products",
-      "settings": {
-        "heading": "Complete the Look"
-      }
-    },
-    "reviews": {
-      "type": "product-reviews",
-      "blocks": {
-        "r1": {
-          "type": "review",
-          "settings": {
-            "score": 5,
-            "title": "Exactly what I wanted",
-            "body": "Heavy without being stiff. Washed it a dozen times and it still hangs the same. The print has faded just enough to look lived in.",
-            "name": "Marcus T.",
-            "meta": "6ft1, wearing M",
-            "verified": true
-          }
-        },
-        "r2": {
-          "type": "review",
-          "settings": {
-            "score": 5,
-            "title": "Worth the money",
-            "body": "I train in it and wear it out the same night. Shoulders held their shape which is more than I can say for anything else in my drawer.",
-            "name": "Devon R.",
-            "meta": "5ft10, wearing L",
-            "verified": true
-          }
-        },
-        "r3": {
-          "type": "review",
-          "settings": {
-            "score": 4,
-            "title": "Runs a touch big",
-            "body": "Quality is not in question. I am between sizes and went up \u2014 should have stayed put. Sized down on the second order and it is perfect.",
-            "name": "Alicia M.",
-            "meta": "5ft6, wearing S",
-            "verified": true
-          }
-        },
-        "r4": {
-          "type": "review",
-          "settings": {
-            "score": 5,
-            "title": "Bought a second one",
-            "body": "Ordered black first, came back for the bone. Shipping out of Detroit was quick and the packaging was not wasteful.",
-            "name": "Jordan P.",
-            "meta": "6ft, wearing M",
-            "verified": true
-          }
-        }
-      },
-      "block_order": [
-        "r1",
-        "r2",
-        "r3",
-        "r4"
-      ],
-      "settings": {
-        "heading": "What people say",
-        "cta_text": "Write a review",
-        "scheme": "light"
-      }
-    },
-    "look": {
-      "type": "complete-look",
-      "blocks": {
-        "p1": {
-          "type": "pick"
-        },
-        "p2": {
-          "type": "pick"
-        },
-        "p3": {
-          "type": "pick"
-        },
-        "p4": {
-          "type": "pick"
-        }
-      },
-      "block_order": [
-        "p1",
-        "p2",
-        "p3",
-        "p4"
-      ],
-      "settings": {
-        "heading": "Complete the look",
-        "intro": "What we would wear it with.",
-        "link_text": "Shop all",
-        "scheme": "alt"
-      }
-    }
+    "related": { "type": "related-products" }
   },
-  "order": [
-    "main",
-    "reviews",
-    "look",
-    "related"
-  ]
+  "order": ["main", "related"]
 }

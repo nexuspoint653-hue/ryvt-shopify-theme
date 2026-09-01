@@ -1,0 +1,40 @@
+{%- comment -%} The band of figures. Each number counts up when scrolled to. {%- endcomment -%}
+<section class="stats">
+  <div class="stats-in">
+    {%- for block in section.blocks -%}
+      <div class="stat" {{ block.shopify_attributes }}>
+        <span class="stat-n num">{{ block.settings.figure }}</span>
+        <span class="stat-l">{{ block.settings.label }}</span>
+        <span class="stat-s">{{ block.settings.body }}</span>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "RYVT figures",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Figure",
+      "settings": [
+        { "type": "text", "id": "figure", "label": "Figure", "default": "8.2 oz",
+          "info": "Counts up from zero when it scrolls into view." },
+        { "type": "text", "id": "label", "label": "Label", "default": "The cloth" },
+        { "type": "textarea", "id": "body", "label": "Caption",
+          "default": "Heavyweight cotton, garment-dyed, washed before it is cut." }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "RYVT figures",
+    "blocks": [
+      { "type": "stat", "settings": { "figure": "8.2 oz", "label": "The cloth", "body": "Heavyweight cotton, garment-dyed, washed before it is cut." } },
+      { "type": "stat", "settings": { "figure": "48h", "label": "Dispatch", "body": "Orders leave Metro Detroit inside two days." } },
+      { "type": "stat", "settings": { "figure": "8", "label": "Styles in the run", "body": "Restocked rather than replaced when they sell out." } },
+      { "type": "stat", "settings": { "figure": "30 days", "label": "To change your mind", "body": "Unworn, tags on, shipping covered both ways." } }
+    ]
+  }]
+}
+{% endschema %}

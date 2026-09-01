@@ -49,6 +49,15 @@
       --stock:{{ settings.color_low }};
       --mx:{{ settings.page_width }}px;
 
+      /* the not-yet-ported sections read these older names; both sets point
+         at the same settings so the editor drives the whole site during the
+         transition */
+      --bg:{{ settings.color_bg }};
+      --bg2:{{ settings.color_bg_alt }};
+      --tile:{{ settings.color_tile }};
+      --ok:{{ settings.color_stock }};
+      --page:{{ settings.page_width }}px;
+
       --sans:{{ f_body.family }}, {{ f_body.fallback_families }};
       --display:{{ f_head.family }}, {{ f_head.fallback_families }};
       --fw-head:{{ settings.font_heading_weight }};

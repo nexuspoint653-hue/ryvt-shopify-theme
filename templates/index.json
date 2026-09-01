@@ -1,255 +1,73 @@
 {
   "sections": {
     "hero": {
-      "type": "hero",
+      "type": "ryvt-hero",
       "settings": {
-        "pin": true,
-        "pin_fade": 60,
-        "height": "full",
-        "eyebrow": "Premium Athletic Wear",
-        "heading": "Detroit, On Your Back.",
-        "link_text": "Shop the collection",
-        "scheme": "light"
+        "eyebrow": "Metro Detroit · Est. 2024",
+        "heading": "Detroit,\nOn Your Back.",
+        "body": "Heavyweight cotton cut for people who actually move. Made in small runs, finished by hand, and named for the streets it came from.",
+        "cta1_text": "Shop the drop",
+        "cta1_link": "/collections/all",
+        "cta2_text": "One tee, four ways",
+        "cta2_link": "/pages/the-renaissance-tee"
       }
     },
-    "story": {
-      "type": "story-block",
-      "settings": {
-        "eyebrow": "The Renaissance Tee",
-        "heading": "One Tee, Four Ways",
-        "link_text": "Shop the Renaissance Tee",
-        "height": "tall",
-        "align": "center",
-        "scheme": "dark"
-      }
-    },
-    "cats": {
-      "type": "category-grid",
+    "figures": {
+      "type": "ryvt-stats",
       "blocks": {
-        "t1": {
-          "type": "tile",
-          "settings": {
-            "label": "Heavyweight Tees"
-          }
-        },
-        "t2": {
-          "type": "tile",
-          "settings": {
-            "label": "Tank Tops"
-          }
-        },
-        "t3": {
-          "type": "tile",
-          "settings": {
-            "label": "Cargo Pants"
-          }
-        },
-        "t4": {
-          "type": "tile",
-          "settings": {
-            "label": "Accessories"
-          }
-        }
+        "s1": { "type": "stat", "settings": { "figure": "8.2 oz", "label": "The cloth", "body": "Heavyweight cotton, garment-dyed, washed before it is cut." } },
+        "s2": { "type": "stat", "settings": { "figure": "48h", "label": "Dispatch", "body": "Orders leave Metro Detroit inside two days." } },
+        "s3": { "type": "stat", "settings": { "figure": "8", "label": "Styles in the run", "body": "Restocked rather than replaced when they sell out." } },
+        "s4": { "type": "stat", "settings": { "figure": "30 days", "label": "To change your mind", "body": "Unworn, tags on, shipping covered both ways." } }
       },
-      "block_order": [
-        "t1",
-        "t2",
-        "t3",
-        "t4"
-      ],
+      "block_order": ["s1", "s2", "s3", "s4"]
+    },
+    "ticker": { "type": "ryvt-marquee" },
+    "cats": {
+      "type": "ryvt-categories",
+      "blocks": {
+        "c1": { "type": "tile", "settings": { "title": "Heavyweight Tees" } },
+        "c2": { "type": "tile", "settings": { "title": "Tank Tops" } },
+        "c3": { "type": "tile", "settings": { "title": "Cargo & Shorts" } },
+        "c4": { "type": "tile", "settings": { "title": "Shop All" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4"],
       "settings": {
         "eyebrow": "Shop by category",
-        "heading": "Find your fit",
-        "scheme": "light"
+        "heading": "Four categories, one fit standard.",
+        "more_text": "Shop all"
       }
     },
-    "row_tees": {
-      "type": "category-row",
+    "rail": {
+      "type": "ryvt-rail",
       "settings": {
-        "heading": "New: Heavyweight Tees",
-        "columns": 4,
-        "show_promo": true,
-        "promo_text": "Shop the full range",
-        "scheme": "light"
+        "eyebrow": "Shop the look",
+        "heading": "Straight off the line.",
+        "body": "Every card carries the same information in the same place: name, price, the colourways that actually exist.",
+        "more_text": "View all",
+        "count": 4,
+        "tight": true
       }
     },
-    "band_mid": {
-      "type": "media-band",
+    "split": {
+      "type": "ryvt-split",
       "settings": {
-        "band_height": "tall",
-        "parallax": true,
-        "overlay_tag": "Built in Metro Detroit",
-        "overlay_title": "Made where we train.",
-        "overlay_sub": "Cut and finished within twenty miles of the studio. Tested by the people who wear it.",
-        "overlay_pos": "bl",
-        "scrim": true,
-        "link_text": "Our story",
-        "link": "/pages/about",
-        "scheme": "light"
+        "eyebrow": "The Foundry Wash",
+        "heading": "Washed twice, so it never shrinks on you.",
+        "body": "Garment-dyed then washed again before it is cut. What you pull out of the dryer in month six is the same tee you opened in week one.",
+        "cta_text": "Shop the wash",
+        "cta_link": "/collections/all"
       }
     },
-    "row_tanks": {
-      "type": "category-row",
+    "rail2": {
+      "type": "ryvt-rail",
       "settings": {
-        "heading": "Tank Tops",
-        "columns": 4,
-        "show_promo": true,
-        "promo_text": "Shop the full range",
-        "scheme": "light"
-      }
-    },
-    "fabric": {
-      "type": "content-split",
-      "settings": {
-        "flip": false,
-        "eyebrow": "The Fabric",
-        "heading": "Heavyweight cotton, garment dyed",
-        "body": "<p>240gsm combed ring-spun cotton, dyed after it is sewn so the colour settles into the fibre instead of sitting on top of it. It softens with every wash and holds its shape through all of them.</p>",
-        "link_text": "How we make it",
-        "link": "/pages/about",
-        "scheme": "alt"
-      }
-    },
-    "row_bottoms": {
-      "type": "category-row",
-      "settings": {
-        "heading": "Bottoms",
-        "columns": 4,
-        "show_promo": true,
-        "promo_text": "Shop the full range",
-        "scheme": "light"
-      }
-    },
-    "stats": {
-      "type": "stat-band",
-      "blocks": {
-        "s1": {
-          "type": "stat",
-          "settings": {
-            "value": "240",
-            "label": "GSM heavyweight cotton"
-          }
-        },
-        "s2": {
-          "type": "stat",
-          "settings": {
-            "value": "7",
-            "label": "Years cut in Detroit"
-          }
-        },
-        "s3": {
-          "type": "stat",
-          "settings": {
-            "value": "20mi",
-            "label": "Studio to finished seam"
-          }
-        },
-        "s4": {
-          "type": "stat",
-          "settings": {
-            "value": "30",
-            "label": "Day returns, no questions"
-          }
-        }
-      },
-      "block_order": [
-        "s1",
-        "s2",
-        "s3",
-        "s4"
-      ],
-      "settings": {
-        "scheme": "dark"
-      }
-    },
-    "duo": {
-      "type": "media-duo",
-      "blocks": {
-        "d1": {
-          "type": "tile",
-          "settings": {
-            "title": "Made in Detroit",
-            "caption": "Cut and finished within twenty miles of where we train.",
-            "link": "/pages/about"
-          }
-        },
-        "d2": {
-          "type": "tile",
-          "settings": {
-            "title": "Built to last",
-            "caption": "Fabric chosen for the fiftieth wash, not the first.",
-            "link": "/collections/all"
-          }
-        },
-        "d3": {
-          "type": "tile",
-          "settings": {
-            "title": "The crew",
-            "caption": "Athletes and coaches who test every cut before it ships.",
-            "link": "/pages/about"
-          }
-        }
-      },
-      "block_order": [
-        "d1",
-        "d2",
-        "d3"
-      ],
-      "settings": {
-        "eyebrow": "The Work",
-        "scheme": "light"
-      }
-    },
-    "feat": {
-      "type": "feature-icons",
-      "blocks": {
-        "f1": {
-          "type": "feature",
-          "settings": {
-            "icon": "truck",
-            "title": "Free shipping over $100",
-            "body": "Standard shipping within the contiguous US."
-          }
-        },
-        "f2": {
-          "type": "feature",
-          "settings": {
-            "icon": "return",
-            "title": "30-day returns",
-            "body": "Unworn, tags on, free label in every US order."
-          }
-        },
-        "f3": {
-          "type": "feature",
-          "settings": {
-            "icon": "stitch",
-            "title": "Heavyweight build",
-            "body": "240gsm cotton, garment dyed, made to wear out slowly."
-          }
-        }
-      },
-      "block_order": [
-        "f1",
-        "f2",
-        "f3"
-      ],
-      "settings": {
-        "heading": "",
-        "scheme": "alt"
+        "eyebrow": "Back in stock",
+        "heading": "Restocked this week.",
+        "more_text": "Shop all",
+        "count": 4
       }
     }
   },
-  "order": [
-    "hero",
-    "story",
-    "cats",
-    "row_tees",
-    "band_mid",
-    "row_tanks",
-    "fabric",
-    "row_bottoms",
-    "stats",
-    "duo",
-    "feat"
-  ]
+  "order": ["hero", "figures", "ticker", "cats", "rail", "split", "rail2"]
 }

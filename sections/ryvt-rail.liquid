@@ -1,0 +1,38 @@
+{%- comment -%} A row of product cards, straight from a collection. {%- endcomment -%}
+{%- assign c = section.settings.collection -%}
+<section class="sec wrap"{% if section.settings.tight %} style="padding-top:0"{% endif %}>
+  <div class="sec-h">
+    <div>
+      {%- if section.settings.eyebrow != blank -%}<div class="lab">{{ section.settings.eyebrow }}</div>{%- endif -%}
+      {%- if section.settings.heading != blank -%}<h2 style="margin-top:8px">{{ section.settings.heading }}</h2>{%- endif -%}
+      {%- if section.settings.body != blank -%}<p>{{ section.settings.body }}</p>{%- endif -%}
+    </div>
+    {%- if section.settings.more_text != blank -%}
+      <a class="more" href="{{ c.url | default: routes.all_products_collection_url }}">{{ section.settings.more_text }}</a>
+    {%- endif -%}
+  </div>
+  <div class="grid"{% if settings.card_swatches_hover %} data-swatch-hover{% endif %}>
+    {%- for product in c.products limit: section.settings.count -%}
+      {% render 'product-card', product: product, index: forloop.index %}
+    {%- else -%}
+      {%- for i in (1..4) -%}
+        <span class="card"><span class="card-media"><span class="ph"></span></span></span>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</section>
+{% schema %}
+{
+  "name": "RYVT product row",
+  "settings": [
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "count", "label": "How many", "min": 2, "max": 12, "step": 1, "default": 4 },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Shop the look" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Straight off the line." },
+    { "type": "textarea", "id": "body", "label": "Body" },
+    { "type": "text", "id": "more_text", "label": "Link text", "default": "View all" },
+    { "type": "checkbox", "id": "tight", "label": "Sit tight under the section above", "default": false }
+  ],
+  "presets": [{ "name": "RYVT product row" }]
+}
+{% endschema %}

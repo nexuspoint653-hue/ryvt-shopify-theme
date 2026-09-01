@@ -1,0 +1,50 @@
+{%- comment -%} RYVT hero — the site's markup, every string editable. {%- endcomment -%}
+<section class="hero">
+  {%- if section.settings.image != blank -%}
+    <img class="plate" src="{{ section.settings.image | image_url: width: 2400 }}"
+         srcset="{{ section.settings.image | image_url: width: 900 }} 900w,
+                 {{ section.settings.image | image_url: width: 1600 }} 1600w,
+                 {{ section.settings.image | image_url: width: 2400 }} 2400w"
+         sizes="100vw" alt="{{ section.settings.image.alt | escape }}"
+         width="2400" height="1350" fetchpriority="high">
+  {%- else -%}
+    <span class="plate ph dark"></span>
+  {%- endif -%}
+  <div class="wrap hero-in">
+    {%- if section.settings.eyebrow != blank -%}
+      <div class="lab">{{ section.settings.eyebrow }}</div>
+    {%- endif -%}
+    {%- if section.settings.heading != blank -%}
+      <h1>{{ section.settings.heading | newline_to_br }}</h1>
+    {%- endif -%}
+    {%- if section.settings.body != blank -%}
+      <p>{{ section.settings.body }}</p>
+    {%- endif -%}
+    <div class="cta-row">
+      {%- if section.settings.cta1_text != blank -%}
+        <a class="btn btn-solid" href="{{ section.settings.cta1_link }}">{{ section.settings.cta1_text }}</a>
+      {%- endif -%}
+      {%- if section.settings.cta2_text != blank -%}
+        <a class="btn btn-ghost" href="{{ section.settings.cta2_link }}">{{ section.settings.cta2_text }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "RYVT hero",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background photograph" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Metro Detroit · Est. 2024" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "Detroit,\nOn Your Back." },
+    { "type": "textarea", "id": "body", "label": "Body",
+      "default": "Heavyweight cotton cut for people who actually move. Made in small runs, finished by hand, and named for the streets it came from." },
+    { "type": "header", "content": "Buttons" },
+    { "type": "text", "id": "cta1_text", "label": "First button", "default": "Shop the drop" },
+    { "type": "url", "id": "cta1_link", "label": "First button link" },
+    { "type": "text", "id": "cta2_text", "label": "Second button", "default": "One tee, four ways" },
+    { "type": "url", "id": "cta2_link", "label": "Second button link" }
+  ],
+  "presets": [{ "name": "RYVT hero" }]
+}
+{% endschema %}

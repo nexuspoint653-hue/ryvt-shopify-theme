@@ -1,0 +1,28 @@
+{%- comment -%}
+  The running band. Lines are duplicated so the loop has no seam — write them
+  once in the editor and the section repeats them.
+{%- endcomment -%}
+{%- assign lines = section.settings.lines | newline_to_br | split: '<br />' -%}
+<div class="marq" aria-hidden="true">
+  <div class="marq-in">
+    {%- for pass in (1..2) -%}
+      {%- for l in lines -%}
+        {%- assign t = l | strip -%}
+        {%- if t != blank -%}
+          <span{% if forloop.index0 | modulo: 2 == 1 %} class="dim"{% endif %}>{{ t }}</span>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "RYVT ticker",
+  "settings": [
+    { "type": "textarea", "id": "lines", "label": "Lines",
+      "default": "Built in Metro Detroit\n8.2 oz heavyweight cotton\nSmall runs, restocked\nShips in 48 hours\nFree over $125\nOne block, eight styles",
+      "info": "One per line. Alternate lines are dimmed. They repeat automatically so the loop has no seam." }
+  ],
+  "presets": [{ "name": "RYVT ticker" }]
+}
+{% endschema %}
