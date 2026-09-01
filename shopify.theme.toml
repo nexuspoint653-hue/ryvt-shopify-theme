@@ -1,2 +1,10 @@
-# shopify theme dev --store <your-ryvt-store>.myshopify.com
+# RYVT — Shopify theme
+#
+#   shopify theme dev  --store ryvt.myshopify.com   # live preview while editing
+#   shopify theme push --store ryvt.myshopify.com --unpublished
+#
 [environments.development]
+store = "ryvt.myshopify.com"
+
+[environments.production]
+store = "ryvt.myshopify.com"

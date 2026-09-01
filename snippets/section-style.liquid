@@ -28,7 +28,7 @@
   assign sec_head_color = s.settings.heading_color
   assign sec_align = s.settings.text_align
 -%}
-{%- if sec_font -%}{{ sec_font | font_face: font_display: 'swap' }}{%- endif -%}
+{%- if sec_font -%}<style>{{ sec_font | font_face: font_display: 'swap' }}</style>{%- endif -%}
 <style>
   #shopify-section-{{ s.id }}{
     --sec-bg:{{ bg }}; --sec-fg:{{ fg }}; --sec-muted:{{ mut }}; --sec-line:{{ ln }};

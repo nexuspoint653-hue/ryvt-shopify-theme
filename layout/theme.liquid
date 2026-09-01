@@ -17,11 +17,17 @@
     assign f_body_bold = f_body | font_modify: 'weight', 'bold'
     assign f_body_ital = f_body | font_modify: 'style', 'italic'
   -%}
-  {{ f_head | font_face: font_display: 'swap' }}
-  {{ f_head_bold | font_face: font_display: 'swap' }}
-  {{ f_body | font_face: font_display: 'swap' }}
-  {{ f_body_bold | font_face: font_display: 'swap' }}
-  {{ f_body_ital | font_face: font_display: 'swap' }}
+  {%- comment -%}
+    font_face returns a bare @font-face rule, not a tag - it has to sit inside
+    a style block or the browser prints it as text at the top of the page.
+  {%- endcomment -%}
+  <style>
+    {{ f_head | font_face: font_display: 'swap' }}
+    {{ f_head_bold | font_face: font_display: 'swap' }}
+    {{ f_body | font_face: font_display: 'swap' }}
+    {{ f_body_bold | font_face: font_display: 'swap' }}
+    {{ f_body_ital | font_face: font_display: 'swap' }}
+  </style>
 
   {{ 'ryvt.css' | asset_url | stylesheet_tag }}
 
@@ -40,7 +46,7 @@
       --tr-head:{{ settings.font_heading_tracking | divided_by: 100.0 }}em;
       --case-head:{{ settings.font_heading_case }};
       --fs-body:{{ settings.font_body_size }}px;
-      --lh-body:{{ settings.font_body_line }};
+      --lh-body:{{ settings.font_body_line | divided_by: 100.0 }};
       --fs-label:{{ settings.font_label_size }}px;
       --tr-label:{{ settings.font_label_tracking | divided_by: 100.0 }}em;
       --case-label:{% if settings.font_label_upper %}uppercase{% else %}none{% endif %};
