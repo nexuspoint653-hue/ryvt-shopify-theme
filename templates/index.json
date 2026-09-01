@@ -15,23 +15,83 @@
     "figures": {
       "type": "ryvt-stats",
       "blocks": {
-        "s1": { "type": "stat", "settings": { "figure": "8.2 oz", "label": "The cloth", "body": "Heavyweight cotton, garment-dyed, washed before it is cut." } },
-        "s2": { "type": "stat", "settings": { "figure": "48h", "label": "Dispatch", "body": "Orders leave Metro Detroit inside two days." } },
-        "s3": { "type": "stat", "settings": { "figure": "8", "label": "Styles in the run", "body": "Restocked rather than replaced when they sell out." } },
-        "s4": { "type": "stat", "settings": { "figure": "30 days", "label": "To change your mind", "body": "Unworn, tags on, shipping covered both ways." } }
+        "s1": {
+          "type": "stat",
+          "settings": {
+            "figure": "8.2 oz",
+            "label": "The cloth",
+            "body": "Heavyweight cotton, garment-dyed, washed before it is cut."
+          }
+        },
+        "s2": {
+          "type": "stat",
+          "settings": {
+            "figure": "48h",
+            "label": "Dispatch",
+            "body": "Orders leave Metro Detroit inside two days."
+          }
+        },
+        "s3": {
+          "type": "stat",
+          "settings": {
+            "figure": "8",
+            "label": "Styles in the run",
+            "body": "Restocked rather than replaced when they sell out."
+          }
+        },
+        "s4": {
+          "type": "stat",
+          "settings": {
+            "figure": "30 days",
+            "label": "To change your mind",
+            "body": "Unworn, tags on, shipping covered both ways."
+          }
+        }
       },
-      "block_order": ["s1", "s2", "s3", "s4"]
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
     },
-    "ticker": { "type": "ryvt-marquee" },
+    "ticker": {
+      "type": "ryvt-marquee"
+    },
     "cats": {
       "type": "ryvt-categories",
       "blocks": {
-        "c1": { "type": "tile", "settings": { "title": "Heavyweight Tees" } },
-        "c2": { "type": "tile", "settings": { "title": "Tank Tops" } },
-        "c3": { "type": "tile", "settings": { "title": "Cargo & Shorts" } },
-        "c4": { "type": "tile", "settings": { "title": "Shop All" } }
+        "c1": {
+          "type": "tile",
+          "settings": {
+            "title": "Heavyweight Tees"
+          }
+        },
+        "c2": {
+          "type": "tile",
+          "settings": {
+            "title": "Tank Tops"
+          }
+        },
+        "c3": {
+          "type": "tile",
+          "settings": {
+            "title": "Cargo & Shorts"
+          }
+        },
+        "c4": {
+          "type": "tile",
+          "settings": {
+            "title": "Shop All"
+          }
+        }
       },
-      "block_order": ["c1", "c2", "c3", "c4"],
+      "block_order": [
+        "c1",
+        "c2",
+        "c3",
+        "c4"
+      ],
       "settings": {
         "eyebrow": "Shop by category",
         "heading": "Four categories, one fit standard.",
@@ -67,7 +127,58 @@
         "more_text": "Shop all",
         "count": 4
       }
+    },
+    "keep": {
+      "type": "ryvt-keep",
+      "blocks": {
+        "w1": {
+          "type": "plate",
+          "settings": {
+            "caption": "Way 01"
+          }
+        },
+        "w2": {
+          "type": "plate",
+          "settings": {
+            "caption": "Way 02"
+          }
+        },
+        "w3": {
+          "type": "plate",
+          "settings": {
+            "caption": "Way 03"
+          }
+        },
+        "w4": {
+          "type": "plate",
+          "settings": {
+            "caption": "Way 04"
+          }
+        }
+      },
+      "block_order": [
+        "w1",
+        "w2",
+        "w3",
+        "w4"
+      ],
+      "settings": {
+        "eyebrow": "The Renaissance Tee",
+        "heading": "One Tee, Four Ways.",
+        "body": "One 8.2 oz garment-dyed body, cut boxy and long enough to hold a tuck. Four ways people in this city actually wear it — photographed the way they wear it, not the way a studio would style it.",
+        "cta_text": "Read the story",
+        "cta_link": "/pages/the-renaissance-tee"
+      }
     }
   },
-  "order": ["hero", "figures", "ticker", "cats", "rail", "split", "rail2"]
+  "order": [
+    "hero",
+    "figures",
+    "ticker",
+    "cats",
+    "rail",
+    "keep",
+    "split",
+    "rail2"
+  ]
 }

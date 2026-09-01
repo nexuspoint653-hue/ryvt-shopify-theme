@@ -1,0 +1,63 @@
+{%- comment -%}
+  The light band that introduces the Renaissance Tee: copy on the left, four
+  plates on the right. Each plate can carry its own photograph and caption.
+{%- endcomment -%}
+<section class="keep">
+  <div class="wrap keep-in">
+    <div>
+      {%- if section.settings.eyebrow != blank -%}
+        <div class="lab">{{ section.settings.eyebrow }}</div>
+      {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h3 style="margin-top:10px">{{ section.settings.heading | newline_to_br }}</h3>
+      {%- endif -%}
+      {%- if section.settings.body != blank -%}<p>{{ section.settings.body }}</p>{%- endif -%}
+      {%- if section.settings.cta_text != blank -%}
+        <a class="stamp" href="{{ section.settings.cta_link }}">{{ section.settings.cta_text }}</a>
+      {%- endif -%}
+    </div>
+    <div class="four">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.image != blank -%}
+          <img src="{{ block.settings.image | image_url: width: 600 }}"
+               alt="{{ block.settings.caption | escape }}" width="600" height="800" loading="lazy">
+        {%- else -%}
+          <span class="ph{% cycle '', ' alt', ' dark', '' %}"><em>{{ block.settings.caption }}</em></span>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+{% schema %}
+{
+  "name": "RYVT feature band",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Renaissance Tee" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "One Tee, Four Ways." },
+    { "type": "textarea", "id": "body", "label": "Body",
+      "default": "One 8.2 oz garment-dyed body, cut boxy and long enough to hold a tuck. Four ways people in this city actually wear it — photographed the way they wear it, not the way a studio would style it." },
+    { "type": "text", "id": "cta_text", "label": "Button", "default": "Read the story" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ],
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "plate",
+      "name": "Way",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photograph" },
+        { "type": "text", "id": "caption", "label": "Caption", "default": "Way 01" }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "RYVT feature band",
+    "blocks": [
+      { "type": "plate", "settings": { "caption": "Way 01" } },
+      { "type": "plate", "settings": { "caption": "Way 02" } },
+      { "type": "plate", "settings": { "caption": "Way 03" } },
+      { "type": "plate", "settings": { "caption": "Way 04" } }
+    ]
+  }]
+}
+{% endschema %}
