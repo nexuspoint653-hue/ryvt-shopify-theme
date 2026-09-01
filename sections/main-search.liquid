@@ -1,140 +1,51 @@
-{% render 'section-style', s: section %}
-<div class="wrap" style="padding-block:clamp(26px,3vw,42px)">
-  <h1 class="h2">{% if search.performed %}{{ search.results_count }} results{% else %}Search{% endif %}</h1>
-  <form action="{{ routes.search_url }}" method="get" class="nl" style="max-width:520px;margin-top:20px">
-    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search products" style="grid-column:1/-1">
+{%- comment -%} Search results — the shop grid, with the query in the masthead. {%- endcomment -%}
+<div class="wrap shop-hd">
+  <h1>{% if search.terms != blank %}Results{% else %}Search{% endif %}</h1>
+  {%- if search.performed -%}
+    <p>{{ search.results_count }} {% if search.results_count == 1 %}result{% else %}results{% endif %}
+       for &ldquo;{{ search.terms | escape }}&rdquo;.</p>
+  {%- else -%}
+    <p>{{ section.settings.body }}</p>
+  {%- endif -%}
+</div>
+
+<div class="wrap shop-bar">
+  <span class="shop-tally">{{ search.results_count }} {% if search.results_count == 1 %}result{% else %}results{% endif %}</span>
+  <form action="{{ routes.search_url }}" method="get" role="search" class="srch-inline">
+    <input type="search" name="q" value="{{ search.terms | escape }}" placeholder="Search again" aria-label="Search">
+    <button type="submit">Go</button>
   </form>
 </div>
-{%- if search.performed -%}
-  <div class="grid stag in" data-row data-max="{{ settings.grid_columns }}"{% if settings.card_swatches_hover %} data-swatch-hover{% endif %}{% if settings.card_show_index %} data-indexed{% endif %}>
-    {%- for item in search.results -%}
-      {%- if item.object_type == 'product' -%}{% render 'product-card', product: item %}{%- endif -%}
-    {%- else -%}
-      <div class="empty"><h3 class="h3">Nothing found for &ldquo;{{ search.terms }}&rdquo;</h3></div>
-    {%- endfor -%}
-  </div>
-{%- endif -%}
+
+<section class="sec wrap" style="padding-top:26px">
+  {%- paginate search.results by 24 -%}
+    <div class="grid indexed"{% if settings.card_swatches_hover %} data-swatch-hover{% endif %}>
+      {%- for item in search.results -%}
+        {%- if item.object_type == 'product' -%}
+          {% render 'product-card', product: item, index: forloop.index %}
+        {%- else -%}
+          <a class="card card--doc" href="{{ item.url }}">
+            <div class="card-info" data-align="left">
+              <span class="card-name">{{ item.title }}</span>
+            </div>
+          </a>
+        {%- endif -%}
+      {%- else -%}
+        <div class="empty">
+          <h3 class="h3">Nothing found</h3>
+          <p>Try a different word, or <a href="{{ routes.all_products_collection_url }}">see everything</a>.</p>
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- if paginate.pages > 1 -%}<nav class="pager">{{ paginate | default_pagination }}</nav>{%- endif -%}
+  {%- endpaginate -%}
+</section>
 {% schema %}
 {
   "name": "Search",
   "settings": [
-    {
-      "type": "header",
-      "content": "Appearance"
-    },
-    {
-      "type": "select",
-      "id": "scheme",
-      "label": "Background",
-      "default": "light",
-      "options": [
-        {
-          "value": "light",
-          "label": "White"
-        },
-        {
-          "value": "alt",
-          "label": "Off-white"
-        },
-        {
-          "value": "sand",
-          "label": "Sand"
-        },
-        {
-          "value": "dark",
-          "label": "Dark"
-        },
-        {
-          "value": "custom",
-          "label": "Custom"
-        }
-      ]
-    },
-    {
-      "type": "color",
-      "id": "bg_custom",
-      "label": "Custom background",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "id": "text_custom",
-      "label": "Custom text",
-      "default": "#111111"
-    },
-    {
-      "type": "range",
-      "id": "pad_top",
-      "label": "Extra top padding",
-      "min": 0,
-      "max": 120,
-      "step": 8,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "pad_bottom",
-      "label": "Extra bottom padding",
-      "min": 0,
-      "max": 120,
-      "step": 8,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "header",
-      "content": "Section style"
-    },
-    {
-      "type": "header",
-      "content": "Section type"
-    },
-    {
-      "type": "paragraph",
-      "content": "Leave these alone and the section follows the site's typography. Set them only when this one section needs to differ."
-    },
-    {
-      "type": "font_picker",
-      "id": "heading_font",
-      "label": "Heading font for this section",
-      "default": "assistant_n4"
-    },
-    {
-      "type": "range",
-      "id": "heading_size",
-      "label": "Heading size",
-      "min": 60,
-      "max": 160,
-      "step": 5,
-      "unit": "%",
-      "default": 100
-    },
-    {
-      "type": "color",
-      "id": "heading_color",
-      "label": "Heading colour"
-    },
-    {
-      "type": "select",
-      "id": "text_align",
-      "label": "Alignment",
-      "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Centred"
-        }
-      ],
-      "default": "left"
-    },
-    {
-      "type": "header",
-      "content": "Spacing"
-    }
+    { "type": "textarea", "id": "body", "label": "Text before a search",
+      "default": "Look for a style, a fabric or a colour." }
   ]
 }
 {% endschema %}

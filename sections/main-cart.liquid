@@ -1,155 +1,52 @@
-{% render 'section-style', s: section %}
-<div class="wrap" style="padding-block:clamp(26px,3vw,48px)">
-  <h1 class="h2">Your Bag</h1>
+{%- comment -%} The bag. {%- endcomment -%}
+<div class="wrap shop-hd">
+  <h1>Your bag</h1>
+  <p>{% if cart.item_count == 0 %}Nothing in it yet.{% else %}{{ cart.item_count }} {% if cart.item_count == 1 %}item{% else %}items{% endif %}, ready when you are.{% endif %}</p>
+</div>
+
+<div class="wrap bag">
   {%- if cart.item_count > 0 -%}
-    <form action="{{ routes.cart_url }}" method="post" novalidate style="margin-top:24px">
-      {%- for item in cart.items -%}
-        <div class="cart-row">
-          <a href="{{ item.url }}">{% if item.image %}<img src="{{ item.image | image_url: width: 200 }}" alt="">{% endif %}</a>
-          <div>
-            <a href="{{ item.url }}" class="pc-n">{{ item.product.title }}</a>
-            <div class="crumb" style="margin-top:4px">{{ item.variant.title | remove: 'Default Title' }}</div>
+    <form action="{{ routes.cart_url }}" method="post" novalidate>
+      <div class="bag-items">
+        {%- for line in cart.items -%}
+          <div class="bag-line">
+            <a class="bag-m" href="{{ line.url }}">
+              {%- if line.image -%}
+                <img src="{{ line.image | image_url: width: 300 }}" alt="{{ line.title | escape }}"
+                     width="300" height="375" loading="lazy">
+              {%- else -%}<span class="ph"></span>{%- endif -%}
+            </a>
+            <div class="bag-t">
+              <a class="bag-n" href="{{ line.url }}">{{ line.product.title }}</a>
+              {%- unless line.product.has_only_default_variant -%}
+                <span class="bag-v">{{ line.variant.title }}</span>
+              {%- endunless -%}
+              <span class="bag-p">{{ line.final_line_price | money_without_trailing_zeros }}</span>
+            </div>
+            <div class="bag-q">
+              <input type="number" name="updates[]" value="{{ line.quantity }}" min="0"
+                     aria-label="Quantity for {{ line.title | escape }}">
+              <a href="{{ line.url_to_remove }}">Remove</a>
+            </div>
           </div>
-          <div class="qty"><input type="number" name="updates[]" value="{{ item.quantity }}" min="0" aria-label="Quantity"></div>
-          <div class="pc-p">{{ item.final_line_price | money }}</div>
-        </div>
-      {%- endfor -%}
-      <div style="display:flex;justify-content:space-between;align-items:center;padding:24px 0;flex-wrap:wrap;gap:16px">
-        <button type="submit" name="update" class="ulink">Update Bag</button>
-        <div style="text-align:right">
-          <div class="mini">Subtotal</div>
-          <div class="price">{{ cart.total_price | money }}</div>
-          <p class="crumb" style="margin-top:6px">Shipping and taxes calculated at checkout.</p>
-        </div>
+        {%- endfor -%}
       </div>
-      <button type="submit" name="checkout" class="btn btn-solid" style="width:100%">Checkout</button>
+
+      <aside class="bag-sum">
+        <div class="bag-row"><span>Subtotal</span><b>{{ cart.total_price | money_without_trailing_zeros }}</b></div>
+        <div class="bag-row muted"><span>Shipping</span><span>Calculated at checkout</span></div>
+        <button type="submit" name="update" class="btn">Update</button>
+        <button type="submit" name="checkout" class="btn btn-solid">Checkout</button>
+        <p class="bag-note">Taxes and shipping calculated at checkout.</p>
+      </aside>
     </form>
   {%- else -%}
-    <p style="color:var(--muted);margin-top:16px">Your bag is currently empty.</p>
-    <div style="margin-top:24px"><a class="btn" href="{{ routes.all_products_collection_url }}">Continue shopping</a></div>
+    <div class="empty">
+      <p>Nothing in the bag yet.</p>
+      <a class="btn btn-solid" href="{{ routes.all_products_collection_url }}">Shop the drop</a>
+    </div>
   {%- endif -%}
 </div>
 {% schema %}
-{
-  "name": "Cart",
-  "settings": [
-    {
-      "type": "header",
-      "content": "Appearance"
-    },
-    {
-      "type": "select",
-      "id": "scheme",
-      "label": "Background",
-      "default": "light",
-      "options": [
-        {
-          "value": "light",
-          "label": "White"
-        },
-        {
-          "value": "alt",
-          "label": "Off-white"
-        },
-        {
-          "value": "sand",
-          "label": "Sand"
-        },
-        {
-          "value": "dark",
-          "label": "Dark"
-        },
-        {
-          "value": "custom",
-          "label": "Custom"
-        }
-      ]
-    },
-    {
-      "type": "color",
-      "id": "bg_custom",
-      "label": "Custom background",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "id": "text_custom",
-      "label": "Custom text",
-      "default": "#111111"
-    },
-    {
-      "type": "range",
-      "id": "pad_top",
-      "label": "Extra top padding",
-      "min": 0,
-      "max": 120,
-      "step": 8,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "pad_bottom",
-      "label": "Extra bottom padding",
-      "min": 0,
-      "max": 120,
-      "step": 8,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "header",
-      "content": "Section style"
-    },
-    {
-      "type": "header",
-      "content": "Section type"
-    },
-    {
-      "type": "paragraph",
-      "content": "Leave these alone and the section follows the site's typography. Set them only when this one section needs to differ."
-    },
-    {
-      "type": "font_picker",
-      "id": "heading_font",
-      "label": "Heading font for this section",
-      "default": "assistant_n4"
-    },
-    {
-      "type": "range",
-      "id": "heading_size",
-      "label": "Heading size",
-      "min": 60,
-      "max": 160,
-      "step": 5,
-      "unit": "%",
-      "default": 100
-    },
-    {
-      "type": "color",
-      "id": "heading_color",
-      "label": "Heading colour"
-    },
-    {
-      "type": "select",
-      "id": "text_align",
-      "label": "Alignment",
-      "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Centred"
-        }
-      ],
-      "default": "left"
-    },
-    {
-      "type": "header",
-      "content": "Spacing"
-    }
-  ]
-}
+{ "name": "Cart", "settings": [] }
 {% endschema %}

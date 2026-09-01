@@ -1,136 +1,18 @@
-{% render 'section-style', s: section %}
-<section class="pagex grain">
-  <div class="pagex-in">
-    <div class="pagex-h" data-rv>
-      <div class="tag" style="margin-bottom:16px">{{ shop.name }}</div>
-      <h1 class="dsp dsp-l">{{ page.title }}</h1>
-    </div>
-    {%- if page.content != blank -%}
-      <div class="pagex-rte rte" data-rv>{{ page.content }}</div>
-    {%- endif -%}
+{%- comment -%} A plain page — the document layout, driven by the page's own content. {%- endcomment -%}
+<div class="doc-hd">
+  <div class="wrap">
+    {%- if section.settings.eyebrow != blank -%}<div class="lab">{{ section.settings.eyebrow }}</div>{%- endif -%}
+    <h1>{{ page.title }}</h1>
   </div>
-</section>
+</div>
+<div class="wrap doc doc--single">
+  <div class="doc-body"><section>{{ page.content }}</section></div>
+</div>
 {% schema %}
 {
   "name": "Page",
   "settings": [
-    {
-      "type": "header",
-      "content": "Appearance"
-    },
-    {
-      "type": "select",
-      "id": "scheme",
-      "label": "Background",
-      "default": "light",
-      "options": [
-        {
-          "value": "light",
-          "label": "White"
-        },
-        {
-          "value": "alt",
-          "label": "Off-white"
-        },
-        {
-          "value": "sand",
-          "label": "Sand"
-        },
-        {
-          "value": "dark",
-          "label": "Dark"
-        },
-        {
-          "value": "custom",
-          "label": "Custom"
-        }
-      ]
-    },
-    {
-      "type": "color",
-      "id": "bg_custom",
-      "label": "Custom background",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "id": "text_custom",
-      "label": "Custom text",
-      "default": "#111111"
-    },
-    {
-      "type": "range",
-      "id": "pad_top",
-      "label": "Extra top padding",
-      "min": 0,
-      "max": 120,
-      "step": 8,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "pad_bottom",
-      "label": "Extra bottom padding",
-      "min": 0,
-      "max": 120,
-      "step": 8,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "header",
-      "content": "Section style"
-    },
-    {
-      "type": "header",
-      "content": "Section type"
-    },
-    {
-      "type": "paragraph",
-      "content": "Leave these alone and the section follows the site's typography. Set them only when this one section needs to differ."
-    },
-    {
-      "type": "font_picker",
-      "id": "heading_font",
-      "label": "Heading font for this section",
-      "default": "assistant_n4"
-    },
-    {
-      "type": "range",
-      "id": "heading_size",
-      "label": "Heading size",
-      "min": 60,
-      "max": 160,
-      "step": 5,
-      "unit": "%",
-      "default": 100
-    },
-    {
-      "type": "color",
-      "id": "heading_color",
-      "label": "Heading colour"
-    },
-    {
-      "type": "select",
-      "id": "text_align",
-      "label": "Alignment",
-      "options": [
-        {
-          "value": "left",
-          "label": "Left"
-        },
-        {
-          "value": "center",
-          "label": "Centred"
-        }
-      ],
-      "default": "left"
-    },
-    {
-      "type": "header",
-      "content": "Spacing"
-    }
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" }
   ]
 }
 {% endschema %}
