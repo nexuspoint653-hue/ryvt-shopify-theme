@@ -38,7 +38,17 @@
   {%- endcomment -%}
   <style>
     :root{
-      /* type */
+      /* the site's own tokens, re-declared from Theme settings so anything
+         chosen in the editor overrides the design's defaults */
+      --paper:{{ settings.color_bg }};
+      --concrete:{{ settings.color_bg_alt }};
+      --plate:{{ settings.color_tile }};
+      --ink:{{ settings.color_text }};
+      --muted:{{ settings.color_muted }};
+      --line:{{ settings.color_line }};
+      --stock:{{ settings.color_low }};
+      --mx:{{ settings.page_width }}px;
+
       --sans:{{ f_body.family }}, {{ f_body.fallback_families }};
       --display:{{ f_head.family }}, {{ f_head.fallback_families }};
       --fw-head:{{ settings.font_heading_weight }};
@@ -51,28 +61,6 @@
       --tr-label:{{ settings.font_label_tracking | divided_by: 100.0 }}em;
       --case-label:{% if settings.font_label_upper %}uppercase{% else %}none{% endif %};
 
-      /* colour */
-      --bg:{{ settings.color_bg }};
-      --bg2:{{ settings.color_bg_alt }};
-      --tile:{{ settings.color_tile }};
-      --ink:{{ settings.color_text }};
-      --muted:{{ settings.color_muted }};
-      --dim:{{ settings.color_muted | color_mix: settings.color_bg, 60 }};
-      --line:{{ settings.color_line }};
-      --accent:{{ settings.color_accent }};
-      --ok:{{ settings.color_stock }};
-      --low:{{ settings.color_low }};
-      --sale:{{ settings.color_sale }};
-      --btn-bg:{{ settings.color_btn_bg }};
-      --btn-tx:{{ settings.color_btn_text }};
-      --btn-bg-h:{{ settings.color_btn_bg_hover }};
-      --btn-tx-h:{{ settings.color_btn_text_hover }};
-      --hdr-bg:{{ settings.color_header_bg }};
-      --hdr-tx:{{ settings.color_header_text }};
-      --ft-bg:{{ settings.color_footer_bg }};
-      --ft-tx:{{ settings.color_footer_text }};
-
-      /* product cards */
       --card-ratio:{{ settings.card_ratio }};
       --card-fit:{{ settings.card_fit }};
       --card-radius:{{ settings.card_radius }}px;
@@ -81,17 +69,17 @@
       --card-name-color:{{ settings.card_name_color }};
       --card-price-color:{{ settings.card_price_color }};
 
-      /* layout */
-      --page:{{ settings.page_width }}px;
-      --sec:{{ settings.section_space }}px;
-      --gap:{{ settings.grid_gap }}px;
       --cols:{{ settings.grid_columns }};
       --cols-m:{{ settings.grid_columns_mobile }};
+      --gap:{{ settings.grid_gap }}px;
+      --sec:{{ settings.section_space }}px;
 
-      /* motion */
-      --speed:{{ 100 | divided_by: settings.motion_speed | times: 1.0 }};
-      --e:cubic-bezier(.16,1,.3,1);
-      --hdr:66px;
+      --btn-bg:{{ settings.color_btn_bg }};
+      --btn-tx:{{ settings.color_btn_text }};
+      --btn-bg-h:{{ settings.color_btn_bg_hover }};
+      --btn-tx-h:{{ settings.color_btn_text_hover }};
+      --ft-bg:{{ settings.color_footer_bg }};
+      --ft-tx:{{ settings.color_footer_text }};
     }
     {%- unless settings.motion_reveal %}[data-rise]{opacity:1!important;transform:none!important}{% endunless -%}
     {%- unless settings.motion_hover_zoom %}.card-media img{transform:none!important}{% endunless -%}

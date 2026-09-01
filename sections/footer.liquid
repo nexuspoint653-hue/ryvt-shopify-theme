@@ -1,181 +1,178 @@
-{% render 'section-style', s: section %}
-{%- assign panels = section.blocks | where: "type", "panel" -%}
-<footer>
-  {%- if panels.size > 0 -%}
-    <div class="f-panels">
-      {%- for b in panels -%}
-        <a class="f-panel" href="{{ b.settings.link | default: '#' }}" {{ b.shopify_attributes }}>
-          {%- if b.settings.video != blank -%}
-            <video class="f-panel-m" autoplay muted loop playsinline src="{{ b.settings.video }}"
-              {% if b.settings.image %}poster="{{ b.settings.image | image_url: width: 1400 }}"{% endif %}></video>
-          {%- elsif b.settings.image != blank -%}
-            <img class="f-panel-m" src="{{ b.settings.image | image_url: width: 1400 }}" alt="" loading="lazy">
-          {%- else -%}
-            <span class="f-panel-m f-panel-ph"></span>
-          {%- endif -%}
-          <span class="f-panel-scrim"></span>
-          <span class="f-panel-t">{{ b.settings.title }}</span>
-          {%- if b.settings.caption != blank -%}<span class="f-panel-c">{{ b.settings.caption }}</span>{%- endif -%}
-        </a>
-      {%- endfor -%}
-    </div>
-  {%- endif -%}
-  <div class="f-main">
-    <div>
-      <h4>{{ section.settings.nl_title }}</h4>
-      {%- if section.settings.nl_body != blank -%}<p class="small">{{ section.settings.nl_body }}</p>{%- endif -%}
-      {% form 'customer' %}
-        <input type="hidden" name="contact[tags]" value="newsletter">
-        <div class="nl">
-          <input type="email" name="contact[email]" placeholder="Email address" aria-label="Email address" required>
-          <input type="text" name="contact[first_name]" placeholder="First name" aria-label="First name">
+{%- comment -%}
+  RYVT footer — the site's film-HUD footer, ported. Now-playing pill, wordmark,
+  Detroit clock, newsletter, the drops pill with its cross-fading plates, the
+  sitemap row and the legal line with the cookie dialog.
+{%- endcomment -%}
+{%- liquid
+  assign ship_over = settings.ship_threshold | default: '125'
+  assign all_count = collections.all.all_products_count
+  assign yr = 'now' | date: '%Y'
+-%}
+
+<footer class="hud-ft">
+  <div class="hud-ft-in">
+    <div class="hud-ft-l">
+      {%- if section.settings.show_np -%}
+        <div class="np" data-np>
+          <span class="np-art" aria-hidden="true"></span>
+          <span class="np-t">
+            <b>Now playing</b>
+            <span>{{ section.settings.np_title }}</span>
+            <span class="np-chip">Preview</span>
+          </span>
+          <span class="np-ctl">
+            <button type="button" aria-label="Save track">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+            </button>
+            <button type="button" aria-label="More">
+              <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor">
+                <circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
+            </button>
+            <button type="button" class="np-play" data-np-toggle aria-label="Play preview">
+              <svg viewBox="0 0 24 24" width="13" height="13" fill="currentColor" data-np-icon><path d="M8 5l11 7-11 7z"/></svg>
+            </button>
+          </span>
         </div>
-        <input type="tel" name="contact[phone]" class="nl-phone" placeholder="Phone number (optional)" aria-label="Phone number">
-        {%- if section.settings.consent != blank -%}
-          <div class="consent"><input type="checkbox" id="ryvt-consent" name="contact[accepts_marketing]">
-            <label for="ryvt-consent">{{ section.settings.consent }}</label></div>
-        {%- endif -%}
-        <button type="submit" class="sub">Subscribe</button>
-        {%- if form.posted_successfully? -%}<p class="small" style="margin-top:12px">Thank you — you're on the list.</p>{%- endif -%}
-      {% endform %}
-      {% render 'social-icons' %}
+      {%- endif -%}
+
+      {%- if settings.logo_light != blank -%}
+        <a class="ft-lockup" href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
+          <img src="{{ settings.logo_light | image_url: width: 640 }}" alt="{{ shop.name | escape }}"
+               width="320" height="66" loading="lazy">
+        </a>
+      {%- endif -%}
     </div>
 
-    <div class="f-cols">
-      {%- for block in section.blocks -%}
-        {%- assign list = linklists[block.settings.menu] -%}
-        <div {{ block.shopify_attributes }}>
-          <h5>{{ block.settings.title | default: list.title }}</h5>
-          <ul>
-            {%- for link in list.links -%}<li><a href="{{ link.url }}">{{ link.title }}</a></li>{%- endfor -%}
-          </ul>
-        </div>
-      {%- endfor -%}
+    <div class="clock"><b>{{ section.settings.city | default: 'DETROIT' }}</b><span data-time>--:--:--</span></div>
+
+    {%- form 'customer', class: 'ft-sub', novalidate: 'novalidate' -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <label for="ft-email">{{ section.settings.sub_label }}</label>
+      <div class="ft-sub-row">
+        <input id="ft-email" type="email" name="contact[email]" placeholder="Email address"
+               autocomplete="email" required>
+        <button type="submit">Sign up</button>
+      </div>
+      {%- if form.posted_successfully? -%}
+        <p class="ft-sub-ok">Thanks — check your inbox.</p>
+      {%- endif -%}
+    {%- endform -%}
+
+    <div class="hud-ft-r">
+      <a class="buy" href="{{ section.settings.drops_link | default: routes.all_products_collection_url }}">
+        <span class="buy-m" aria-hidden="true" data-slides>
+          {%- assign shots = section.blocks | where: 'type', 'plate' -%}
+          {%- for b in shots -%}
+            {%- if b.settings.image != blank -%}
+              <img src="{{ b.settings.image | image_url: width: 200 }}" alt=""
+                   {% if forloop.first %}class="on"{% endif %} width="200" height="200" loading="lazy">
+            {%- endif -%}
+          {%- endfor -%}
+        </span>
+        <span class="buy-t">
+          <b>{{ section.settings.drops_title }}</b>
+          <span>{{ section.settings.drops_sub }} <i>{{ all_count }} styles</i></span>
+        </span>
+        <span class="buy-go" aria-hidden="true">&rarr;</span>
+      </a>
+      <a class="ship" href="{{ section.settings.ship_link }}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true">
+          <path d="M3 7.5 12 3l9 4.5v9L12 21l-9-4.5z"/><path d="M3 7.5 12 12l9-4.5M12 12v9"/></svg>
+        Free shipping over <b>{{ ship_over | prepend: '$' }}</b>
+      </a>
     </div>
   </div>
 
-  <div class="f-bottom">
-    <div>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</div>
-    <div style="display:flex;gap:16px">
-      {%- assign legal = linklists[section.settings.legal_menu] -%}
-      {%- for l in legal.links -%}<a href="{{ l.url }}">{{ l.title }}</a>{%- endfor -%}
-    </div>
+  <div class="hud-ft-btm">
+    <nav>
+      {%- for link in section.settings.menu.links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </nav>
+    <span>{{ section.settings.place }}</span>
+  </div>
+
+  <div class="ft-legal">
+    <span>&copy; {{ yr }} {{ shop.name }}. All rights reserved.</span>
+    <nav>
+      {%- for link in section.settings.legal_menu.links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+      <button type="button" data-cookie-open>Cookie preferences</button>
+    </nav>
   </div>
 </footer>
+
+{%- comment -%}
+  Cookie preferences. On Shopify this is where the consent API is called:
+  the theme's JS already hands the answer to Shopify.customerPrivacy.
+{%- endcomment -%}
+<div class="ck" data-ck role="dialog" aria-modal="true" aria-labelledby="ck-h" hidden>
+  <div class="ck-scrim" data-ck-close></div>
+  <div class="ck-card">
+    <h2 id="ck-h">Cookie preferences</h2>
+    <p>Toggle the categories you&rsquo;re comfortable with. Necessary cookies (cart, auth, CSRF)
+       are always on. Choices are stored for 13 months.</p>
+
+    <div class="ck-row locked">
+      <span class="ck-box"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>
+      <span class="ck-txt"><b>Necessary</b>
+        <span>Required for the cart, sign-in, and CSRF protection. Cannot be disabled.</span></span>
+    </div>
+
+    <button type="button" class="ck-row on" data-ck-toggle="analytics" aria-pressed="true">
+      <span class="ck-box"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>
+      <span class="ck-txt"><b>Analytics</b>
+        <span>Helps us understand which pages are visited and where issues happen.</span></span>
+    </button>
+
+    <button type="button" class="ck-row on" data-ck-toggle="marketing" aria-pressed="true">
+      <span class="ck-box"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg></span>
+      <span class="ck-txt"><b>Marketing</b>
+        <span>Lets us measure which ads bring people here and show you more relevant promotions.</span></span>
+    </button>
+
+    <div class="ck-act">
+      <button type="button" class="ck-reject" data-ck-reject>Reject all optional</button>
+      <button type="button" class="ck-save" data-ck-save>Save preferences</button>
+    </div>
+    <p class="ck-note" data-ck-note></p>
+  </div>
+</div>
+
 {% schema %}
 {
   "name": "Footer",
-  "max_blocks": 6,
   "settings": [
-    {
-      "type": "text",
-      "id": "nl_title",
-      "label": "Newsletter heading",
-      "default": "Join the movement"
-    },
-    {
-      "type": "textarea",
-      "id": "nl_body",
-      "label": "Newsletter body",
-      "default": "First to know about new drops, exclusive offers, and stories from Detroit."
-    },
-    {
-      "type": "textarea",
-      "id": "consent",
-      "label": "Consent text",
-      "default": "By signing up you consent to receive marketing messages from RYVT. Message frequency varies. Unsubscribe at any time."
-    },
-    {
-      "type": "link_list",
-      "id": "legal_menu",
-      "label": "Legal menu"
-    },
-    {
-      "type": "header",
-      "content": "Appearance"
-    },
-    {
-      "type": "select",
-      "id": "scheme",
-      "label": "Background",
-      "default": "light",
-      "options": [
-        {
-          "value": "light",
-          "label": "White"
-        },
-        {
-          "value": "alt",
-          "label": "Off-white"
-        },
-        {"value":"sand","label":"Sand"},
-        {
-          "value": "dark",
-          "label": "Dark"
-        },
-        {
-          "value": "custom",
-          "label": "Custom"
-        }
-      ]
-    },
-    {
-      "type": "color",
-      "id": "bg_custom",
-      "label": "Custom background",
-      "default": "#FFFFFF"
-    },
-    {
-      "type": "color",
-      "id": "text_custom",
-      "label": "Custom text",
-      "default": "#111111"
-    },
-    {
-      "type": "range",
-      "id": "pad_top",
-      "label": "Extra top padding",
-      "min": 0,
-      "max": 120,
-      "step": 8,
-      "unit": "px",
-      "default": 0
-    },
-    {
-      "type": "range",
-      "id": "pad_bottom",
-      "label": "Extra bottom padding",
-      "min": 0,
-      "max": 120,
-      "step": 8,
-      "unit": "px",
-      "default": 0
-    }
+    { "type": "header", "content": "Now playing" },
+    { "type": "checkbox", "id": "show_np", "label": "Show the now-playing pill", "default": true },
+    { "type": "text", "id": "np_title", "label": "Track name", "default": "The RYVT mix" },
+    { "type": "header", "content": "Clock" },
+    { "type": "text", "id": "city", "label": "City label", "default": "DETROIT" },
+    { "type": "header", "content": "Newsletter" },
+    { "type": "text", "id": "sub_label", "label": "Invitation", "default": "First look at every drop" },
+    { "type": "header", "content": "Drops pill" },
+    { "type": "text", "id": "drops_title", "label": "Title", "default": "New Drops" },
+    { "type": "text", "id": "drops_sub", "label": "Subtitle", "default": "Heavyweight release" },
+    { "type": "url", "id": "drops_link", "label": "Links to" },
+    { "type": "url", "id": "ship_link", "label": "Shipping pill links to" },
+    { "type": "header", "content": "Links" },
+    { "type": "link_list", "id": "menu", "label": "Sitemap row", "default": "footer" },
+    { "type": "link_list", "id": "legal_menu", "label": "Legal row" },
+    { "type": "text", "id": "place", "label": "Location line", "default": "Metro Detroit, Michigan" }
   ],
   "blocks": [
-    { "type": "panel", "name": "Footer panel", "settings": [
-      { "type": "image_picker", "id": "image", "label": "Image" },
-      { "type": "url", "id": "video", "label": "Video file URL" },
-      { "type": "text", "id": "title", "label": "Title", "default": "Discover RYVT" },
-      { "type": "text", "id": "caption", "label": "Caption" },
-      { "type": "url", "id": "link", "label": "Link" }
-    ]},
     {
-      "type": "menu",
-      "name": "Link column",
+      "type": "plate",
+      "name": "Drops photo",
+      "limit": 6,
       "settings": [
-        {
-          "type": "text",
-          "id": "title",
-          "label": "Title"
-        },
-        {
-          "type": "link_list",
-          "id": "menu",
-          "label": "Menu"
-        }
+        { "type": "image_picker", "id": "image", "label": "Photo",
+          "info": "These cross-fade inside the little square. Add two or more." }
       ]
     }
-  ]
+  ],
+  "enabled_on": { "groups": ["footer"] }
 }
 {% endschema %}

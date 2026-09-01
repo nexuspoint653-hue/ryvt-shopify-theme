@@ -691,3 +691,303 @@ function wireCard(cardEl){
 }
 function wireAllCards(root){ (root||document).querySelectorAll(".card").forEach(wireCard); }
 document.addEventListener("DOMContentLoaded",function(){ wireAllCards(document); });
+
+/* ==========================================================================
+   Ported from the site: the behaviour the ryvt.css markup expects.
+   Everything below is additive and namespaced to its own IIFE, so it does not
+   disturb the Shopify plumbing above (cart, variants, accordions).
+   ========================================================================== */
+(function ryvtSite(){
+  "use strict";
+  var $  = function(s, r){ return (r||document).querySelector(s); };
+  var $$ = function(s, r){ return Array.prototype.slice.call((r||document).querySelectorAll(s)); };
+
+  /* ---------------- header: mega menu, search, scrim ---------------- */
+  (function chrome(){
+    var scrim = $('[data-scrim]');
+    function openScrim(){ if(scrim){ scrim.hidden = false; requestAnimationFrame(function(){ scrim.classList.add('on'); }); } }
+    function closeAll(){
+      $$('[data-panel]').forEach(function(p){ p.classList.remove('on'); });
+      var s = $('[data-srch]'); if(s) s.classList.remove('on');
+      $$('[data-menu]').forEach(function(m){ m.classList.remove('on'); });
+      $$('[data-drop]').forEach(function(b){ b.setAttribute('aria-expanded','false'); });
+      if(scrim){ scrim.classList.remove('on'); setTimeout(function(){ scrim.hidden = true; }, 300); }
+    }
+    function openDrop(btn){
+      var panel = $('[data-panel="' + btn.dataset.drop + '"]');
+      if(!panel) return;
+      closeAll();
+      panel.classList.add('on');
+      btn.setAttribute('aria-expanded','true');
+      openScrim();
+      var wrap = btn.closest('[data-menu]');
+      if(wrap) wrap.classList.add('on');
+    }
+
+    $$('[data-drop]').forEach(function(btn){
+      /* Shop is a destination as well as a menu: clicking goes to the
+         collection, hovering opens the menu */
+      if(btn.hasAttribute('data-shop-nav')){
+        btn.addEventListener('click', function(){
+          var href = btn.getAttribute('data-href');
+          if(href) window.location.href = href;
+        });
+        return;
+      }
+      btn.addEventListener('click', function(e){
+        e.preventDefault();
+        var panel = $('[data-panel="' + btn.dataset.drop + '"]');
+        if(panel && panel.classList.contains('on')) closeAll(); else openDrop(btn);
+      });
+    });
+
+    if(matchMedia('(hover:hover) and (pointer:fine)').matches){
+      $$('[data-menu] [data-drop]').forEach(function(btn){
+        btn.closest('[data-menu]').addEventListener('mouseenter', function(){ openDrop(btn); });
+      });
+      var hd = $('.hd');
+      if(hd) hd.addEventListener('mouseleave', function(){
+        var s = $('[data-srch]');
+        if(s && s.classList.contains('on')) return;
+        closeAll();
+      });
+    }
+
+    var openBtn = $('[data-search-open]');
+    if(openBtn) openBtn.addEventListener('click', function(){
+      var s = $('[data-srch]'), was = s.classList.contains('on');
+      closeAll();
+      if(!was){ s.classList.add('on'); openScrim(); setTimeout(function(){ var q = $('[data-q]'); if(q) q.focus(); }, 60); }
+    });
+    var closeBtn = $('[data-search-close]');
+    if(closeBtn) closeBtn.addEventListener('click', closeAll);
+    var clearBtn = $('[data-search-clear]');
+    if(clearBtn) clearBtn.addEventListener('click', function(){
+      var q = $('[data-q]'); if(q){ q.value = ''; q.focus(); } clearBtn.hidden = true;
+    });
+    var q = $('[data-q]');
+    if(q) q.addEventListener('input', function(){ if(clearBtn) clearBtn.hidden = !q.value; });
+
+    /* a suggestion chip runs the search rather than just filling the box */
+    $$('.srch-terms button').forEach(function(b){
+      b.addEventListener('click', function(){
+        var term = b.getAttribute('data-term') || b.textContent;
+        var form = b.closest('form');
+        if(q) q.value = term;
+        if(form) form.submit();
+      });
+    });
+
+    addEventListener('keydown', function(e){ if(e.key === 'Escape') closeAll(); });
+    document.addEventListener('click', function(e){
+      if(e.target.closest('.hd') || e.target.closest('.srch-scrim')) return;
+      closeAll();
+    });
+    if(scrim) scrim.addEventListener('click', closeAll);
+  })();
+
+  /* ---------------- the Detroit clock ---------------- */
+  (function clock(){
+    var outs = $$('[data-time]');
+    if(!outs.length) return;
+    var city = (document.body.getAttribute('data-tz') || 'America/Detroit');
+    var fmt;
+    try {
+      fmt = new Intl.DateTimeFormat('en-GB', {
+        hour: '2-digit', minute: '2-digit', second: '2-digit',
+        hour12: false, timeZone: city
+      });
+    } catch(e){
+      fmt = new Intl.DateTimeFormat('en-GB', { hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false });
+    }
+    function tick(){
+      var t = fmt.format(new Date()).replace(/:/g, ' : ');
+      outs.forEach(function(o){ o.textContent = t; });
+    }
+    tick(); setInterval(tick, 1000);
+  })();
+
+  /* ---------------- now playing ---------------- */
+  (function nowPlaying(){
+    var np = $('[data-np]'), toggle = $('[data-np-toggle]'), icon = $('[data-np-icon]');
+    if(!np || !toggle) return;
+    toggle.addEventListener('click', function(){
+      var on = np.classList.toggle('playing');
+      if(icon) icon.innerHTML = on
+        ? '<path d="M7 5h3.4v14H7zM13.6 5H17v14h-3.4z"/>'
+        : '<path d="M8 5l11 7-11 7z"/>';
+      toggle.setAttribute('aria-label', on ? 'Pause preview' : 'Play preview');
+    });
+  })();
+
+  /* ---------------- the drops square ----------------
+     A slow cross-fade through the photos in the footer pill. */
+  (function drops(){
+    var box = $('[data-slides]');
+    if(!box) return;
+    var shots = $$('img', box);
+    if(shots.length < 2 || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+    var i = 0, timer = null;
+    function step(){ shots[i].classList.remove('on'); i = (i + 1) % shots.length; shots[i].classList.add('on'); }
+    function run(){ stop(); timer = setInterval(step, 3400); }
+    function stop(){ if(timer){ clearInterval(timer); timer = null; } }
+    document.addEventListener('visibilitychange', function(){ document.hidden ? stop() : run(); });
+    run();
+  })();
+
+  /* ---------------- the shipping promise ----------------
+     Rests at a whisper so there is something to find, then stays lit. */
+  (function shipLine(){
+    var el = $('[data-ship]');
+    if(!el) return;
+    function lit(){ el.classList.add('lit'); }
+    el.addEventListener('mouseenter', lit);
+    el.addEventListener('focus', lit);
+    el.addEventListener('touchstart', lit, { passive:true });
+  })();
+
+  /* ---------------- the construction specs ----------------
+     Hovering a row brings its spec in from the right and holds it ten
+     seconds so it can be read, then lets it go. */
+  $$('[data-detail]').forEach(function(row){
+    var t = null;
+    function reveal(){
+      clearTimeout(t);
+      row.classList.add('show');
+      t = setTimeout(function(){ row.classList.remove('show'); }, 10000);
+    }
+    row.addEventListener('mouseenter', reveal);
+    row.addEventListener('focusin', reveal);
+  });
+
+  /* ---------------- the shop filter drawer ----------------
+     Folded away until wanted, never hidden: the button says what is on. */
+  (function filterDrawer(){
+    var btn = $('[data-filt-toggle]'), panel = $('[data-filt-panel]');
+    if(!btn || !panel) return;
+    function set(open){
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+      if(open){
+        panel.hidden = false;
+        panel.style.height = '0px';
+        var h = panel.scrollHeight;
+        requestAnimationFrame(function(){
+          panel.style.transition = 'height .45s cubic-bezier(.22,.61,.36,1)';
+          panel.style.height = h + 'px';
+        });
+        setTimeout(function(){ panel.style.height = 'auto'; }, 470);
+      } else {
+        panel.style.height = panel.scrollHeight + 'px';
+        requestAnimationFrame(function(){ panel.style.height = '0px'; });
+        setTimeout(function(){ panel.hidden = true; panel.style.height = ''; }, 470);
+      }
+    }
+    btn.addEventListener('click', function(){ set(btn.getAttribute('aria-expanded') !== 'true'); });
+    /* arriving on a filtered collection opens it, so the narrowed grid is
+       never a mystery */
+    if(location.search.indexOf('filter.') > -1 || location.pathname.indexOf('/collections/') === 0 &&
+       document.body.getAttribute('data-filtered') === 'true'){ set(true); }
+  })();
+
+  /* ---------------- cookie preferences ----------------
+     A real dialog: it remembers what was chosen and hands the answer to one
+     place, so pointing it at Shopify's consent API is a one-line change. */
+  (function cookies(){
+    var box = $('[data-ck]');
+    if(!box) return;
+    var rows = $$('[data-ck-toggle]', box), note = $('[data-ck-note]', box), last = null, KEY = 'ryvt.consent';
+    var mem = null;
+    function load(){ try { var raw = localStorage.getItem(KEY); if(raw) return JSON.parse(raw); } catch(e){} return mem; }
+    function save(v){ mem = v; try { localStorage.setItem(KEY, JSON.stringify(v)); } catch(e){} }
+
+    function paint(){
+      var c = load() || { analytics:true, marketing:true };
+      rows.forEach(function(r){
+        var on = !!c[r.dataset.ckToggle];
+        r.classList.toggle('on', on);
+        r.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      if(note) note.textContent = c.at
+        ? 'Saved ' + new Date(c.at).toLocaleDateString(undefined, { day:'numeric', month:'long', year:'numeric' })
+        : '';
+    }
+    function open(){
+      last = document.activeElement;
+      paint();
+      box.hidden = false;
+      requestAnimationFrame(function(){ box.classList.add('on'); });
+      document.body.style.overflow = 'hidden';
+      var f = $('[data-ck-toggle]', box); if(f) f.focus();
+    }
+    function close(){
+      box.classList.remove('on');
+      document.body.style.overflow = '';
+      setTimeout(function(){ box.hidden = true; }, 380);
+      if(last && last.focus) last.focus();
+    }
+    function apply(c){
+      save(c);
+      if(window.Shopify && Shopify.customerPrivacy && Shopify.customerPrivacy.setTrackingConsent){
+        Shopify.customerPrivacy.setTrackingConsent(
+          { analytics:c.analytics, marketing:c.marketing, preferences:c.analytics }, function(){});
+      }
+    }
+    function read(){
+      var c = { at: Date.now() };
+      rows.forEach(function(r){ c[r.dataset.ckToggle] = r.classList.contains('on'); });
+      return c;
+    }
+    $$('[data-cookie-open]').forEach(function(b){ b.addEventListener('click', function(e){ e.preventDefault(); open(); }); });
+    $$('[data-ck-close]', box).forEach(function(b){ b.addEventListener('click', close); });
+    rows.forEach(function(r){
+      r.addEventListener('click', function(){
+        var on = !r.classList.contains('on');
+        r.classList.toggle('on', on);
+        r.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+    });
+    var rej = $('[data-ck-reject]', box);
+    if(rej) rej.addEventListener('click', function(){
+      rows.forEach(function(r){ r.classList.remove('on'); r.setAttribute('aria-pressed','false'); });
+      apply(read()); close();
+    });
+    var sav = $('[data-ck-save]', box);
+    if(sav) sav.addEventListener('click', function(){ apply(read()); close(); });
+    addEventListener('keydown', function(e){ if(e.key === 'Escape' && box.classList.contains('on')) close(); });
+  })();
+
+  /* ---------------- text arrives rather than appearing ---------------- */
+  (function rise(){
+    if(matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+    var SEL = '.sec-h, .stat, .marq, .cat, .card, .tile, .keep-in > *, .split .txt,' +
+              ' .doc-hd .wrap > *, .doc-body section, .doc-nav,' +
+              ' .st-open-in > *, .st-spec div, .st-step, .st-quote blockquote, .st-by,' +
+              ' .st-detail-txt > *, .st-detail-media,' +
+              ' .br-title, .br-lead, .br-based p, .br-source > *, .br-figs div, .br-news-in > *,' +
+              ' .pdp > *, .acc details, .pdp-trust, .hud-ft-in > *, .hud-ft-btm > *';
+    function arm(root){
+      $$(SEL, root || document).forEach(function(el){
+        if(el.hasAttribute('data-rise')) return;
+        el.setAttribute('data-rise', '1');
+        var p = el.parentElement, n = 0;
+        if(p){ n = Array.prototype.indexOf.call(p.children, el); }
+        el.style.transitionDelay = Math.min(n, 6) * 60 + 'ms';
+        io.observe(el);
+      });
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { rootMargin: '0px 0px -2% 0px', threshold: 0.01 });
+    arm(document);
+    /* safety net: anything the observer misses at the foot of a document */
+    addEventListener('scroll', function(){
+      requestAnimationFrame(function(){
+        $$('[data-rise]:not(.in)').forEach(function(el){
+          var r = el.getBoundingClientRect();
+          if(r.top < innerHeight && r.bottom > 0) el.classList.add('in');
+        });
+      });
+    }, { passive:true });
+    document.addEventListener('shopify:section:load', function(e){ arm(e.target); });
+  })();
+})();

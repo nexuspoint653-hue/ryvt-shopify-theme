@@ -1,301 +1,244 @@
-{%- assign menu = linklists[section.settings.menu] -%}
-{%- assign notes = section.blocks | where: "type", "announcement" -%}
-{%- assign cards = section.blocks | where: "type", "menu_card" -%}
-{%- assign tiles = section.blocks | where: "type", "search_tile" -%}
+{%- comment -%}
+  RYVT header — ported from the site markup so the ryvt.css classes match:
+  sticky bar, mega menu, search pane. Every list is merchant-editable through
+  blocks and menus rather than hardcoded.
+{%- endcomment -%}
+{%- liquid
+  assign ship_over = settings.ship_threshold | default: '125'
+  assign ship_time = settings.ship_time | default: '48 hours'
+  assign ship_from = settings.ship_from | default: 'Metro Detroit'
+  assign ret_days  = settings.returns_days | default: '30'
+  assign all_count = collections.all.all_products_count
+-%}
 
-{%- if notes.size > 0 -%}
-  <div class="abar" id="abar" data-rotate="{{ section.settings.rotate_secs }}">
-    <div class="abar-in">
-      {%- for b in notes -%}
-        <div class="abar-i{% if forloop.first %} on{% endif %}" {{ b.shopify_attributes }}>
-          {%- if b.settings.link != blank -%}
-            <a href="{{ b.settings.link }}">{{ b.settings.text }}</a>
-          {%- else -%}{{ b.settings.text }}{%- endif -%}
-        </div>
-      {%- endfor -%}
-    </div>
-    {%- if section.settings.abar_dismiss -%}
-      <button class="abar-x" id="abarX" type="button" aria-label="Dismiss"></button>
-    {%- endif -%}
-  </div>
-{%- endif -%}
+<div class="srch-scrim" data-scrim hidden></div>
 
-<header class="hdr" id="hdr"
-  data-clear="{{ section.settings.transparent }}"
-  data-autohide="{{ section.settings.autohide }}">
-  <div class="hdr-in">
-
-    <nav class="nav-c" aria-label="Main">
-      <button class="burger" id="burger" type="button" data-tap aria-label="Open menu" aria-expanded="false">
-        <i></i><i></i><i></i>
-      </button>
-      {%- for link in menu.links limit: 5 -%}
-        {%- if link.links.size > 0 -%}
-          <button type="button" class="nav-i" data-tap data-menu="mega-{{ forloop.index }}"
-                  aria-expanded="false" aria-controls="mega-{{ forloop.index }}">{{ link.title }}</button>
-        {%- else -%}
-          <a href="{{ link.url }}" class="nav-i{% if link.active %} on{% endif %}" data-tap>{{ link.title }}</a>
-        {%- endif -%}
-      {%- endfor -%}
-      {%- if section.settings.soon_label != blank -%}
-        <span class="nav-i dim">{{ section.settings.soon_label }}<span class="soon">Coming Soon</span></span>
-      {%- endif -%}
-    </nav>
-
-    <a href="{{ routes.root_url }}" class="logo" aria-label="{{ shop.name | escape }}">
-      {%- if section.settings.logo != blank -%}
-        <img src="{{ section.settings.logo | image_url: width: 400 }}" alt="{{ shop.name | escape }}"
-             style="max-height:{{ section.settings.logo_height }}px;width:auto">
+<header class="hd">
+  <div class="wrap hd-in">
+    <a class="logo" href="{{ routes.root_url }}" aria-label="{{ shop.name }} home">
+      {%- if settings.logo != blank -%}
+        <img src="{{ settings.logo | image_url: width: 640 }}"
+             alt="{{ shop.name | escape }}"
+             width="{{ settings.logo_width }}" height="auto"
+             style="width:{{ settings.logo_width }}px">
       {%- else -%}
-        <svg class="logo-mark" viewBox="0 0 32 32" aria-hidden="true"><path d="M4 20 L14 8 L18 13 L28 3 L28 10 L18 20 L14 15 L8 22 Z M4 26 L14 14 L18 19 L28 9 L28 16 L18 26 L14 21 L8 28 Z"/></svg>
-        <span class="logo-w">{{ section.settings.wordmark | default: shop.name }}</span>
+        <span class="logo-txt">{{ shop.name }}</span>
       {%- endif -%}
     </a>
 
-    <div class="nav-r">
-      <button class="ico" id="searchBtn" type="button" data-tap aria-label="Search" aria-expanded="false">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg></button>
-      {%- if section.settings.show_saved -%}
-        <a href="{{ section.settings.saved_url | default: routes.all_products_collection_url }}"
-           class="ico" id="savedBtn" data-tap aria-label="Saved">
-          <svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-5-6 5V3z"/></svg>
-          <span class="cnt" data-saved-count>0</span>
-        </a>
-      {%- endif -%}
-      <a href="{{ routes.account_url }}" class="ico hide-sm" data-tap aria-label="Account">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></a>
-      <a href="{{ routes.cart_url }}" class="ico" data-tap aria-label="Bag ({{ cart.item_count }})">
-        <svg viewBox="0 0 24 24"><path d="M6 8h12l1 12H5L6 8z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg>
-        <span class="cnt{% if cart.item_count > 0 %} on{% endif %}" data-cart-count>{{ cart.item_count }}</span>
+    <nav class="nav" aria-label="Main">
+      {%- for link in section.settings.menu.links -%}
+        {%- if forloop.first -%}
+          <div data-menu>
+            <button class="navbtn" data-drop="shop" data-shop-nav aria-expanded="false"
+                    data-href="{{ link.url }}">
+              <span class="nfx"><i>{{ link.title }}</i><i aria-hidden="true">{{ link.title }}</i></span>
+            </button>
+          </div>
+        {%- else -%}
+          <div><a class="navbtn" href="{{ link.url }}">
+            <span class="nfx"><i>{{ link.title }}</i><i aria-hidden="true">{{ link.title }}</i></span>
+            {%- if forloop.last and settings.logo_light != blank -%}
+              <img class="nav-mark" src="{{ settings.logo_light | image_url: width: 120 }}" alt="" aria-hidden="true">
+            {%- endif -%}
+          </a></div>
+        {%- endif -%}
+      {%- endfor -%}
+    </nav>
+
+    <div class="hd-r">
+      <button class="ic" data-search-open aria-label="Search">
+        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" aria-hidden="true">
+          <circle cx="8.2" cy="8.2" r="6.1" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M12.7 12.7 L17 17" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
+      </button>
+      <a class="ic" href="{{ routes.account_url }}" aria-label="Account">
+        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" aria-hidden="true">
+          <circle cx="9.5" cy="6.6" r="3.4" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M3 17c0-3.6 2.9-5.6 6.5-5.6S16 13.4 16 17" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
       </a>
+      <a class="ic" href="{{ routes.cart_url }}" data-bag-open aria-label="Bag">
+        <svg width="19" height="19" viewBox="0 0 19 19" fill="none" aria-hidden="true">
+          <path d="M3.4 5.6h12.2l-1 11.4H4.4z" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M6.9 7.4V5.2a2.6 2.6 0 0 1 5.2 0v2.2" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
+        <span class="bagn" data-bagn {% if cart.item_count == 0 %}hidden{% endif %}>{{ cart.item_count }}</span>
+      </a>
+      <button class="ic burger" data-drop="shop" aria-label="Menu">
+        <svg width="19" height="14" viewBox="0 0 19 14" aria-hidden="true">
+          <path d="M0 1h19M0 7h19M0 13h19" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
+      </button>
     </div>
   </div>
 
-  {%- comment -%} mega menu {%- endcomment -%}
-  <div class="mega" id="mega">
-    {%- for link in menu.links limit: 5 -%}
-      {%- if link.links.size > 0 -%}
-        {%- assign pos = forloop.index -%}
-        {%- comment -%} flat menu (types only) vs grouped menu {%- endcomment -%}
-        {%- assign grouped = false -%}
-        {%- for col in link.links -%}
-          {%- if col.links.size > 0 -%}{%- assign grouped = true -%}{%- break -%}{%- endif -%}
+  {%- comment -%} The mega menu: two link columns, then featured products. {%- endcomment -%}
+  <div class="drop" data-panel="shop">
+    <div class="wrap drop-in">
+      {%- assign col = 0 -%}
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'column' -%}
+          {%- assign col = col | plus: 1 -%}
+          <div class="drop-col" style="--d:{{ col }}" {{ block.shopify_attributes }}>
+            {%- if block.settings.heading != blank -%}<h4>{{ block.settings.heading }}</h4>{%- endif -%}
+            <ul>
+              {%- for link in block.settings.menu.links -%}
+                <li><a href="{{ link.url }}">{{ link.title }}
+                  {%- if link.object.all_products_count -%}<i>{{ link.object.all_products_count }}</i>
+                  {%- else -%}<i>&rarr;</i>{%- endif -%}
+                </a></li>
+              {%- endfor -%}
+            </ul>
+            {%- if block.settings.heading_2 != blank -%}<h4 class="mt">{{ block.settings.heading_2 }}</h4>{%- endif -%}
+            {%- if block.settings.menu_2 != blank -%}
+              <ul>
+                {%- for link in block.settings.menu_2.links -%}
+                  <li><a href="{{ link.url }}">{{ link.title }}
+                    {%- if link.object.all_products_count -%}<i>{{ link.object.all_products_count }}</i>
+                    {%- else -%}<i>&rarr;</i>{%- endif -%}
+                  </a></li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      <div class="drop-feat" style="--d:3">
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'featured' and block.settings.product != blank -%}
+            {%- assign p = block.settings.product -%}
+            <a class="dfeat" href="{{ p.url }}" {{ block.shopify_attributes }}>
+              <span class="dfeat-m">
+                {%- if p.featured_image -%}
+                  <img src="{{ p.featured_image | image_url: width: 500 }}" alt="{{ p.title | escape }}"
+                       width="500" height="666" loading="lazy">
+                {%- else -%}<span class="ph"></span>{%- endif -%}
+                {%- if block.settings.tag != blank -%}<span class="dfeat-tag">{{ block.settings.tag }}</span>{%- endif -%}
+              </span>
+              <span class="dfeat-n">{{ p.title }}</span><span class="dfeat-p">{{ p.price | money_without_trailing_zeros }}</span>
+            </a>
+          {%- endif -%}
         {%- endfor -%}
+      </div>
+    </div>
 
-        <div class="mega-in" id="mega-{{ pos }}" role="region" aria-label="{{ link.title }}">
-          <div class="mega-cols{% unless grouped %} mega-flat{% endunless %}">
-            {%- if grouped -%}
-              {%- for col in link.links limit: 4 -%}
-                <div class="mcol">
-                  <h4>{{ col.title }}</h4>
-                  <ul>
-                    {%- if col.links.size > 0 -%}
-                      {%- for item in col.links -%}<li><a href="{{ item.url }}">{{ item.title }}</a></li>{%- endfor -%}
-                    {%- else -%}
-                      <li><a href="{{ col.url }}">{{ col.title }}</a></li>
-                    {%- endif -%}
-                  </ul>
-                </div>
-              {%- endfor -%}
-              <div class="mcol mcol-all">
-                <h4>&nbsp;</h4>
-                <ul><li><a class="mall" href="{{ link.url }}">Shop all &rarr;</a></li></ul>
-              </div>
-            {%- else -%}
-              <div class="mcol mcol-wide">
-                <h4>{{ section.settings.types_label | default: 'Shop by type' }}</h4>
-                <ul class="mlist">
-                  {%- for col in link.links -%}<li><a href="{{ col.url }}">{{ col.title }}</a></li>{%- endfor -%}
-                </ul>
-                <div class="mcol-foot"><a class="mall" href="{{ link.url }}">Shop all &rarr;</a></div>
-              </div>
-            {%- endif -%}
-          </div>
-
-          <div class="mega-cards">
-            {%- for block in cards -%}
-              {%- if block.settings.position == pos -%}
-                {%- assign pr = block.settings.product -%}
-                {%- assign img_a = block.settings.image -%}
-                {%- assign img_b = block.settings.image_hover -%}
-                {%- if img_a == blank and pr != blank -%}{%- assign img_a = pr.featured_image -%}{%- endif -%}
-                {%- if img_b == blank and pr != blank and pr.images.size > 1 -%}{%- assign img_b = pr.images[1] -%}{%- endif -%}
-                {%- assign title = block.settings.label | default: pr.title -%}
-                {%- assign href = block.settings.link | default: pr.url | default: link.url -%}
-                <a class="mcard" href="{{ href }}" {{ block.shopify_attributes }}>
-                  <div class="mcard-m">
-                    {%- if img_a != blank -%}
-                      <img class="pri" src="{{ img_a | image_url: width: 700 }}" alt="{{ title | escape }}" loading="lazy">
-                    {%- else -%}
-                      <span class="ph ph-a"></span>
-                    {%- endif -%}
-                    {%- if img_b != blank -%}
-                      <img class="alt" src="{{ img_b | image_url: width: 700 }}" alt="" loading="lazy" aria-hidden="true">
-                    {%- else -%}
-                      <span class="ph ph-b alt"></span>
-                    {%- endif -%}
-                    {%- if block.settings.tag != blank -%}<span class="mcard-tag">{{ block.settings.tag }}</span>{%- endif -%}
-                  </div>
-                  <div class="mcard-b">
-                    <span class="mcard-t">{{ title }}</span>
-                    {%- if block.settings.caption != blank -%}
-                      <span class="mcard-c">{{ block.settings.caption }}</span>
-                    {%- elsif pr != blank and block.settings.show_price -%}
-                      <span class="mcard-c">{{ pr.price | money }}</span>
-                    {%- endif -%}
-                  </div>
-                </a>
-              {%- endif -%}
-            {%- endfor -%}
-          </div>
-        </div>
-      {%- endif -%}
-    {%- endfor -%}
-  </div>
-
-  {%- comment -%} search panel — full width, drops from the header {%- endcomment -%}
-  <div class="spanel" id="search" role="dialog" aria-label="Search" aria-modal="false">
-    <div class="spanel-in">
-      <form class="sform" action="{{ routes.search_url }}" method="get" role="search">
-        <input type="hidden" name="type" value="product">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M16.5 16.5L21 21"/></svg>
-        <input class="sinput" type="search" name="q" id="sInput"
-               placeholder="{{ section.settings.search_placeholder }}" autocomplete="off">
-        <button class="sclear" type="button" id="sClear" aria-label="Clear"></button>
-        <button class="ssubmit" type="submit">Search</button>
-      </form>
-
-      <div class="spanel-body">
-        {%- if section.settings.popular != blank -%}
-          <div class="scol">
-            <h5 class="sh">Popular searches</h5>
-            <div class="chips">
-              {%- assign terms = section.settings.popular | split: ',' -%}
-              {%- for t in terms -%}
-                <a class="chip" href="{{ routes.search_url }}?q={{ t | strip | url_encode }}&type=product">{{ t | strip }}</a>
-              {%- endfor -%}
-            </div>
-            {%- assign fabric = linklists[section.settings.fabric_menu] -%}
-            {%- if fabric.links.size > 0 -%}
-              <h5 class="sh" style="margin-top:26px">{{ section.settings.fabric_title }}</h5>
-              <div class="slinks">
-                {%- for l in fabric.links -%}<a href="{{ l.url }}">{{ l.title }}</a>{%- endfor -%}
-              </div>
-            {%- endif -%}
-          </div>
-        {%- endif -%}
-
-        {%- if tiles.size > 0 -%}
-          <div class="scol scol-tiles">
-            <h5 class="sh">Shop by category</h5>
-            <div class="stiles">
-              {%- for block in tiles -%}
-                {%- assign coll = block.settings.collection -%}
-                <a class="stile" href="{{ block.settings.link | default: coll.url | default: routes.all_products_collection_url }}" {{ block.shopify_attributes }}>
-                  {%- if block.settings.image != blank -%}
-                    <img src="{{ block.settings.image | image_url: width: 500 }}" alt="" loading="lazy">
-                  {%- elsif coll.featured_image -%}
-                    <img src="{{ coll.featured_image | image_url: width: 500 }}" alt="" loading="lazy">
-                  {%- else -%}
-                    {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
-                  {%- endif -%}
-                  <span>{{ block.settings.label | default: coll.title }}</span>
-                </a>
-              {%- endfor -%}
-            </div>
-          </div>
-        {%- endif -%}
+    <div class="drop-strip">
+      <div class="wrap">
+        <span><b>Free shipping</b> over {{ ship_over | prepend: '$' }}</span>
+        <span><b>Ships in {{ ship_time }}</b> from {{ ship_from }}</span>
+        <span><b>{{ ret_days }}-day returns</b> unworn, tags on</span>
+        <a href="{{ routes.all_products_collection_url }}">Shop all {{ all_count }} styles &rarr;</a>
       </div>
     </div>
   </div>
-</header>
 
-<div class="scrim" id="scrim"></div>
+  {%- comment -%} Search: results lead, shortcuts in the rail beside them. {%- endcomment -%}
+  <div class="srch" data-srch>
+    <form class="wrap srch-in" action="{{ routes.search_url }}" method="get" role="search">
+      <div class="srch-row">
+        <svg width="20" height="20" viewBox="0 0 19 19" fill="none" aria-hidden="true">
+          <circle cx="8.2" cy="8.2" r="6.1" stroke="currentColor" stroke-width="1.6"/>
+          <path d="M12.7 12.7 L17 17" stroke="currentColor" stroke-width="1.6"/>
+        </svg>
+        <input type="search" name="q" placeholder="What are you looking for?" data-q
+               aria-label="Search products" autocomplete="off">
+        <button class="srch-clear" type="button" data-search-clear hidden>Clear</button>
+        <button class="srch-x" type="button" data-search-close>Close <span>esc</span></button>
+      </div>
 
-<aside class="drawer" id="drawer" aria-label="Menu">
-  <div class="drawer-h">
-    <span class="mini">Menu</span>
-    <button class="x" id="drawerX" type="button" data-tap aria-label="Close"></button>
-  </div>
-  <div class="drawer-b">
-    <ul>
-      {%- for link in menu.links -%}
-        <li>
-          {%- if link.links.size > 0 -%}
-            <button type="button" data-tap data-sub="dsub-{{ forloop.index }}" aria-expanded="false">
-              {{ link.title }} <span aria-hidden="true">+</span></button>
-            <div class="drawer-sub" id="dsub-{{ forloop.index }}">
-              {%- for col in link.links -%}
-                {%- if col.links.size > 0 -%}
-                  {%- for item in col.links -%}<a href="{{ item.url }}">{{ item.title }}</a>{%- endfor -%}
-                {%- else -%}
-                  <a href="{{ col.url }}">{{ col.title }}</a>
-                {%- endif -%}
-              {%- endfor -%}
-              <a class="dall" href="{{ link.url }}">Shop all {{ link.title | downcase }} &rarr;</a>
+      <div class="srch-body">
+        <div class="srch-main">
+          <div class="srch-head">
+            <h4 data-hits-h>Most wanted</h4>
+            <span class="srch-count" data-hits-count></span>
+          </div>
+          <div class="hits" data-hits>
+            {%- assign feat = section.settings.search_collection -%}
+            {%- for p in feat.products limit: 4 -%}
+              <a href="{{ p.url }}">
+                <span class="hit-m">
+                  {%- if p.featured_image -%}
+                    <img src="{{ p.featured_image | image_url: width: 400 }}" alt="{{ p.title | escape }}"
+                         width="400" height="533" loading="lazy">
+                  {%- else -%}<span class="ph"></span>{%- endif -%}
+                </span>
+                <p>{{ p.title }}</p><span>{{ p.price | money_without_trailing_zeros }}</span>
+              </a>
+            {%- endfor -%}
+          </div>
+        </div>
+
+        <div class="srch-side">
+          {%- if section.settings.terms != blank -%}
+            <div>
+              <h4 data-sugg-h>Popular right now</h4>
+              <ul class="srch-terms">
+                {%- assign terms = section.settings.terms | split: ',' -%}
+                {%- for t in terms -%}
+                  {%- assign tt = t | strip -%}
+                  <li><button type="button" data-term="{{ tt | escape }}">{{ tt }}</button></li>
+                {%- endfor -%}
+              </ul>
             </div>
-          {%- else -%}
-            <a href="{{ link.url }}">{{ link.title }}</a>
           {%- endif -%}
-        </li>
-      {%- endfor -%}
-    </ul>
-    <div class="drawer-f">
-      <a href="{{ routes.account_url }}">Account</a>
-      <a href="{{ routes.search_url }}">Search</a>
-    </div>
+          {%- if section.settings.jump_menu != blank -%}
+            <div>
+              <h4>Jump to</h4>
+              <ul class="srch-jump">
+                {%- for link in section.settings.jump_menu.links -%}
+                  <li><a href="{{ link.url }}">{{ link.title }}
+                    {%- if link.object.all_products_count -%}<i>{{ link.object.all_products_count }}</i>
+                    {%- else -%}<i>&rarr;</i>{%- endif -%}
+                  </a></li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    </form>
   </div>
-</aside>
+</header>
 
 {% schema %}
 {
   "name": "Header",
   "settings": [
-    { "type": "link_list", "id": "menu", "label": "Main menu", "default": "main-menu" },
-    { "type": "image_picker", "id": "logo", "label": "Logo image" },
-    { "type": "range", "id": "logo_height", "label": "Logo height", "min": 16, "max": 64, "step": 2, "unit": "px", "default": 26 },
-    { "type": "text", "id": "wordmark", "label": "Wordmark (used if no logo image)", "default": "RYVT" },
-    { "type": "text", "id": "soon_label", "label": "Greyed-out nav item" },
-    { "type": "text", "id": "types_label", "label": "Heading over a flat Shop menu", "default": "Shop by type" },
-    { "type": "header", "content": "Behaviour" },
-    { "type": "checkbox", "id": "transparent", "label": "Transparent over a full-bleed first section", "default": true,
-      "info": "White text over the hero, then solid white once you scroll past it." },
-    { "type": "checkbox", "id": "autohide", "label": "Hide on scroll down, reveal on scroll up", "default": true },
-    { "type": "checkbox", "id": "show_saved", "label": "Show saved items icon", "default": true },
-    { "type": "url", "id": "saved_url", "label": "Saved items link" },
-    { "type": "header", "content": "Announcement bar" },
-    { "type": "range", "id": "rotate_secs", "label": "Rotate every", "min": 0, "max": 12, "step": 1, "unit": "s", "default": 5,
-      "info": "0 turns rotation off." },
-    { "type": "checkbox", "id": "abar_dismiss", "label": "Let shoppers dismiss it", "default": false },
-    { "type": "header", "content": "Search panel" },
-    { "type": "text", "id": "search_placeholder", "label": "Placeholder", "default": "Search for a tee, a fit, a fabric" },
-    { "type": "text", "id": "popular", "label": "Popular searches (comma separated)", "default": "Heavyweight Tee, Tanks, Cargo Pants, Garment Dyed" },
-    { "type": "text", "id": "fabric_title", "label": "Secondary link heading", "default": "Our Fabric" },
-    { "type": "link_list", "id": "fabric_menu", "label": "Secondary menu" }
+    { "type": "link_list", "id": "menu", "label": "Main menu", "default": "main-menu",
+      "info": "The first item opens the mega menu below; the rest are plain links." },
+    { "type": "header", "content": "Search pane" },
+    { "type": "collection", "id": "search_collection", "label": "Products shown before anyone types",
+      "info": "Four of these fill the panel so it is never empty." },
+    { "type": "text", "id": "terms", "label": "Popular searches",
+      "default": "Heavyweight tees, Tank tops, Cargo pants, The Renaissance Tee, Everything in black",
+      "info": "Separate with commas." },
+    { "type": "link_list", "id": "jump_menu", "label": "Jump to menu" }
   ],
   "blocks": [
-    { "type": "announcement", "name": "Announcement", "settings": [
-      { "type": "text", "id": "text", "label": "Text", "default": "Free shipping over $100" },
-      { "type": "url", "id": "link", "label": "Link" }
-    ]},
-    { "type": "menu_card", "name": "Featured product card", "settings": [
-      { "type": "range", "id": "position", "label": "Applies to menu item #", "min": 1, "max": 5, "step": 1, "default": 1 },
-      { "type": "product", "id": "product", "label": "Featured product",
-        "info": "Its first two photos become the hover swap. Images below override this." },
-      { "type": "image_picker", "id": "image", "label": "Image" },
-      { "type": "image_picker", "id": "image_hover", "label": "Image on hover" },
-      { "type": "text", "id": "label", "label": "Title", "default": "The Detroit Renaissance Heavyweight Tee" },
-      { "type": "text", "id": "caption", "label": "Caption under title" },
-      { "type": "checkbox", "id": "show_price", "label": "Show price when a product is picked", "default": false },
-      { "type": "text", "id": "tag", "label": "Corner tag" },
-      { "type": "url", "id": "link", "label": "Link" }
-    ]},
-    { "type": "search_tile", "name": "Search panel tile", "settings": [
-      { "type": "collection", "id": "collection", "label": "Collection" },
-      { "type": "image_picker", "id": "image", "label": "Image" },
-      { "type": "text", "id": "label", "label": "Label" },
-      { "type": "url", "id": "link", "label": "Link" }
-    ]}
-  ]
+    {
+      "type": "column",
+      "name": "Menu column",
+      "limit": 2,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading" },
+        { "type": "link_list", "id": "menu", "label": "Links" },
+        { "type": "text", "id": "heading_2", "label": "Second heading" },
+        { "type": "link_list", "id": "menu_2", "label": "Second set of links" }
+      ]
+    },
+    {
+      "type": "featured",
+      "name": "Featured product",
+      "limit": 2,
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "tag", "label": "Label", "default": "Best seller" }
+      ]
+    }
+  ],
+  "enabled_on": { "groups": ["header"] }
 }
 {% endschema %}

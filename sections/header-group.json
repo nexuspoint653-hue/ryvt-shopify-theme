@@ -5,94 +5,29 @@
     "header": {
       "type": "header",
       "blocks": {
-        "a1": {
-          "type": "announcement",
+        "col1": {
+          "type": "column",
           "settings": {
-            "text": "Free shipping over $100"
+            "heading": "Tops",
+            "heading_2": "Bottoms"
           }
         },
-        "a2": {
-          "type": "announcement",
+        "col2": {
+          "type": "column",
           "settings": {
-            "text": "30-day returns"
+            "heading": "Collections",
+            "heading_2": "Help"
           }
         },
-        "a3": {
-          "type": "announcement",
-          "settings": {
-            "text": "Made in Metro Detroit"
-          }
-        },
-        "card1": {
-          "type": "menu_card",
-          "settings": {
-            "position": 1,
-            "label": "The Detroit Renaissance Heavyweight Tee",
-            "tag": "Men",
-            "show_price": true
-          }
-        },
-        "t1": {
-          "type": "search_tile",
-          "settings": {
-            "label": "T-Shirts"
-          }
-        },
-        "t2": {
-          "type": "search_tile",
-          "settings": {
-            "label": "Tanks"
-          }
-        },
-        "t3": {
-          "type": "search_tile",
-          "settings": {
-            "label": "Bottoms"
-          }
-        },
-        "t4": {
-          "type": "search_tile",
-          "settings": {
-            "label": "Accessories"
-          }
-        },
-        "card2": {
-          "type": "menu_card",
-          "settings": {
-            "position": 1,
-            "label": "Complete the Fit",
-            "caption": "Pairs with the Standard-Issue Cargo",
-            "tag": "Women"
-          }
-        }
+        "f1": { "type": "featured", "settings": { "tag": "Best seller" } },
+        "f2": { "type": "featured", "settings": { "tag": "Restocked" } }
       },
-      "block_order": [
-        "a1",
-        "a2",
-        "a3",
-        "card1",
-        "card2",
-        "t1",
-        "t2",
-        "t3",
-        "t4"
-      ],
+      "block_order": ["col1", "col2", "f1", "f2"],
       "settings": {
         "menu": "main-menu",
-        "wordmark": "RYVT",
-        "transparent": true,
-        "autohide": true,
-        "show_saved": true,
-        "rotate_secs": 5,
-        "abar_dismiss": false,
-        "search_placeholder": "Search for a tee, a fit, a fabric",
-        "popular": "Heavyweight Tee, Tanks, Cargo Pants, Garment Dyed",
-        "fabric_title": "Our Fabric",
-        "types_label": "Shop by type"
+        "terms": "Heavyweight tees, Tank tops, Cargo pants, The Renaissance Tee, Everything in black"
       }
     }
   },
-  "order": [
-    "header"
-  ]
+  "order": ["header"]
 }
