@@ -1,95 +1,77 @@
 {
   "sections": {
-    "doc": {
+    "main": {
       "type": "legal-doc",
       "blocks": {
-        "c1": {
-          "type": "clause",
-          "settings": {
-            "title": "Who we are",
-            "body": "<p>RYVT is an athletic wear label based in Metro Detroit, Michigan. When we say <strong>we</strong> or <strong>us</strong> on this page, that is who we mean. Our store runs on Shopify, which processes orders and payments on our behalf.</p>"
-          }
-        },
-        "c2": {
-          "type": "clause",
+        "p1": {
+          "type": "part",
           "settings": {
             "title": "What we collect",
-            "body": "<p>When you buy something, we collect the details needed to get it to you: your name, email, shipping and billing address, phone number if you give one, and what you ordered. Payment card details go straight to our payment processor \u2014 <strong>we never see or store your full card number.</strong></p><p>If you sign up to our emails we keep your address and first name. If you browse without buying, our analytics record anonymous page views and rough location by country.</p>"
+            "body": "<p>Your name, contact details, delivery address and order history. Payment details go to Shopify, not to us.</p>"
           }
         },
-        "c3": {
-          "type": "clause",
+        "p2": {
+          "type": "part",
           "settings": {
-            "title": "Why we collect it",
-            "body": "<p>To fulfil your order, to answer your messages, to send the emails you asked for, and to understand which parts of the site people actually use so we can fix the parts they do not.</p><p>We do not sell your information to anyone. We do not share it beyond the companies that help us run the shop \u2014 payment processing, shipping carriers, and email delivery.</p>"
+            "title": "Why we hold it",
+            "body": "<p>To take payment, send your order, answer questions and meet our tax obligations.</p>"
           }
         },
-        "c4": {
-          "type": "clause",
+        "p3": {
+          "type": "part",
           "settings": {
-            "title": "Cookies",
-            "body": "<p>We use a small number of cookies. Some are strictly necessary \u2014 they keep your cart intact between pages and remember whether you have dismissed this notice. Others are analytics cookies that tell us anonymously how the site performs.</p><p>You can clear or block cookies in your browser at any time. The necessary ones being blocked will break your cart; the rest are safe to refuse.</p>"
+            "title": "Who sees it",
+            "body": "<p>Shopify, our carrier, and our accountant. Nobody else, and we do not sell data.</p>"
           }
         },
-        "c5": {
-          "type": "clause",
+        "p4": {
+          "type": "part",
           "settings": {
             "title": "How long we keep it",
-            "body": "<p>Order records are kept for seven years because tax law requires it. Email subscribers stay on the list until they unsubscribe. Analytics data is aggregated and anonymised after twenty-six months.</p>"
+            "body": "<p>Order and invoice records for 7 years. Marketing consent for 3 years from last activity. Site analytics for 14 months.</p>"
           }
         },
-        "c6": {
-          "type": "clause",
+        "p5": {
+          "type": "part",
+          "settings": {
+            "title": "Cookies",
+            "body": "<p>Necessary cookies keep the cart and sign-in working. Analytics and marketing cookies are optional and set only if you allow them.</p>"
+          }
+        },
+        "p6": {
+          "type": "part",
           "settings": {
             "title": "Your rights",
-            "body": "<p>You can ask us for a copy of everything we hold on you, ask us to correct it, or ask us to delete it \u2014 except records we are legally required to keep. Email us and we will action it within thirty days, free of charge.</p><p>Every marketing email has a one-click unsubscribe. Using it does not affect order confirmations or shipping updates.</p>"
+            "body": "<p>A copy, a correction, or deletion — email privacy@wearryvt.com and we answer within thirty days.</p>"
           }
         },
-        "c7": {
-          "type": "clause",
+        "p7": {
+          "type": "part",
           "settings": {
-            "title": "Keeping it safe",
-            "body": "<p>The site runs over HTTPS end to end. Our store platform is PCI-DSS compliant. Access to customer records is limited to the people who need it to do their job. If a breach ever affected your data, we would tell you and the relevant authority within seventy-two hours.</p>"
-          }
-        },
-        "c8": {
-          "type": "clause",
-          "settings": {
-            "title": "Children",
-            "body": "<p>This shop is not aimed at anyone under sixteen and we do not knowingly collect their information. If you believe a child has given us data, contact us and we will remove it.</p>"
-          }
-        },
-        "c9": {
-          "type": "clause",
-          "settings": {
-            "title": "Changes and contact",
-            "body": "<p>If this policy changes materially we will date-stamp the update at the top of this page and, where the change is significant, email subscribers directly.</p><p>Questions, requests or complaints: <a href='/pages/contact'>get in touch</a>. If you are unsatisfied with our response you have the right to complain to your local data protection authority.</p>"
+            "title": "Contact",
+            "body": "<p>privacy@wearryvt.com, or write to RYVT LLC, Metro Detroit, Michigan.</p>"
           }
         }
       },
       "block_order": [
-        "c1",
-        "c2",
-        "c3",
-        "c4",
-        "c5",
-        "c6",
-        "c7",
-        "c8",
-        "c9"
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5",
+        "p6",
+        "p7"
       ],
       "settings": {
-        "eyebrow": "Terms & Policies",
+        "eyebrow": "Legal",
         "heading": "Privacy Policy",
-        "updated": "August 2026",
-        "intro": "How RYVT handles your information, written in plain English rather than legalese. If anything here is unclear, ask us.",
-        "contact_text": "Something here unclear? We would rather explain it than have you guess.",
-        "contact_link": "/pages/contact",
-        "scheme": "light"
+        "lede": "What we collect when you shop with us, why we hold it, how long we keep it, and how to make us delete it.",
+        "meta_1": "Updated 1 August 2026",
+        "meta_2": ""
       }
     }
   },
   "order": [
-    "doc"
+    "main"
   ]
 }

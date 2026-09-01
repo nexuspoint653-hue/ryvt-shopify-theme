@@ -1,229 +1,87 @@
 {
   "sections": {
-    "band_open": {
-      "type": "media-band",
-      "settings": {
-        "band_height": "full",
-        "parallax": true,
-        "overlay_tag": "Metro Detroit, Michigan",
-        "overlay_title": "Rebirth",
-        "overlay_sub": "A city that got written off and kept working anyway. We make kit for the people still putting in the hours.",
-        "overlay_pos": "bl",
-        "scrim": true,
-        "scheme": "light"
-      }
-    },
-    "who": {
-      "type": "statement",
+    "main": {
+      "type": "ryvt-about",
       "blocks": {
-        "p1": {
-          "type": "para",
+        "c1": {
+          "type": "column",
           "settings": {
-            "body": "<p>RYVT was built in Metro Detroit for people who train hard and then keep the same clothes on for the rest of the day. No logos shouting. No seasonal noise. A short, deliberate range instead of a long, forgettable one.</p>"
+            "title": "The cloth",
+            "body": "<p>At RYVT we choose the cloth before we design to it. Every piece is 8.2 oz cotton, garment-dyed, and washed before it is ever cut.</p>",
+            "tall": true
           }
         },
-        "p2": {
-          "type": "para",
+        "c2": {
+          "type": "column",
           "settings": {
-            "body": "<p>We are a small crew \u2014 pattern cutters, athletes, a couple of stubborn perfectionists. Every piece earns its place or it does not ship.</p>"
+            "title": "The run",
+            "body": "<p>Small runs, restocked rather than replaced. When something sells out it comes back, not gets discontinued.</p>"
+          }
+        },
+        "c3": {
+          "type": "column",
+          "settings": {
+            "title": "The city",
+            "body": "<p>Cut and finished in Metro Detroit, named for the streets it came from.</p>"
+          }
+        },
+        "f1": {
+          "type": "figure",
+          "settings": {
+            "label": "Founded",
+            "value": "2024"
+          }
+        },
+        "f2": {
+          "type": "figure",
+          "settings": {
+            "label": "Styles",
+            "value": "8"
+          }
+        },
+        "f3": {
+          "type": "figure",
+          "settings": {
+            "label": "Weight",
+            "value": "8.2 oz"
+          }
+        },
+        "f4": {
+          "type": "figure",
+          "settings": {
+            "label": "Dispatch",
+            "value": "48h"
+          }
+        },
+        "f5": {
+          "type": "figure",
+          "settings": {
+            "label": "Returns",
+            "value": "30 days"
           }
         }
       },
       "block_order": [
-        "p1",
-        "p2"
+        "c1",
+        "c2",
+        "c3",
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5"
       ],
       "settings": {
-        "eyebrow": "The City",
-        "heading": "Built Where",
-        "heading_accent": "It's Hard",
-        "scale": "l",
-        "align": "left",
-        "size": "lg",
-        "grain": false,
-        "scheme": "light"
-      }
-    },
-    "band_2": {
-      "type": "media-band",
-      "settings": {
-        "band_height": "tall",
-        "parallax": true,
-        "scheme": "light"
-      }
-    },
-    "cut": {
-      "type": "statement",
-      "blocks": {
-        "p1": {
-          "type": "para",
-          "settings": {
-            "body": "<p>Performance kit does not have to shout. Clean lines, fabric that behaves, fit that holds its shape after fifty washes. We design in the city, test in the city, and we do not release anything we would not train in ourselves.</p>"
-          }
-        },
-        "p2": {
-          "type": "para",
-          "settings": {
-            "body": "<p>Fewer, better pieces \u2014 cut properly, priced honestly, made to be worn until they wear out.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "p1",
-        "p2"
-      ],
-      "settings": {
-        "eyebrow": "The Cut",
-        "heading": "Nothing",
-        "heading_accent": "Wasted",
-        "scale": "l",
-        "align": "left",
-        "size": "lg",
-        "grain": false,
-        "link_text": "Shop the range",
-        "link": "/collections/all",
-        "scheme": "light",
-        "cta_solid": true
-      }
-    },
-    "record": {
-      "type": "timeline",
-      "blocks": {
-        "r1": {
-          "type": "row",
-          "settings": {
-            "year": "2019",
-            "title": "First cut",
-            "body": "One tee, sewn in a rented studio on the east side. Sold out to friends before it had a name."
-          }
-        },
-        "r2": {
-          "type": "row",
-          "settings": {
-            "year": "2021",
-            "title": "The Renaissance Tee",
-            "body": "The cut that made the label. Still the piece most people buy twice."
-          }
-        },
-        "r3": {
-          "type": "row",
-          "settings": {
-            "year": "2023",
-            "title": "Training range",
-            "body": "Tanks and bottoms added \u2014 tested by coaches across the metro before a single unit shipped."
-          }
-        },
-        "r4": {
-          "type": "row",
-          "settings": {
-            "year": "Now",
-            "title": "Same city, same crew",
-            "body": "Cut and finished within twenty miles of where we train. That does not change."
-          }
-        }
-      },
-      "block_order": [
-        "r1",
-        "r2",
-        "r3",
-        "r4"
-      ],
-      "settings": {
-        "eyebrow": "The Record",
-        "heading": "How We Got Here",
-        "grain": false,
-        "scheme": "alt"
-      }
-    },
-    "duo": {
-      "type": "media-duo",
-      "blocks": {
-        "t1": {
-          "type": "tile",
-          "settings": {
-            "title": "Made In Detroit",
-            "caption": "Cut and finished within twenty miles of where we train.",
-            "link": "/pages/about"
-          }
-        },
-        "t2": {
-          "type": "tile",
-          "settings": {
-            "title": "Built To Last",
-            "caption": "Fabric chosen for the fiftieth wash, not the first.",
-            "link": "/collections/all"
-          }
-        },
-        "t3": {
-          "type": "tile",
-          "settings": {
-            "title": "The Crew",
-            "caption": "Athletes and coaches who test every cut before it ships.",
-            "link": "/collections/all"
-          }
-        }
-      },
-      "block_order": [
-        "t1",
-        "t2",
-        "t3"
-      ],
-      "settings": {
-        "eyebrow": "The Work",
-        "scheme": "light"
-      }
-    },
-    "band_3": {
-      "type": "media-band",
-      "settings": {
-        "band_height": "tall",
-        "parallax": true,
-        "overlay_tag": "The Renaissance Tee",
-        "overlay_title": "One Tee. Four Ways.",
-        "overlay_sub": "Our longest-running cut, still the one we wear most.",
-        "overlay_pos": "center",
-        "scrim": true,
-        "link_text": "Shop the tee",
-        "link": "/collections/all",
-        "scheme": "light",
-        "cta_solid": true
-      }
-    },
-    "close": {
-      "type": "statement",
-      "blocks": {
-        "p1": {
-          "type": "para",
-          "settings": {
-            "body": "<p>Questions about fit, fabric or wholesale? We answer every message ourselves.</p>"
-          }
-        }
-      },
-      "block_order": [
-        "p1"
-      ],
-      "settings": {
-        "eyebrow": "Direct Line",
-        "heading": "Say",
-        "heading_accent": "Something",
-        "scale": "m",
-        "align": "left",
-        "size": "md",
-        "grain": false,
-        "link_text": "Contact us",
-        "link": "/pages/contact",
-        "scheme": "dark"
+        "eyebrow": "Our Brand",
+        "heading": "Built where we train.",
+        "lede": "Heavyweight cotton, washed before it is ever cut. Made in small runs in Metro Detroit and named for the streets it came from.",
+        "based": "(Based) Metro Detroit",
+        "news_heading": "Get in on the news",
+        "news_body": "First look at every drop, an hour before it lists. One email a fortnight, no more."
       }
     }
   },
   "order": [
-    "band_open",
-    "who",
-    "band_2",
-    "cut",
-    "record",
-    "duo",
-    "band_3",
-    "close"
+    "main"
   ]
 }

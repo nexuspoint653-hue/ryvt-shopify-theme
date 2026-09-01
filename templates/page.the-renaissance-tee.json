@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "main": {
+      "type": "ryvt-story",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

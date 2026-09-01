@@ -1,0 +1,94 @@
+{%- comment -%} Our Brand — the about page. {%- endcomment -%}
+<section class="br-top wrap">
+  {%- if section.settings.eyebrow != blank -%}<div class="lab">{{ section.settings.eyebrow }}</div>{%- endif -%}
+  <h1 class="br-title">{{ section.settings.heading }}</h1>
+  {%- if section.settings.lede != blank -%}<p class="br-lead">{{ section.settings.lede }}</p>{%- endif -%}
+</section>
+
+{%- if section.settings.hero != blank -%}
+  <figure class="br-hero">
+    <img src="{{ section.settings.hero | image_url: width: 2400 }}"
+         alt="{{ section.settings.hero.alt | escape }}" width="2400" height="1350" loading="lazy">
+    {%- if section.settings.hero_caption != blank -%}
+      <figcaption class="br-cap">{{ section.settings.hero_caption }}</figcaption>
+    {%- endif -%}
+  </figure>
+{%- endif -%}
+
+{%- if section.settings.based != blank -%}
+  <section class="br-based wrap"><p>{{ section.settings.based }}</p></section>
+{%- endif -%}
+
+{%- assign cols = section.blocks | where: 'type', 'column' -%}
+{%- if cols.size > 0 -%}
+  <section class="br-source wrap">
+    {%- for b in cols -%}
+      <div class="{% if b.settings.tall %}br-tall{% else %}br-small{% endif %}" {{ b.shopify_attributes }}>
+        {%- if b.settings.title != blank -%}<h3>{{ b.settings.title }}</h3>{%- endif -%}
+        {{ b.settings.body }}
+      </div>
+    {%- endfor -%}
+  </section>
+{%- endif -%}
+
+{%- assign figs = section.blocks | where: 'type', 'figure' -%}
+{%- if figs.size > 0 -%}
+  <section class="br-figs wrap">
+    {%- for b in figs -%}
+      <div {{ b.shopify_attributes }}><dt>{{ b.settings.label }}</dt><dd>{{ b.settings.value }}</dd></div>
+    {%- endfor -%}
+  </section>
+{%- endif -%}
+
+{%- if section.settings.news_heading != blank -%}
+  <section class="br-news">
+    <div class="wrap br-news-in">
+      <h2>{{ section.settings.news_heading }}</h2>
+      {%- if section.settings.news_body != blank -%}<p>{{ section.settings.news_body }}</p>{%- endif -%}
+      {%- form 'customer' -%}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="ft-sub-row">
+          <input type="email" name="contact[email]" placeholder="Email address" required>
+          <button type="submit">Sign up</button>
+        </div>
+      {%- endform -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "RYVT about",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Our Brand" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Built where we train." },
+    { "type": "textarea", "id": "lede", "label": "Opening paragraph" },
+    { "type": "image_picker", "id": "hero", "label": "Photograph" },
+    { "type": "text", "id": "hero_caption", "label": "Caption" },
+    { "type": "textarea", "id": "based", "label": "Large statement", "default": "(Based) Metro Detroit" },
+    { "type": "header", "content": "Newsletter band" },
+    { "type": "text", "id": "news_heading", "label": "Heading", "default": "Get in on the news" },
+    { "type": "textarea", "id": "news_body", "label": "Body" }
+  ],
+  "blocks": [
+    {
+      "type": "column",
+      "name": "Column",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "richtext", "id": "body", "label": "Body" },
+        { "type": "checkbox", "id": "tall", "label": "Wide column", "default": false }
+      ]
+    },
+    {
+      "type": "figure",
+      "name": "Figure",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "Founded" },
+        { "type": "text", "id": "value", "label": "Value", "default": "2024" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "RYVT about" }]
+}
+{% endschema %}

@@ -1,95 +1,69 @@
 {
   "sections": {
-    "doc": {
+    "main": {
       "type": "legal-doc",
       "blocks": {
-        "c1": {
-          "type": "clause",
+        "p1": {
+          "type": "part",
           "settings": {
-            "title": "Where you can find us",
-            "body": "<p>RYVT is active on Instagram, TikTok and Facebook. Those are the only accounts we run. Any other profile using our name, marks or imagery is not us \u2014 report it and let us know.</p>"
+            "title": "Our accounts",
+            "body": "<p>Instagram and TikTok are the only accounts we run. Anything else using our name is not us.</p>"
           }
         },
-        "c2": {
-          "type": "clause",
+        "p2": {
+          "type": "part",
           "settings": {
-            "title": "Our posts are not advice",
-            "body": "<p>Content we publish about training, fit or fabric care is general information shared in good faith. It is not medical, fitness or professional advice. Speak to a qualified professional before starting or changing a training programme.</p>"
+            "title": "What posts mean",
+            "body": "<p>Posts are marketing, not an offer. Prices and availability on this store are the ones that count.</p>"
           }
         },
-        "c3": {
-          "type": "clause",
+        "p3": {
+          "type": "part",
           "settings": {
-            "title": "Product representation",
-            "body": "<p>We photograph our garments as honestly as we can. Colour reproduces differently on every screen, and garment-dyed fabric varies slightly batch to batch \u2014 that is a feature of the process, not a fault. The product page carries the authoritative description, composition and measurements; a social post never overrides it.</p>"
+            "title": "Your content",
+            "body": "<p>Tag us and we may reshare, with credit. Ask and we will take it down.</p>"
           }
         },
-        "c4": {
-          "type": "clause",
+        "p4": {
+          "type": "part",
           "settings": {
-            "title": "Offers posted socially",
-            "body": "<p>Promotions announced on social media run on the terms stated in that post and are subject to our <a href='/pages/terms-conditions'>Terms &amp; Conditions</a>. Where the two differ, the Terms govern. We may end a promotion early if stock runs out.</p>"
+            "title": "Comments",
+            "body": "<p>We moderate for abuse and spam. Nothing else gets removed.</p>"
           }
         },
-        "c5": {
-          "type": "clause",
+        "p5": {
+          "type": "part",
           "settings": {
-            "title": "Comments and community",
-            "body": "<p>We welcome honest opinion, including criticism. We will hide or remove comments that are abusive, discriminatory, spam, or that share someone's private information. Repeat offenders get blocked. Removing a comment is a moderation decision, not a comment on its truth.</p>"
+            "title": "Competitions",
+            "body": "<p>Any giveaway carries its own rules in the post. No platform endorses them.</p>"
           }
         },
-        "c6": {
-          "type": "clause",
+        "p6": {
+          "type": "part",
           "settings": {
-            "title": "Your content and tags",
-            "body": "<p>Tagging us or using our hashtag may lead us to ask about resharing your photo. <strong>We always ask first and we always credit.</strong> We never use your image in paid advertising without separate written permission. If you want a reshare taken down, message us and it goes.</p>"
-          }
-        },
-        "c7": {
-          "type": "clause",
-          "settings": {
-            "title": "Ambassadors and gifting",
-            "body": "<p>Where we gift product or pay for a post, we require the creator to disclose it clearly in line with FTC guidance. If you see one of our collaborations that is not properly disclosed, tell us \u2014 we will fix it.</p>"
-          }
-        },
-        "c8": {
-          "type": "clause",
-          "settings": {
-            "title": "Third-party platforms",
-            "body": "<p>Instagram, TikTok and Facebook are run by their own companies under their own privacy policies and terms. We do not control how they handle your data. Links we post to other sites are not endorsements of everything on them.</p>"
-          }
-        },
-        "c9": {
-          "type": "clause",
-          "settings": {
-            "title": "Support requests",
-            "body": "<p>We read direct messages but they are not a support channel \u2014 order issues get lost there. For anything about an order, use the <a href='/pages/contact'>contact page</a> so it reaches the right person with your order number attached. Never send payment details over social media.</p>"
+            "title": "Contact",
+            "body": "<p>press@wearryvt.com for anything to do with our social accounts.</p>"
           }
         }
       },
       "block_order": [
-        "c1",
-        "c2",
-        "c3",
-        "c4",
-        "c5",
-        "c6",
-        "c7",
-        "c8",
-        "c9"
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5",
+        "p6"
       ],
       "settings": {
-        "eyebrow": "Terms & Policies",
-        "heading": "Social Media Disclaimer",
-        "updated": "August 2026",
-        "intro": "How we behave on social platforms, and what our posts do and do not amount to.",
-        "contact_text": "Something here unclear? We would rather explain it than have you guess.",
-        "contact_link": "/pages/contact",
-        "scheme": "light"
+        "eyebrow": "Legal",
+        "heading": "Social media disclaimer",
+        "lede": "How we use social platforms, and what our posts do and do not commit us to.",
+        "meta_1": "Updated 1 August 2026",
+        "meta_2": ""
       }
     }
   },
   "order": [
-    "doc"
+    "main"
   ]
 }

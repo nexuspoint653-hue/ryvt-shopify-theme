@@ -1,103 +1,93 @@
 {
   "sections": {
-    "doc": {
+    "main": {
       "type": "legal-doc",
       "blocks": {
-        "c1": {
-          "type": "clause",
+        "p1": {
+          "type": "part",
           "settings": {
-            "title": "Agreeing to these terms",
-            "body": "<p>By browsing this site or placing an order you accept these terms. If you do not accept them, please do not use the site. We may update them; the version in force is the one published here when you order.</p>"
+            "title": "Who we are",
+            "body": "<p>RYVT LLC, Metro Detroit, Michigan. These terms cover every order placed through this store.</p>"
           }
         },
-        "c2": {
-          "type": "clause",
+        "p2": {
+          "type": "part",
           "settings": {
-            "title": "Orders and acceptance",
-            "body": "<p>Adding something to your bag is not a contract. Your order becomes binding only when we send a shipping confirmation. Until then we may decline it \u2014 for example if an item sells out, if we spot a pricing error, or if we suspect fraud. If we decline after payment, you get a full refund.</p>"
+            "title": "Orders",
+            "body": "<p>An order is an offer to buy. It is accepted when we dispatch it, and we may decline one before then.</p>"
           }
         },
-        "c3": {
-          "type": "clause",
+        "p3": {
+          "type": "part",
           "settings": {
-            "title": "Pricing and payment",
-            "body": "<p>Prices are in US dollars and exclude sales tax and shipping unless stated. Tax and delivery are calculated at checkout before you pay. We take payment when the order is placed.</p><p>If an item is listed at an obviously wrong price, we will contact you before shipping and you may cancel for a full refund.</p>"
+            "title": "Prices",
+            "body": "<p>Prices are in US dollars and exclude tax, which is calculated at checkout.</p>"
           }
         },
-        "c4": {
-          "type": "clause",
+        "p4": {
+          "type": "part",
           "settings": {
-            "title": "Shipping",
-            "body": "<p>Orders leave our studio within one business day. Delivery estimates shown at checkout are estimates, not guarantees \u2014 once a parcel is with the carrier its timing is outside our control. Risk passes to you on delivery.</p><p>International orders may attract duties and import taxes. Where these are calculated at checkout they are prepaid; where they are not, they are your responsibility.</p>"
+            "title": "Payment",
+            "body": "<p>Payment is handled by Shopify. We never see or store your card details.</p>"
           }
         },
-        "c5": {
-          "type": "clause",
+        "p5": {
+          "type": "part",
           "settings": {
-            "title": "Returns and exchanges",
-            "body": "<p>You have <strong>thirty days</strong> from delivery to return anything unworn with tags attached. US orders include a free return label. Refunds go back to the original payment method within five business days of the return arriving.</p><p>We cannot accept returns on items that have been worn, washed, altered, or that arrive without tags. Exchanges ship as soon as your return scans with the carrier \u2014 you do not wait for it to reach us.</p>"
+            "title": "Delivery",
+            "body": "<p>Title and risk pass to you on delivery. Shipping timescales are estimates, not guarantees.</p>"
           }
         },
-        "c6": {
-          "type": "clause",
+        "p6": {
+          "type": "part",
           "settings": {
-            "title": "Faulty goods",
-            "body": "<p>Our stitching is guaranteed for one year of normal wear. If something fails, send a photo and your order number and we will replace it without asking for the item back. This sits alongside your statutory rights, it does not replace them.</p>"
+            "title": "Returns",
+            "body": "<p>Thirty days from delivery, unworn with tags on. Faulty goods are covered separately by law.</p>"
           }
         },
-        "c7": {
-          "type": "clause",
-          "settings": {
-            "title": "Using the site",
-            "body": "<p>You may not scrape the site, resell our products as new without written permission, misuse our imagery, or attempt to interfere with how the site runs. Accounts used fraudulently will be closed.</p>"
-          }
-        },
-        "c8": {
-          "type": "clause",
-          "settings": {
-            "title": "Our content",
-            "body": "<p>Everything on this site \u2014 photography, copy, garment designs, the RYVT name and marks \u2014 belongs to us or our licensors. You may share links freely. You may not reproduce our assets commercially without permission.</p>"
-          }
-        },
-        "c9": {
-          "type": "clause",
+        "p7": {
+          "type": "part",
           "settings": {
             "title": "Liability",
-            "body": "<p>We are responsible for foreseeable loss caused by us breaking this contract. We are not liable for indirect or consequential loss, and our total liability for any order is limited to what you paid for it. Nothing here limits liability for death, personal injury, or fraud.</p>"
+            "body": "<p>Our total liability for any order is limited to the amount you paid for it. Nothing here limits liability that cannot be limited by law.</p>"
           }
         },
-        "c10": {
-          "type": "clause",
+        "p8": {
+          "type": "part",
           "settings": {
-            "title": "Governing law",
-            "body": "<p>These terms are governed by the laws of the State of Michigan, USA, and disputes fall to the courts of that state. If any clause is found unenforceable, the rest stand.</p>"
+            "title": "Changes",
+            "body": "<p>We may update these terms. The version in force is the one published when you order.</p>"
+          }
+        },
+        "p9": {
+          "type": "part",
+          "settings": {
+            "title": "Law",
+            "body": "<p>Michigan law applies, and the Michigan courts have jurisdiction.</p>"
           }
         }
       },
       "block_order": [
-        "c1",
-        "c2",
-        "c3",
-        "c4",
-        "c5",
-        "c6",
-        "c7",
-        "c8",
-        "c9",
-        "c10"
+        "p1",
+        "p2",
+        "p3",
+        "p4",
+        "p5",
+        "p6",
+        "p7",
+        "p8",
+        "p9"
       ],
       "settings": {
-        "eyebrow": "Terms & Policies",
-        "heading": "Terms & Conditions",
-        "updated": "August 2026",
-        "intro": "The agreement between you and RYVT when you use this site or buy from it. Short, and we mean all of it.",
-        "contact_text": "Something here unclear? We would rather explain it than have you guess.",
-        "contact_link": "/pages/contact",
-        "scheme": "light"
+        "eyebrow": "Legal",
+        "heading": "Terms of Service",
+        "lede": "The agreement between you and RYVT when you buy from this store.",
+        "meta_1": "Updated 1 August 2026",
+        "meta_2": "Version 2.0"
       }
     }
   },
   "order": [
-    "doc"
+    "main"
   ]
 }

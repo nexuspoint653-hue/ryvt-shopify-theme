@@ -1,0 +1,162 @@
+{%- comment -%}
+  The Renaissance Tee — the scroll storytelling page. The picture sticks while
+  the writing moves past it; each way is a block.
+{%- endcomment -%}
+{%- assign ways = section.blocks | where: 'type', 'way' -%}
+
+<section class="st-open">
+  {%- if section.settings.open_image != blank -%}
+    <img class="st-open-plate" src="{{ section.settings.open_image | image_url: width: 2000 }}"
+         alt="{{ section.settings.open_image.alt | escape }}" width="2000" height="1200">
+  {%- else -%}
+    <div class="st-open-plate ph dark"></div>
+  {%- endif -%}
+  <div class="wrap st-open-in">
+    {%- if section.settings.eyebrow != blank -%}
+      <div class="lab" style="color:rgba(255,255,255,.72)">{{ section.settings.eyebrow }}</div>
+    {%- endif -%}
+    <h1 class="st-title">{{ section.settings.heading | newline_to_br }}</h1>
+    {%- if section.settings.lede != blank -%}<p class="st-lede">{{ section.settings.lede }}</p>{%- endif -%}
+    <ol class="st-toc">
+      {%- for b in ways -%}
+        <li><a href="#way-{{ forloop.index }}"><b>{{ forloop.index | prepend: '0' | slice: -2, 2 }}</b> {{ b.settings.title }}</a></li>
+      {%- endfor -%}
+    </ol>
+  </div>
+</section>
+
+{%- if section.blocks | where: 'type', 'spec' | size > 0 -%}
+<div class="st-spec">
+  <div class="wrap">
+    <dl>
+      {%- for b in section.blocks -%}
+        {%- if b.type == 'spec' -%}
+          <div {{ b.shopify_attributes }}><dt>{{ b.settings.term }}</dt><dd>{{ b.settings.value }}</dd></div>
+        {%- endif -%}
+      {%- endfor -%}
+    </dl>
+  </div>
+</div>
+{%- endif -%}
+
+<section class="st-ways wrap" data-ways>
+  <div class="st-stage">
+    <div class="st-stack">
+      {%- for b in ways -%}
+        {%- if b.settings.image != blank -%}
+          <img class="st-shot{% if forloop.first %} on{% endif %}" data-way-shot="{{ forloop.index }}"
+               src="{{ b.settings.image | image_url: width: 1200 }}" alt="{{ b.settings.title | escape }}"
+               width="1200" height="1500" loading="lazy">
+        {%- else -%}
+          <span class="ph st-shot{% if forloop.first %} on{% endif %}" data-way-shot="{{ forloop.index }}"></span>
+        {%- endif -%}
+      {%- endfor -%}
+      <span class="st-count"><b data-way-n>01</b> / {{ ways.size | prepend: '0' | slice: -2, 2 }}</span>
+    </div>
+  </div>
+  <div class="st-steps">
+    {%- for b in ways -%}
+      <article class="st-step" id="way-{{ forloop.index }}" data-way="{{ forloop.index }}" {{ b.shopify_attributes }}>
+        <span class="st-n">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+        <h2>{{ b.settings.title }}</h2>
+        {%- if b.settings.body != blank -%}<p>{{ b.settings.body }}</p>{%- endif -%}
+        {%- if b.settings.note != blank -%}<p class="st-note">{{ b.settings.note }}</p>{%- endif -%}
+      </article>
+    {%- endfor -%}
+  </div>
+</section>
+
+{%- if section.settings.quote != blank -%}
+<section class="st-quote">
+  <div class="wrap">
+    <blockquote>{{ section.settings.quote }}</blockquote>
+    <span class="st-by">{{ section.settings.quote_by }}</span>
+  </div>
+</section>
+{%- endif -%}
+
+{%- assign details = section.blocks | where: 'type', 'detail' -%}
+{%- if details.size > 0 -%}
+<section class="st-detail">
+  <div class="st-detail-media">
+    {%- if section.settings.detail_1 != blank -%}
+      <img src="{{ section.settings.detail_1 | image_url: width: 900 }}" alt="" width="900" height="1200" loading="lazy">
+    {%- else -%}<span class="ph alt"></span>{%- endif -%}
+    {%- if section.settings.detail_2 != blank -%}
+      <img src="{{ section.settings.detail_2 | image_url: width: 900 }}" alt="" width="900" height="1200" loading="lazy">
+    {%- else -%}<span class="ph"></span>{%- endif -%}
+  </div>
+  <div class="st-detail-txt">
+    <div class="lab">{{ section.settings.detail_eyebrow }}</div>
+    <h3>{{ section.settings.detail_heading }}</h3>
+    <div class="st-list">
+      {%- for b in details -%}
+        <div data-detail {{ b.shopify_attributes }}>
+          <b>{{ b.settings.title }}</b>
+          <span>{{ b.settings.body }}</span>
+          <span class="st-spec-out" aria-hidden="true"><i>{{ b.settings.figure }}</i>{{ b.settings.proof }}</span>
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.cta_text != blank -%}
+      <a class="btn btn-dark" href="{{ section.settings.cta_link }}">{{ section.settings.cta_text }}</a>
+    {%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "RYVT story",
+  "settings": [
+    { "type": "header", "content": "Opening" },
+    { "type": "image_picker", "id": "open_image", "label": "Opening photograph" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Renaissance Tee" },
+    { "type": "textarea", "id": "heading", "label": "Heading", "default": "One Tee,\nFour Ways." },
+    { "type": "textarea", "id": "lede", "label": "Opening paragraph",
+      "default": "One 8.2 oz garment-dyed body, cut boxy and long enough to hold a tuck. Four ways people in this city actually wear it — photographed the way they wear it, not the way a studio would style it." },
+    { "type": "header", "content": "Quote" },
+    { "type": "textarea", "id": "quote", "label": "Quote",
+      "default": "A tee should outlast the season you bought it in. Everything else about this one follows from that." },
+    { "type": "text", "id": "quote_by", "label": "Attribution", "default": "RYVT · Metro Detroit" },
+    { "type": "header", "content": "Construction" },
+    { "type": "image_picker", "id": "detail_1", "label": "First photograph" },
+    { "type": "image_picker", "id": "detail_2", "label": "Second photograph" },
+    { "type": "text", "id": "detail_eyebrow", "label": "Eyebrow", "default": "The construction" },
+    { "type": "text", "id": "detail_heading", "label": "Heading", "default": "Three details that decide whether a tee lasts." },
+    { "type": "text", "id": "cta_text", "label": "Button", "default": "Shop the Renaissance Tee" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ],
+  "blocks": [
+    {
+      "type": "spec",
+      "name": "Specification",
+      "settings": [
+        { "type": "text", "id": "term", "label": "Label", "default": "Weight" },
+        { "type": "text", "id": "value", "label": "Value", "default": "8.2 oz" }
+      ]
+    },
+    {
+      "type": "way",
+      "name": "Way",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Photograph" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Worn open" },
+        { "type": "textarea", "id": "body", "label": "Body" },
+        { "type": "text", "id": "note", "label": "Caption" }
+      ]
+    },
+    {
+      "type": "detail",
+      "name": "Construction detail",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "textarea", "id": "body", "label": "Body" },
+        { "type": "text", "id": "figure", "label": "Figure", "info": "Appears on hover, at the right." },
+        { "type": "text", "id": "proof", "label": "Proof" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "RYVT story" }]
+}
+{% endschema %}

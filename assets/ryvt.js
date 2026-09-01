@@ -1065,3 +1065,27 @@ document.addEventListener("DOMContentLoaded",function(){ wireAllCards(document);
     });
   });
 })();
+
+/* ==========================================================================
+   The story page: the picture sticks while the writing moves past it.
+   ========================================================================== */
+(function ryvtWays(){
+  "use strict";
+  var wrap = document.querySelector('[data-ways]');
+  if(!wrap) return;
+  var steps = Array.prototype.slice.call(wrap.querySelectorAll('.st-step'));
+  var shots = Array.prototype.slice.call(wrap.querySelectorAll('[data-way-shot]'));
+  var n = wrap.querySelector('[data-way-n]');
+  if(!steps.length) return;
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var i = steps.indexOf(e.target) + 1;
+      steps.forEach(function(s){ s.classList.toggle('on', s === e.target); });
+      shots.forEach(function(s){ s.classList.toggle('on', s.getAttribute('data-way-shot') == i); });
+      if(n) n.textContent = ('0' + i).slice(-2);
+    });
+  }, { rootMargin: '-45% 0px -45% 0px', threshold: 0 });
+  steps.forEach(function(s){ io.observe(s); });
+})();
