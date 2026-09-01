@@ -1,112 +1,83 @@
 {
   "sections": {
-    "band": {
-      "type": "media-band",
-      "settings": {
-        "band_height": "short",
-        "parallax": true,
-        "scheme": "light",
-        "overlay_tag": "",
-        "overlay_title": ""
-      }
-    },
-    "faq": {
-      "type": "faq",
+    "main": {
+      "type": "legal-doc",
       "blocks": {
         "q1": {
-          "type": "qa",
+          "type": "part",
           "settings": {
-            "group": "Orders & Shipping",
-            "q": "How long does shipping take?",
-            "a": "<p>Orders leave our Detroit studio within one business day. Standard US delivery lands in three to five business days; express is one to two. Your exact estimate is shown at checkout before you pay.</p>"
+            "title": "What weight is the cotton",
+            "body": "<p>8.2 oz on the tees and tanks, 12 oz twill on the cargo and shorts, 14 oz fleece on the crews.</p>"
           }
         },
         "q2": {
-          "type": "qa",
+          "type": "part",
           "settings": {
-            "group": "Orders & Shipping",
-            "q": "Do you ship internationally?",
-            "a": "<p>Yes \u2014 to most of Europe, Canada and Australia. Duties are calculated at checkout so nothing lands on your doormat unpaid.</p>"
+            "title": "How does it fit",
+            "body": "<p>Boxy through the body with a set shoulder. True to size for a relaxed fit; size down for a closer one.</p>"
           }
         },
         "q3": {
-          "type": "qa",
+          "type": "part",
           "settings": {
-            "group": "Orders & Shipping",
-            "q": "Can I change my order after placing it?",
-            "a": "<p>Message us within two hours of ordering and we will almost always catch it before it is packed. After that we can arrange a free exchange instead.</p>"
+            "title": "Will it shrink",
+            "body": "<p>No. It is garment-dyed and washed twice before it is cut, so the shrink happens before you own it.</p>"
           }
         },
         "q4": {
-          "type": "qa",
+          "type": "part",
           "settings": {
-            "group": "Sizing & Fit",
-            "q": "How does RYVT fit?",
-            "a": "<p>True to size with a slight athletic taper. If you are between sizes and want room through the chest and shoulders, size up. Every product page carries the exact garment measurements for that cut.</p>"
+            "title": "How do I wash it",
+            "body": "<p>Cold, inside out, like colours. Tumble low or hang. No softener — it coats heavyweight cotton and stops it breathing.</p>"
           }
         },
         "q5": {
-          "type": "qa",
+          "type": "part",
           "settings": {
-            "group": "Sizing & Fit",
-            "q": "Will it shrink?",
-            "a": "<p>Our cotton is pre-shrunk and our performance blends are dimensionally stable. Wash cold, hang dry, and the fit you bought is the fit you keep.</p>"
+            "title": "When will my order ship",
+            "body": "<p>Before 2pm Eastern on a business day, it is picked the same day. Otherwise the next.</p>"
           }
         },
         "q6": {
-          "type": "qa",
+          "type": "part",
           "settings": {
-            "group": "Sizing & Fit",
-            "q": "What is the Renaissance Tee cut like?",
-            "a": "<p>Straight body, set-in sleeve, hem that sits just below the belt line. It is the most relaxed thing we make and the piece most people buy twice.</p>"
+            "title": "Do you ship internationally",
+            "body": "<p>Canada today, with duties payable on delivery. The rest of the world through our international rate.</p>"
           }
         },
         "q7": {
-          "type": "qa",
+          "type": "part",
           "settings": {
-            "group": "Returns & Exchanges",
-            "q": "What is your returns policy?",
-            "a": "<p>Thirty days, unworn, tags on, free return label inside every US order. Exchanges ship the moment your return scans \u2014 you do not wait for it to reach us.</p>"
+            "title": "What is the returns window",
+            "body": "<p>Thirty days from delivery, unworn with tags on. Shipping is covered both ways within the US.</p>"
           }
         },
         "q8": {
-          "type": "qa",
+          "type": "part",
           "settings": {
-            "group": "Returns & Exchanges",
-            "q": "Something arrived faulty. What now?",
-            "a": "<p>Send us a photo and your order number and we will replace it, no return needed. Our stitching is guaranteed for a year of normal training.</p>"
+            "title": "Something arrived faulty",
+            "body": "<p>Email hello@wearryvt.com with your order number and a photograph. We replace or refund, your choice.</p>"
           }
         },
         "q9": {
-          "type": "qa",
+          "type": "part",
           "settings": {
-            "group": "Product & Care",
-            "q": "How should I wash my kit?",
-            "a": "<p>Cold wash, inside out, no fabric softener \u2014 it clogs the fibres that make performance fabric breathe. Hang dry where you can; low tumble if you must.</p>"
+            "title": "Do you restock",
+            "body": "<p>Yes. Small runs are restocked rather than replaced, so a sold-out style comes back.</p>"
           }
         },
         "q10": {
-          "type": "qa",
+          "type": "part",
           "settings": {
-            "group": "Product & Care",
-            "q": "What are your fabrics made from?",
-            "a": "<p>Combed ring-spun cotton for the tees, a recycled poly-elastane knit for the training pieces. Full composition is listed on each product page.</p>"
+            "title": "Do you do wholesale",
+            "body": "<p>wholesale@wearryvt.com for stockist enquiries.</p>"
           }
         },
         "q11": {
-          "type": "qa",
+          "type": "part",
           "settings": {
-            "group": "Wholesale & Teams",
-            "q": "Do you do team or gym orders?",
-            "a": "<p>We do. Minimums start at twenty-four units with custom colourways available on larger runs. Message us with what you need and we will quote within a day.</p>"
-          }
-        },
-        "q12": {
-          "type": "qa",
-          "settings": {
-            "group": "Wholesale & Teams",
-            "q": "Can I stock RYVT?",
-            "a": "<p>We work with a small number of independent stores. Send us your shop, your city and your Instagram and we will take it from there.</p>"
+            "title": "Where are you based",
+            "body": "<p>Metro Detroit, Michigan. Cut and finished here.</p>"
           }
         }
       },
@@ -121,32 +92,18 @@
         "q8",
         "q9",
         "q10",
-        "q11",
-        "q12"
+        "q11"
       ],
       "settings": {
-        "eyebrow": "Help Desk",
-        "heading": "Straight Answers",
-        "intro": "<p>Everything people ask us most, in one place. If your question is not here, we answer messages ourselves \u2014 usually the same day.</p>",
-        "foot": "Still stuck? Talk to a human.",
-        "foot_link_text": "Contact us",
-        "foot_link": "/pages/contact",
-        "scheme": "light",
-        "pad_top": 40,
-        "pad_bottom": 40,
-        "grain": false
-      }
-    },
-    "feat": {
-      "type": "feature-icons",
-      "settings": {
-        "scheme": "alt"
+        "eyebrow": "Help",
+        "heading": "Questions",
+        "lede": "The eleven we are asked most. Anything else, email hello@wearryvt.com.",
+        "meta_1": "Answered inside one business day",
+        "meta_2": "Metro Detroit, Michigan"
       }
     }
   },
   "order": [
-    "band",
-    "faq",
-    "feat"
+    "main"
   ]
 }
